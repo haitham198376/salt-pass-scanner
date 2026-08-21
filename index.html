@@ -117,16 +117,11 @@ h1 {
 
 <div class="container">
 
-
-<!-- ========================= -->
 <!-- الصفحة الرئيسية -->
-<!-- ========================= -->
 
 <div id="home">
 
-<h1>
-SALT PASS
-</h1>
+<h1>SALT PASS</h1>
 
 <div class="shop">
 مطعم السلط
@@ -136,7 +131,6 @@ SALT PASS
 اختر الخصم المقدم للعميل
 </h3>
 
-
 <button
 class="discount d15"
 onclick="startScanner('15%')">
@@ -145,7 +139,6 @@ onclick="startScanner('15%')">
 
 </button>
 
-
 <button
 class="discount d20"
 onclick="startScanner('20%')">
@@ -153,7 +146,6 @@ onclick="startScanner('20%')">
 20% خصم
 
 </button>
-
 
 <button
 class="discount d30"
@@ -166,15 +158,11 @@ onclick="startScanner('30%')">
 </div>
 
 
-<!-- ========================= -->
-<!-- شاشة الكاميرا -->
-<!-- ========================= -->
+<!-- صفحة الكاميرا -->
 
 <div id="scannerSection">
 
-<h1>
-SALT PASS
-</h1>
+<h1>SALT PASS</h1>
 
 <div class="selected">
 
@@ -201,16 +189,13 @@ onclick="location.reload()">
 </div>
 
 
-<!-- ========================= -->
-<!-- نتيجة قراءة البطاقة -->
-<!-- ========================= -->
+<!-- نتيجة المسح -->
 
 <div id="result" class="result">
 
 <h2>
 ✅ البطاقة صالحة
 </h2>
-
 
 <p>
 
@@ -222,7 +207,6 @@ onclick="location.reload()">
 
 </p>
 
-
 <p>
 
 <strong>
@@ -232,7 +216,6 @@ onclick="location.reload()">
 <span id="memberDiscount"></span>
 
 </p>
-
 
 <button
 class="confirm"
@@ -244,16 +227,15 @@ onclick="confirmDiscount()">
 
 </div>
 
-
 </div>
 
 
 <script>
 
 
-// ==============================
-// المتغيرات
-// ==============================
+// =====================================
+// بيانات النظام
+// =====================================
 
 let scanner = null;
 
@@ -262,210 +244,176 @@ let selectedDiscount = "";
 let scannedMember = "";
 
 
-// ==============================
+// =====================================
 // بيانات المحل
-// ==============================
+// =====================================
 
-const SHOP_ID =
-"SH-0001";
+const SHOP_ID = "SH-0001";
 
-const SHOP_NAME =
-"مطعم السلط";
+const SHOP_NAME = "مطعم السلط";
 
 
-// ==============================
+// =====================================
 // رابط Google Apps Script
-// ==============================
+// =====================================
 
 const APPS_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-// ==============================
+// =====================================
 // تشغيل الكاميرا
-// ==============================
+// =====================================
 
 function startScanner(discount) {
 
+    selectedDiscount = discount;
 
-selectedDiscount =
-discount;
+    document.getElementById("home")
+        .style.display = "none";
 
+    document.getElementById("scannerSection")
+        .style.display = "block";
 
-document.getElementById("home")
-.style.display =
-"none";
+    document.getElementById("selectedDiscount")
+        .innerText = discount;
 
-
-document.getElementById("scannerSection")
-.style.display =
-"block";
-
-
-document.getElementById("selectedDiscount")
-.innerText =
-discount;
+    scanner =
+        new Html5Qrcode("reader");
 
 
-scanner =
-new Html5Qrcode("reader");
+    scanner.start(
+
+        {
+            facingMode: "environment"
+        },
+
+        {
+            fps: 10,
+
+            qrbox: {
+                width: 250,
+                height: 250
+            }
+        },
 
 
-scanner.start(
+        function(decodedText) {
 
-{
-
-facingMode:
-"environment"
-
-},
-
-{
-
-fps: 10,
-
-qrbox: {
-
-width: 250,
-
-height: 250
-
-}
-
-},
+            scannedMember =
+                decodedText.trim();
 
 
-function(decodedText) {
+            scanner.stop().then(function() {
+
+                document.getElementById(
+                    "scannerSection"
+                ).style.display = "none";
 
 
-scannedMember =
-decodedText.trim();
+                document.getElementById(
+                    "result"
+                ).style.display = "block";
 
 
-scanner.stop().then(function() {
+                document.getElementById(
+                    "memberId"
+                ).innerText =
+                    scannedMember;
 
 
-document.getElementById(
-"scannerSection"
-).style.display =
-"none";
+                document.getElementById(
+                    "memberDiscount"
+                ).innerText =
+                    selectedDiscount;
+
+            });
+
+        },
 
 
-document.getElementById(
-"result"
-).style.display =
-"block";
+        function(errorMessage) {
+
+            // تجاهل أخطاء البحث العادية
+
+        }
 
 
-document.getElementById(
-"memberId"
-).innerText =
-scannedMember;
+    ).catch(function(error) {
 
+        alert(
+            "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
+        );
 
-document.getElementById(
-"memberDiscount"
-).innerText =
-selectedDiscount;
-
-
-});
-
-
-},
-
-
-function(errorMessage) {
-
-// تجاهل أخطاء البحث العادية
+    });
 
 }
 
 
-).catch(function(error) {
-
-
-alert(
-"تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
-);
-
-
-});
-
-}
-
-
-// ==============================
+// =====================================
 // تأكيد تنفيذ الخصم
-// ==============================
+// =====================================
 
 function confirmDiscount() {
 
 
-if (!scannedMember) {
+    if (!scannedMember) {
 
-alert(
-"❌ لم يتم العثور على رقم العضوية."
-);
+        alert(
+            "❌ لم يتم العثور على رقم العضوية."
+        );
 
-return;
-
-}
-
-
-if (!selectedDiscount) {
-
-alert(
-"❌ لم يتم اختيار الخصم."
-);
-
-return;
-
-}
+        return;
+    }
 
 
-// ==============================
-// تجهيز الرابط
-// ==============================
+    if (!selectedDiscount) {
 
-const finalUrl =
+        alert(
+            "❌ لم يتم اختيار الخصم."
+        );
 
-APPS_SCRIPT_URL +
-
-"?memberId=" +
-
-encodeURIComponent(
-scannedMember
-) +
-
-"&discount=" +
-
-encodeURIComponent(
-selectedDiscount
-) +
-
-"&shopId=" +
-
-encodeURIComponent(
-SHOP_ID
-) +
-
-"&shop=" +
-
-encodeURIComponent(
-SHOP_NAME
-);
+        return;
+    }
 
 
-// ==============================
-// إرسال العملية
-// ==============================
+    // =================================
+    // إنشاء رابط العملية
+    // =================================
 
-window.location.href =
-finalUrl;
+    const finalUrl =
+
+        APPS_SCRIPT_URL +
+
+        "?memberId=" +
+        encodeURIComponent(
+            scannedMember
+        ) +
+
+        "&discount=" +
+        encodeURIComponent(
+            selectedDiscount
+        ) +
+
+        "&shopId=" +
+        encodeURIComponent(
+            SHOP_ID
+        ) +
+
+        "&shop=" +
+        encodeURIComponent(
+            SHOP_NAME
+        );
+
+
+    // =================================
+    // إرسال العملية
+    // =================================
+
+    window.location.href =
+        finalUrl;
 
 }
-
 
 </script>
 
