@@ -113,14 +113,14 @@ h1 {
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
 
+<!-- ========================= -->
 <!-- الصفحة الرئيسية -->
+<!-- ========================= -->
 
 <div id="home">
 
@@ -166,15 +166,15 @@ onclick="startScanner('30%')">
 </div>
 
 
-
-<!-- صفحة الكاميرا -->
+<!-- ========================= -->
+<!-- شاشة الكاميرا -->
+<!-- ========================= -->
 
 <div id="scannerSection">
 
 <h1>
 SALT PASS
 </h1>
-
 
 <div class="selected">
 
@@ -184,14 +184,11 @@ SALT PASS
 
 </div>
 
-
 <p>
 وجّه الكاميرا نحو QR بطاقة العميل
 </p>
 
-
 <div id="reader"></div>
-
 
 <button
 class="back"
@@ -204,8 +201,9 @@ onclick="location.reload()">
 </div>
 
 
-
+<!-- ========================= -->
 <!-- نتيجة قراءة البطاقة -->
+<!-- ========================= -->
 
 <div id="result" class="result">
 
@@ -250,9 +248,12 @@ onclick="confirmDiscount()">
 </div>
 
 
-
 <script>
 
+
+// ==============================
+// المتغيرات
+// ==============================
 
 let scanner = null;
 
@@ -261,8 +262,28 @@ let selectedDiscount = "";
 let scannedMember = "";
 
 
+// ==============================
+// بيانات المحل
+// ==============================
 
-/* تشغيل الكاميرا */
+const SHOP_ID =
+"SH-0001";
+
+const SHOP_NAME =
+"مطعم السلط";
+
+
+// ==============================
+// رابط Google Apps Script
+// ==============================
+
+const APPS_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
+
+
+// ==============================
+// تشغيل الكاميرا
+// ==============================
 
 function startScanner(discount) {
 
@@ -288,7 +309,6 @@ discount;
 
 scanner =
 new Html5Qrcode("reader");
-
 
 
 scanner.start(
@@ -357,9 +377,7 @@ selectedDiscount;
 
 function(errorMessage) {
 
-
 // تجاهل أخطاء البحث العادية
-
 
 }
 
@@ -377,36 +395,42 @@ alert(
 }
 
 
-
-/* تأكيد تنفيذ الخصم */
+// ==============================
+// تأكيد تنفيذ الخصم
+// ==============================
 
 function confirmDiscount() {
 
 
-/*
-رابط Google Apps Script
-*/
+if (!scannedMember) {
 
-const appsScriptUrl =
+alert(
+"❌ لم يتم العثور على رقم العضوية."
+);
 
-"https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
+return;
 
-
-/*
-اسم المحل
-*/
-
-const shop =
-"مطعم السلط";
+}
 
 
-/*
-إنشاء رابط العملية
-*/
+if (!selectedDiscount) {
+
+alert(
+"❌ لم يتم اختيار الخصم."
+);
+
+return;
+
+}
+
+
+// ==============================
+// تجهيز الرابط
+// ==============================
 
 const finalUrl =
 
-appsScriptUrl +
+APPS_SCRIPT_URL +
 
 "?memberId=" +
 
@@ -420,16 +444,22 @@ encodeURIComponent(
 selectedDiscount
 ) +
 
+"&shopId=" +
+
+encodeURIComponent(
+SHOP_ID
+) +
+
 "&shop=" +
 
 encodeURIComponent(
-shop
+SHOP_NAME
 );
 
 
-/*
-إرسال العملية إلى Google Apps Script
-*/
+// ==============================
+// إرسال العملية
+// ==============================
 
 window.location.href =
 finalUrl;
@@ -438,7 +468,6 @@ finalUrl;
 
 
 </script>
-
 
 </body>
 
