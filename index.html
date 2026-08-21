@@ -96,6 +96,7 @@ h1 {
     font-size: 19px;
     font-weight: bold;
     margin-top: 15px;
+    cursor: pointer;
 }
 
 .back {
@@ -105,127 +106,149 @@ h1 {
     border-radius: 12px;
     margin-top: 10px;
     font-size: 16px;
+    cursor: pointer;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-    <!-- الصفحة الرئيسية -->
 
-    <div id="home">
+<!-- الصفحة الرئيسية -->
 
-        <h1>SALT PASS</h1>
+<div id="home">
 
-        <div class="shop">
-            مطعم السلط
-        </div>
+<h1>
+SALT PASS
+</h1>
 
-        <h3>
-            اختر الخصم المقدم للعميل
-        </h3>
+<div class="shop">
+مطعم السلط
+</div>
 
-        <button
-            class="discount d15"
-            onclick="startScanner('15%')">
-
-            15% خصم
-
-        </button>
-
-        <button
-            class="discount d20"
-            onclick="startScanner('20%')">
-
-            20% خصم
-
-        </button>
-
-        <button
-            class="discount d30"
-            onclick="startScanner('30%')">
-
-            30% خصم
-
-        </button>
-
-    </div>
+<h3>
+اختر الخصم المقدم للعميل
+</h3>
 
 
-    <!-- صفحة الكاميرا -->
+<button
+class="discount d15"
+onclick="startScanner('15%')">
 
-    <div id="scannerSection">
+15% خصم
 
-        <h1>SALT PASS</h1>
-
-        <div class="selected">
-
-            الخصم المختار:
-
-            <span id="selectedDiscount"></span>
-
-        </div>
-
-        <p>
-            وجّه الكاميرا نحو QR بطاقة العميل
-        </p>
-
-        <div id="reader"></div>
-
-        <button
-            class="back"
-            onclick="location.reload()">
-
-            رجوع
-
-        </button>
-
-    </div>
+</button>
 
 
-    <!-- نتيجة قراءة البطاقة -->
+<button
+class="discount d20"
+onclick="startScanner('20%')">
 
-    <div id="result" class="result">
+20% خصم
 
-        <h2>
-            ✅ البطاقة صالحة
-        </h2>
+</button>
 
-        <p>
 
-            <strong>
-                رقم العضوية:
-            </strong>
+<button
+class="discount d30"
+onclick="startScanner('30%')">
 
-            <span id="memberId"></span>
+30% خصم
 
-        </p>
-
-        <p>
-
-            <strong>
-                الخصم:
-            </strong>
-
-            <span id="memberDiscount"></span>
-
-        </p>
-
-        <button
-            class="confirm"
-            onclick="confirmDiscount()">
-
-            ✅ تأكيد تنفيذ الخصم
-
-        </button>
-
-    </div>
+</button>
 
 </div>
+
+
+
+<!-- صفحة الكاميرا -->
+
+<div id="scannerSection">
+
+<h1>
+SALT PASS
+</h1>
+
+
+<div class="selected">
+
+الخصم المختار:
+
+<span id="selectedDiscount"></span>
+
+</div>
+
+
+<p>
+وجّه الكاميرا نحو QR بطاقة العميل
+</p>
+
+
+<div id="reader"></div>
+
+
+<button
+class="back"
+onclick="location.reload()">
+
+رجوع
+
+</button>
+
+</div>
+
+
+
+<!-- نتيجة قراءة البطاقة -->
+
+<div id="result" class="result">
+
+<h2>
+✅ البطاقة صالحة
+</h2>
+
+
+<p>
+
+<strong>
+رقم العضوية:
+</strong>
+
+<span id="memberId"></span>
+
+</p>
+
+
+<p>
+
+<strong>
+الخصم:
+</strong>
+
+<span id="memberDiscount"></span>
+
+</p>
+
+
+<button
+class="confirm"
+onclick="confirmDiscount()">
+
+✅ تأكيد تنفيذ الخصم
+
+</button>
+
+</div>
+
+
+</div>
+
 
 
 <script>
@@ -243,93 +266,113 @@ let scannedMember = "";
 
 function startScanner(discount) {
 
-    selectedDiscount = discount;
+
+selectedDiscount =
+discount;
 
 
-    document.getElementById("home")
-        .style.display = "none";
+document.getElementById("home")
+.style.display =
+"none";
 
 
-    document.getElementById("scannerSection")
-        .style.display = "block";
+document.getElementById("scannerSection")
+.style.display =
+"block";
 
 
-    document.getElementById("selectedDiscount")
-        .innerText = discount;
+document.getElementById("selectedDiscount")
+.innerText =
+discount;
 
 
-    scanner =
-        new Html5Qrcode("reader");
+scanner =
+new Html5Qrcode("reader");
 
 
-    scanner.start(
 
-        {
-            facingMode: "environment"
-        },
+scanner.start(
 
-        {
-            fps: 10,
+{
 
-            qrbox: {
-                width: 250,
-                height: 250
-            }
-        },
+facingMode:
+"environment"
 
+},
 
-        function(decodedText) {
+{
 
+fps: 10,
 
-            scannedMember =
-                decodedText.trim();
+qrbox: {
 
+width: 250,
 
-            scanner.stop().then(function() {
+height: 250
 
+}
 
-                document.getElementById(
-                    "scannerSection"
-                ).style.display = "none";
+},
 
 
-                document.getElementById(
-                    "result"
-                ).style.display = "block";
+function(decodedText) {
 
 
-                document.getElementById(
-                    "memberId"
-                ).innerText = scannedMember;
+scannedMember =
+decodedText.trim();
 
 
-                document.getElementById(
-                    "memberDiscount"
-                ).innerText =
-                    selectedDiscount;
+scanner.stop().then(function() {
 
 
-            });
-
-        },
-
-
-        function(errorMessage) {
-
-            // تجاهل أخطاء البحث العادية
-
-        }
+document.getElementById(
+"scannerSection"
+).style.display =
+"none";
 
 
-    ).catch(function(error) {
+document.getElementById(
+"result"
+).style.display =
+"block";
 
 
-        alert(
-            "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
-        );
+document.getElementById(
+"memberId"
+).innerText =
+scannedMember;
 
 
-    });
+document.getElementById(
+"memberDiscount"
+).innerText =
+selectedDiscount;
+
+
+});
+
+
+},
+
+
+function(errorMessage) {
+
+
+// تجاهل أخطاء البحث العادية
+
+
+}
+
+
+).catch(function(error) {
+
+
+alert(
+"تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
+);
+
+
+});
 
 }
 
@@ -340,55 +383,62 @@ function startScanner(discount) {
 function confirmDiscount() {
 
 
-    /*
-       رابط Google Apps Script
-    */
+/*
+رابط Google Apps Script
+*/
 
-    const appsScriptUrl =
-        "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
+const appsScriptUrl =
 
-
-    /*
-       اسم المحل
-    */
-
-    const shop =
-        "مطعم السلط";
+"https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-    /*
-       إنشاء الرابط
-    */
+/*
+اسم المحل
+*/
 
-    const finalUrl =
-        appsScriptUrl +
-
-        "?memberId=" +
-        encodeURIComponent(
-            scannedMember
-        ) +
-
-        "&discount=" +
-        encodeURIComponent(
-            selectedDiscount
-        ) +
-
-        "&shop=" +
-        encodeURIComponent(
-            shop
-        );
+const shop =
+"مطعم السلط";
 
 
-    /*
-       الانتقال إلى Google Apps Script
-    */
+/*
+إنشاء رابط العملية
+*/
 
-    window.location.href =
-        finalUrl;
+const finalUrl =
+
+appsScriptUrl +
+
+"?memberId=" +
+
+encodeURIComponent(
+scannedMember
+) +
+
+"&discount=" +
+
+encodeURIComponent(
+selectedDiscount
+) +
+
+"&shop=" +
+
+encodeURIComponent(
+shop
+);
+
+
+/*
+إرسال العملية إلى Google Apps Script
+*/
+
+window.location.href =
+finalUrl;
 
 }
 
+
 </script>
+
 
 </body>
 
