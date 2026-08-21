@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1">
 
-<title>SALT PASS Scanner</title>
+<title>SALT PASS</title>
 
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
@@ -26,8 +26,8 @@ body {
     max-width: 420px;
     margin: auto;
     background: white;
-    padding: 25px 20px;
-    border-radius: 20px;
+    padding: 30px 20px;
+    border-radius: 22px;
     box-shadow: 0 4px 20px rgba(0,0,0,.08);
 }
 
@@ -37,12 +37,34 @@ h1 {
 
 .shop {
     color: #666;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .discount {
+    width: 100%;
+    padding: 18px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 13px;
     font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.d15 {
+    background: #e8f5e9;
+}
+
+.d20 {
+    background: #e3f2fd;
+}
+
+.d30 {
+    background: #fff3e0;
+}
+
+#scannerSection {
+    display: none;
 }
 
 #reader {
@@ -50,94 +72,180 @@ h1 {
     margin-top: 20px;
 }
 
-#status {
-    margin-top: 20px;
+.selected {
+    font-size: 20px;
     font-weight: bold;
+    margin: 20px 0;
+}
+
+.result {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f1f8e9;
+}
+
+.confirm {
+    width: 100%;
+    padding: 17px;
+    border: none;
+    border-radius: 12px;
+    background: #111;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.back {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 16px;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 <div class="container">
 
+
+<div id="home">
+
 <h1>SALT PASS</h1>
 
 <div class="shop">
-ماسح بطاقة العميل
+مطعم السلط
 </div>
 
-<div class="discount">
-الخصم المختار:
-<span id="discount"></span>
+<h3>
+اختر الخصم المقدم للعميل
+</h3>
+
+
+<button
+class="discount d15"
+onclick="startScanner('15%')">
+
+15% خصم
+
+</button>
+
+
+<button
+class="discount d20"
+onclick="startScanner('20%')">
+
+20% خصم
+
+</button>
+
+
+<button
+class="discount d30"
+onclick="startScanner('30%')">
+
+30% خصم
+
+</button>
+
 </div>
+
+
+
+<div id="scannerSection">
+
+<h1>SALT PASS</h1>
+
+<div class="selected">
+
+الخصم المختار:
+
+<span id="selectedDiscount"></span>
+
+</div>
+
+<p>
+وجّه الكاميرا نحو QR بطاقة العميل
+</p>
 
 <div id="reader"></div>
 
-<div id="status">
-جاري تشغيل الكاميرا...
+<button
+class="back"
+onclick="location.reload()">
+
+رجوع
+
+</button>
+
 </div>
+
+
+
+<div id="result" class="result">
+
+<h2>✅ البطاقة صالحة</h2>
+
+<p>
+<strong>رقم العضوية:</strong>
+<span id="memberId"></span>
+</p>
+
+<p>
+<strong>الخصم:</strong>
+<span id="memberDiscount"></span>
+</p>
+
+<button
+class="confirm"
+onclick="confirmDiscount()">
+
+✅ تأكيد تنفيذ الخصم
+
+</button>
+
+</div>
+
 
 </div>
 
 
 <script>
 
-const params =
-new URLSearchParams(window.location.search);
 
-const discount =
-params.get("discount") || "20%";
+let scanner = null;
 
-const returnUrl =
-params.get("returnUrl");
+let selectedDiscount = "";
+
+let scannedMember = "";
 
 
-document.getElementById("discount").innerText =
-discount;
+function startScanner(discount) {
+
+selectedDiscount = discount;
 
 
-const scanner =
-new Html5Qrcode("reader");
+document.getElementById("home")
+.style.display = "none";
 
 
-function success(decodedText) {
-
-scanner.stop().then(function() {
-
-document.getElementById("status").innerText =
-"تمت قراءة البطاقة: " + decodedText;
+document.getElementById("scannerSection")
+.style.display = "block";
 
 
-/*
-نرجع رقم العضوية إلى Google Apps Script
-*/
-
-if (returnUrl) {
-
-const url =
-returnUrl
-+ "?memberId="
-+ encodeURIComponent(decodedText)
-+ "&discount="
-+ encodeURIComponent(discount);
-
-window.location.href = url;
-
-}
-
-});
-
-}
+document.getElementById("selectedDiscount")
+.innerText = discount;
 
 
-function error(message) {
-
-// أخطاء القراءة العادية لا نعرضها
-
-}
+scanner = new Html5Qrcode("reader");
 
 
 scanner.start(
@@ -155,16 +263,72 @@ scanner.start(
     }
 },
 
-success,
+function(decodedText) {
 
-error
+
+scannedMember =
+decodedText.trim();
+
+
+scanner.stop();
+
+
+document.getElementById("scannerSection")
+.style.display = "none";
+
+
+document.getElementById("result")
+.style.display = "block";
+
+
+document.getElementById("memberId")
+.innerText =
+scannedMember;
+
+
+document.getElementById("memberDiscount")
+.innerText =
+selectedDiscount;
+
+
+},
+
+function(errorMessage) {
+
+// تجاهل أخطاء البحث العادية
+
+}
 
 ).catch(function(error) {
 
-document.getElementById("status").innerText =
-"❌ تعذر تشغيل الكاميرا.";
+alert(
+"تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
+);
 
 });
+
+}
+
+
+
+function confirmDiscount() {
+
+
+alert(
+
+"✅ تم تأكيد الخصم\\n\\n" +
+
+"رقم العضوية: " +
+scannedMember +
+
+"\\nالخصم: " +
+selectedDiscount
+
+);
+
+
+}
+
 
 </script>
 
