@@ -111,109 +111,119 @@ h1 {
 
 </head>
 
-
 <body>
 
 <div class="container">
 
+    <!-- الصفحة الرئيسية -->
 
-<div id="home">
+    <div id="home">
 
-<h1>SALT PASS</h1>
+        <h1>SALT PASS</h1>
 
-<div class="shop">
-مطعم السلط
-</div>
+        <div class="shop">
+            مطعم السلط
+        </div>
 
-<h3>
-اختر الخصم المقدم للعميل
-</h3>
+        <h3>
+            اختر الخصم المقدم للعميل
+        </h3>
 
+        <button
+            class="discount d15"
+            onclick="startScanner('15%')">
 
-<button
-class="discount d15"
-onclick="startScanner('15%')">
+            15% خصم
 
-15% خصم
+        </button>
 
-</button>
+        <button
+            class="discount d20"
+            onclick="startScanner('20%')">
 
+            20% خصم
 
-<button
-class="discount d20"
-onclick="startScanner('20%')">
+        </button>
 
-20% خصم
+        <button
+            class="discount d30"
+            onclick="startScanner('30%')">
 
-</button>
+            30% خصم
 
+        </button>
 
-<button
-class="discount d30"
-onclick="startScanner('30%')">
-
-30% خصم
-
-</button>
-
-</div>
+    </div>
 
 
+    <!-- صفحة الكاميرا -->
 
-<div id="scannerSection">
+    <div id="scannerSection">
 
-<h1>SALT PASS</h1>
+        <h1>SALT PASS</h1>
 
-<div class="selected">
+        <div class="selected">
 
-الخصم المختار:
+            الخصم المختار:
 
-<span id="selectedDiscount"></span>
+            <span id="selectedDiscount"></span>
 
-</div>
+        </div>
 
-<p>
-وجّه الكاميرا نحو QR بطاقة العميل
-</p>
+        <p>
+            وجّه الكاميرا نحو QR بطاقة العميل
+        </p>
 
-<div id="reader"></div>
+        <div id="reader"></div>
 
-<button
-class="back"
-onclick="location.reload()">
+        <button
+            class="back"
+            onclick="location.reload()">
 
-رجوع
+            رجوع
 
-</button>
+        </button>
 
-</div>
+    </div>
 
 
+    <!-- نتيجة قراءة البطاقة -->
 
-<div id="result" class="result">
+    <div id="result" class="result">
 
-<h2>✅ البطاقة صالحة</h2>
+        <h2>
+            ✅ البطاقة صالحة
+        </h2>
 
-<p>
-<strong>رقم العضوية:</strong>
-<span id="memberId"></span>
-</p>
+        <p>
 
-<p>
-<strong>الخصم:</strong>
-<span id="memberDiscount"></span>
-</p>
+            <strong>
+                رقم العضوية:
+            </strong>
 
-<button
-class="confirm"
-onclick="confirmDiscount()">
+            <span id="memberId"></span>
 
-✅ تأكيد تنفيذ الخصم
+        </p>
 
-</button>
+        <p>
 
-</div>
+            <strong>
+                الخصم:
+            </strong>
 
+            <span id="memberDiscount"></span>
+
+        </p>
+
+        <button
+            class="confirm"
+            onclick="confirmDiscount()">
+
+            ✅ تأكيد تنفيذ الخصم
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -228,107 +238,155 @@ let selectedDiscount = "";
 let scannedMember = "";
 
 
+
+/* تشغيل الكاميرا */
+
 function startScanner(discount) {
 
-selectedDiscount = discount;
+    selectedDiscount = discount;
 
 
-document.getElementById("home")
-.style.display = "none";
+    document.getElementById("home")
+        .style.display = "none";
 
 
-document.getElementById("scannerSection")
-.style.display = "block";
+    document.getElementById("scannerSection")
+        .style.display = "block";
 
 
-document.getElementById("selectedDiscount")
-.innerText = discount;
+    document.getElementById("selectedDiscount")
+        .innerText = discount;
 
 
-scanner = new Html5Qrcode("reader");
+    scanner =
+        new Html5Qrcode("reader");
 
 
-scanner.start(
+    scanner.start(
 
-{
-    facingMode: "environment"
-},
+        {
+            facingMode: "environment"
+        },
 
-{
-    fps: 10,
+        {
+            fps: 10,
 
-    qrbox: {
-        width: 250,
-        height: 250
-    }
-},
-
-function(decodedText) {
+            qrbox: {
+                width: 250,
+                height: 250
+            }
+        },
 
 
-scannedMember =
-decodedText.trim();
+        function(decodedText) {
 
 
-scanner.stop();
+            scannedMember =
+                decodedText.trim();
 
 
-document.getElementById("scannerSection")
-.style.display = "none";
+            scanner.stop().then(function() {
 
 
-document.getElementById("result")
-.style.display = "block";
+                document.getElementById(
+                    "scannerSection"
+                ).style.display = "none";
 
 
-document.getElementById("memberId")
-.innerText =
-scannedMember;
+                document.getElementById(
+                    "result"
+                ).style.display = "block";
 
 
-document.getElementById("memberDiscount")
-.innerText =
-selectedDiscount;
+                document.getElementById(
+                    "memberId"
+                ).innerText = scannedMember;
 
 
-},
+                document.getElementById(
+                    "memberDiscount"
+                ).innerText =
+                    selectedDiscount;
 
-function(errorMessage) {
 
-// تجاهل أخطاء البحث العادية
+            });
+
+        },
+
+
+        function(errorMessage) {
+
+            // تجاهل أخطاء البحث العادية
+
+        }
+
+
+    ).catch(function(error) {
+
+
+        alert(
+            "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
+        );
+
+
+    });
 
 }
 
-).catch(function(error) {
-
-alert(
-"تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
-);
-
-});
-
-}
 
 
+/* تأكيد تنفيذ الخصم */
 
 function confirmDiscount() {
 
 
-alert(
+    /*
+       رابط Google Apps Script
+    */
 
-"✅ تم تأكيد الخصم\\n\\n" +
+    const appsScriptUrl =
+        "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
 
-"رقم العضوية: " +
-scannedMember +
 
-"\\nالخصم: " +
-selectedDiscount
+    /*
+       اسم المحل
+    */
 
-);
+    const shop =
+        "مطعم السلط";
 
+
+    /*
+       إنشاء الرابط
+    */
+
+    const finalUrl =
+        appsScriptUrl +
+
+        "?memberId=" +
+        encodeURIComponent(
+            scannedMember
+        ) +
+
+        "&discount=" +
+        encodeURIComponent(
+            selectedDiscount
+        ) +
+
+        "&shop=" +
+        encodeURIComponent(
+            shop
+        );
+
+
+    /*
+       الانتقال إلى Google Apps Script
+    */
+
+    window.location.href =
+        finalUrl;
 
 }
-
 
 </script>
 
