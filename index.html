@@ -14,99 +14,120 @@ content="width=device-width, initial-scale=1">
 
 <style>
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
+  font-family: Arial, Tahoma, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
 }
 
 .container {
-    max-width: 420px;
-    margin: auto;
-    background: white;
-    padding: 30px 20px;
-    border-radius: 22px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  max-width: 430px;
+  margin: 20px auto;
+  background: white;
+  padding: 30px 20px;
+  border-radius: 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
 }
 
-h1 {
-    margin-bottom: 5px;
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 2px;
 }
 
 .shop {
-    color: #666;
-    margin-bottom: 25px;
+  color: #666;
+  font-size: 18px;
+  margin-top: 8px;
+  margin-bottom: 30px;
 }
 
 .discount {
-    width: 100%;
-    padding: 18px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 13px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
+  width: 100%;
+  padding: 19px;
+  margin: 11px 0;
+  border: none;
+  border-radius: 14px;
+  font-size: 21px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .d15 {
-    background: #e8f5e9;
+  background: #e8f5e9;
+  color: #1b5e20;
 }
 
 .d20 {
-    background: #e3f2fd;
+  background: #e3f2fd;
+  color: #0d47a1;
 }
 
 .d30 {
-    background: #fff3e0;
+  background: #fff3e0;
+  color: #e65100;
 }
 
 #scannerSection {
-    display: none;
+  display: none;
 }
 
 #reader {
-    width: 100%;
-    margin-top: 20px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .selected {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 20px 0;
+  margin: 20px 0;
+  font-size: 21px;
+  font-weight: bold;
 }
 
-.result {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 15px;
-    background: #f1f8e9;
+.selected span {
+  color: #1976d2;
+}
+
+#result {
+  display: none;
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 18px;
+  background: #f1f8e9;
 }
 
 .confirm {
-    width: 100%;
-    padding: 17px;
-    border: none;
-    border-radius: 12px;
-    background: #111;
-    color: white;
-    font-size: 19px;
-    font-weight: bold;
-    margin-top: 15px;
-    cursor: pointer;
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 13px;
+  background: #111;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+  cursor: pointer;
 }
 
 .back {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    margin-top: 10px;
-    font-size: 16px;
-    cursor: pointer;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  margin-top: 15px;
+  background: #eee;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.error {
+  color: #c62828;
+  margin-top: 15px;
 }
 
 </style>
@@ -117,70 +138,50 @@ h1 {
 
 <div class="container">
 
-<!-- الصفحة الرئيسية -->
-
 <div id="home">
 
-<h1>SALT PASS</h1>
-
-<div class="shop">
-مطعم السلط
+<div class="logo">
+SALT PASS
 </div>
 
-<h3>
+<div class="shop" id="shopName">
+جاري تحميل بيانات المحل...
+</div>
+
+<div class="choose">
 اختر الخصم المقدم للعميل
-</h3>
+</div>
 
-<button
-class="discount d15"
-onclick="startScanner('15%')">
-
-15% خصم
-
-</button>
-
-<button
-class="discount d20"
-onclick="startScanner('20%')">
-
-20% خصم
-
-</button>
-
-<button
-class="discount d30"
-onclick="startScanner('30%')">
-
-30% خصم
-
-</button>
+<div id="discountButtons"></div>
 
 </div>
 
-
-<!-- صفحة الكاميرا -->
 
 <div id="scannerSection">
 
-<h1>SALT PASS</h1>
+<div class="logo">
+SALT PASS
+</div>
+
+<div class="shop" id="scannerShopName">
+</div>
 
 <div class="selected">
-
 الخصم المختار:
-
 <span id="selectedDiscount"></span>
-
 </div>
 
 <p>
-وجّه الكاميرا نحو QR بطاقة العميل
+وجّه كاميرا الهاتف نحو QR بطاقة العميل
 </p>
 
 <div id="reader"></div>
 
+<div id="cameraError" class="error"></div>
+
 <button
 class="back"
-onclick="location.reload()">
+onclick="goBack()">
 
 رجوع
 
@@ -189,32 +190,22 @@ onclick="location.reload()">
 </div>
 
 
-<!-- نتيجة المسح -->
-
-<div id="result" class="result">
+<div id="result">
 
 <h2>
 ✅ البطاقة صالحة
 </h2>
 
 <p>
-
-<strong>
-رقم العضوية:
-</strong>
-
+<strong>رقم العضوية:</strong>
+<br>
 <span id="memberId"></span>
-
 </p>
 
 <p>
-
-<strong>
-الخصم:
-</strong>
-
+<strong>الخصم:</strong>
+<br>
 <span id="memberDiscount"></span>
-
 </p>
 
 <button
@@ -225,6 +216,14 @@ onclick="confirmDiscount()">
 
 </button>
 
+<button
+class="back"
+onclick="goBack()">
+
+إلغاء
+
+</button>
+
 </div>
 
 </div>
@@ -232,188 +231,344 @@ onclick="confirmDiscount()">
 
 <script>
 
-
-// =====================================
-// بيانات النظام
-// =====================================
-
 let scanner = null;
-
 let selectedDiscount = "";
-
 let scannedMember = "";
 
 
-// =====================================
-// بيانات المحل
-// =====================================
+// =============================================
+// قراءة بيانات المحل من الرابط
+// =============================================
 
-const SHOP_ID = "SH-0001";
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
-const SHOP_NAME = "مطعم السلط";
-
-
-// =====================================
-// رابط Google Apps Script
-// =====================================
-
-const APPS_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
+const shopId =
+  params.get("shopId") || "SH-0001";
 
 
-// =====================================
+// =============================================
+// بيانات المحلات
+// =============================================
+// مؤقتًا نضع بيانات المحلين الموجودين.
+// لاحقًا سنجعلها تقرأ من Shops تلقائيًا.
+
+const shops = {
+
+  "SH-0001": {
+    name: "مطعم السلط",
+    discounts: ["15%", "20%", "30%"]
+  },
+
+  "SH-0002": {
+    name: "كافيه السلط",
+    discounts: ["10%", "15%", "20%"]
+  }
+
+};
+
+
+// =============================================
+// تحميل بيانات المحل
+// =============================================
+
+function loadShop() {
+
+  const shop =
+    shops[shopId];
+
+  if (!shop) {
+
+    document.getElementById(
+      "shopName"
+    ).innerText =
+      "❌ المحل غير موجود";
+
+    document.getElementById(
+      "discountButtons"
+    ).innerHTML = "";
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "shopName"
+  ).innerText =
+    shop.name;
+
+
+  document.getElementById(
+    "scannerShopName"
+  ).innerText =
+    shop.name;
+
+
+  const container =
+    document.getElementById(
+      "discountButtons"
+    );
+
+
+  container.innerHTML = "";
+
+
+  shop.discounts.forEach(
+    function(discount, index) {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "discount " +
+        (
+          index === 0
+            ? "d15"
+            : index === 1
+            ? "d20"
+            : "d30"
+        );
+
+
+      button.innerText =
+        discount +
+        " خصم";
+
+
+      button.onclick =
+        function() {
+
+          startScanner(
+            discount
+          );
+
+        };
+
+
+      container.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+// =============================================
 // تشغيل الكاميرا
-// =====================================
+// =============================================
 
 function startScanner(discount) {
 
-    selectedDiscount = discount;
-
-    document.getElementById("home")
-        .style.display = "none";
-
-    document.getElementById("scannerSection")
-        .style.display = "block";
-
-    document.getElementById("selectedDiscount")
-        .innerText = discount;
-
-    scanner =
-        new Html5Qrcode("reader");
+  selectedDiscount =
+    discount;
 
 
-    scanner.start(
-
-        {
-            facingMode: "environment"
-        },
-
-        {
-            fps: 10,
-
-            qrbox: {
-                width: 250,
-                height: 250
-            }
-        },
+  document.getElementById(
+    "home"
+  ).style.display =
+    "none";
 
 
-        function(decodedText) {
-
-            scannedMember =
-                decodedText.trim();
-
-
-            scanner.stop().then(function() {
-
-                document.getElementById(
-                    "scannerSection"
-                ).style.display = "none";
+  document.getElementById(
+    "scannerSection"
+  ).style.display =
+    "block";
 
 
-                document.getElementById(
-                    "result"
-                ).style.display = "block";
+  document.getElementById(
+    "selectedDiscount"
+  ).innerText =
+    discount;
 
 
-                document.getElementById(
-                    "memberId"
-                ).innerText =
-                    scannedMember;
+  document.getElementById(
+    "cameraError"
+  ).innerText = "";
 
 
-                document.getElementById(
-                    "memberDiscount"
-                ).innerText =
-                    selectedDiscount;
-
-            });
-
-        },
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
 
 
-        function(errorMessage) {
+  scanner.start(
 
-            // تجاهل أخطاء البحث العادية
+    {
+      facingMode:
+        "environment"
+    },
 
-        }
+    {
+      fps: 10,
+
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+
+    },
+
+    function(decodedText) {
 
 
-    ).catch(function(error) {
+      scannedMember =
+        decodedText.trim();
 
-        alert(
-            "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا."
-        );
 
-    });
+      scanner.stop()
+        .then(function() {
+
+          showResult();
+
+        })
+        .catch(function() {
+
+          showResult();
+
+        });
+
+    },
+
+    function(errorMessage) {
+
+      // أخطاء المسح العادية لا تظهر
+
+    }
+
+  ).catch(function(error) {
+
+    document.getElementById(
+      "cameraError"
+    ).innerText =
+      "❌ تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا.";
+
+  });
 
 }
 
 
-// =====================================
-// تأكيد تنفيذ الخصم
-// =====================================
+// =============================================
+// عرض البطاقة
+// =============================================
+
+function showResult() {
+
+  document.getElementById(
+    "scannerSection"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "result"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "memberId"
+  ).innerText =
+    scannedMember;
+
+
+  document.getElementById(
+    "memberDiscount"
+  ).innerText =
+    selectedDiscount;
+
+}
+
+
+// =============================================
+// تأكيد الخصم
+// =============================================
 
 function confirmDiscount() {
 
+  if (!scannedMember) {
 
-    if (!scannedMember) {
+    alert(
+      "لم يتم العثور على رقم العضوية."
+    );
 
-        alert(
-            "❌ لم يتم العثور على رقم العضوية."
-        );
+    return;
 
-        return;
-    }
-
-
-    if (!selectedDiscount) {
-
-        alert(
-            "❌ لم يتم اختيار الخصم."
-        );
-
-        return;
-    }
+  }
 
 
-    // =================================
-    // إنشاء رابط العملية
-    // =================================
-
-    const finalUrl =
-
-        APPS_SCRIPT_URL +
-
-        "?memberId=" +
-        encodeURIComponent(
-            scannedMember
-        ) +
-
-        "&discount=" +
-        encodeURIComponent(
-            selectedDiscount
-        ) +
-
-        "&shopId=" +
-        encodeURIComponent(
-            SHOP_ID
-        ) +
-
-        "&shop=" +
-        encodeURIComponent(
-            SHOP_NAME
-        );
+  const baseUrl =
+    "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-    // =================================
-    // إرسال العملية
-    // =================================
+  const finalUrl =
 
-    window.location.href =
-        finalUrl;
+    baseUrl +
+
+    "?memberId=" +
+    encodeURIComponent(
+      scannedMember
+    ) +
+
+    "&discount=" +
+    encodeURIComponent(
+      selectedDiscount
+    ) +
+
+    "&shopId=" +
+    encodeURIComponent(
+      shopId
+    ) +
+
+    "&shop=" +
+    encodeURIComponent(
+      shops[shopId].name
+    );
+
+
+  window.location.href =
+    finalUrl;
 
 }
+
+
+// =============================================
+// رجوع
+// =============================================
+
+function goBack() {
+
+  try {
+
+    if (scanner) {
+
+      scanner.stop()
+        .catch(
+          function() {}
+        );
+
+    }
+
+  } catch (e) {}
+
+  location.reload();
+
+}
+
+
+// =============================================
+// تشغيل الصفحة
+// =============================================
+
+loadShop();
 
 </script>
 
