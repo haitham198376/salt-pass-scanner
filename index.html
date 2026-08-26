@@ -15,125 +15,152 @@ content="width=device-width, initial-scale=1">
 <style>
 
 * {
-  box-sizing: border-box;
+  box-sizing:border-box;
 }
 
 body {
-  font-family: Arial, Tahoma, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
+
+  font-family:
+    Arial,
+    Tahoma,
+    sans-serif;
+
+  background:#f5f5f5;
+
+  margin:0;
+
+  padding:20px;
+
+  text-align:center;
+
 }
 
 .container {
-  max-width: 430px;
-  margin: 20px auto;
-  background: white;
-  padding: 30px 20px;
-  border-radius: 22px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+
+  max-width:430px;
+
+  margin:20px auto;
+
+  background:white;
+
+  padding:30px 20px;
+
+  border-radius:22px;
+
+  box-shadow:
+    0 4px 20px
+    rgba(0,0,0,.08);
+
 }
 
 .logo {
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: 2px;
+
+  font-size:30px;
+
+  font-weight:800;
+
+  letter-spacing:2px;
+
 }
 
 .shop {
-  color: #666;
-  font-size: 18px;
-  margin-top: 8px;
-  margin-bottom: 30px;
+
+  color:#666;
+
+  font-size:18px;
+
+  margin-top:8px;
+
+  margin-bottom:15px;
+
 }
 
-.choose {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 18px;
+.offer {
+
+  background:#f1f8e9;
+
+  padding:15px;
+
+  border-radius:14px;
+
+  margin-bottom:20px;
+
+  line-height:1.7;
+
 }
 
-.discount {
-  width: 100%;
-  padding: 19px;
-  margin: 11px 0;
-  border: none;
-  border-radius: 14px;
-  font-size: 21px;
-  font-weight: bold;
-  cursor: pointer;
-}
+.offerTitle {
 
-.d1 {
-  background: #e8f5e9;
-  color: #1b5e20;
-}
+  font-weight:bold;
 
-.d2 {
-  background: #e3f2fd;
-  color: #0d47a1;
-}
+  font-size:18px;
 
-.d3 {
-  background: #fff3e0;
-  color: #e65100;
-}
-
-#scannerSection {
-  display: none;
 }
 
 #reader {
-  width: 100%;
-  margin-top: 20px;
+
+  width:100%;
+
+  margin-top:20px;
+
 }
 
-.selected {
-  margin: 20px 0;
-  font-size: 21px;
-  font-weight: bold;
-}
+#cameraError {
 
-.selected span {
-  color: #1976d2;
+  color:#c62828;
+
+  margin-top:15px;
+
+  line-height:1.7;
+
 }
 
 #result {
-  display: none;
-  margin-top: 20px;
-  padding: 22px;
-  border-radius: 18px;
-  background: #f1f8e9;
+
+  display:none;
+
+  background:#f1f8e9;
+
+  padding:22px;
+
+  border-radius:18px;
+
+  margin-top:20px;
+
+}
+
+.button {
+
+  width:100%;
+
+  padding:16px;
+
+  margin-top:12px;
+
+  border:none;
+
+  border-radius:13px;
+
+  font-size:17px;
+
+  font-weight:bold;
+
 }
 
 .confirm {
-  width: 100%;
-  padding: 17px;
-  border: none;
-  border-radius: 13px;
-  background: #111;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 15px;
-  cursor: pointer;
+
+  background:#111;
+
+  color:white;
+
 }
 
 .back {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  margin-top: 15px;
-  background: #eee;
-  font-size: 16px;
-  cursor: pointer;
-}
 
-.error {
-  color: #c62828;
-  margin-top: 15px;
+  background:#eee;
+
+  color:#111;
+
 }
 
 </style>
@@ -144,48 +171,31 @@ body {
 
 <div class="container">
 
-<!-- ========================= -->
-<!-- الصفحة الرئيسية -->
-<!-- ========================= -->
-
-<div id="home">
 
 <div class="logo">
 SALT PASS
 </div>
 
-<div id="shopName" class="shop">
-</div>
 
-<div class="choose">
-اختر الخصم المقدم للعميل
-</div>
-
-<div id="discountButtons"></div>
-
+<div
+id="shopName"
+class="shop">
 </div>
 
 
-<!-- ========================= -->
-<!-- الكاميرا -->
-<!-- ========================= -->
+<div
+id="offerBox"
+class="offer">
 
-<div id="scannerSection">
-
-<div class="logo">
-SALT PASS
+<div
+id="offerTitle"
+class="offerTitle">
 </div>
 
-<div id="scannerShopName" class="shop">
 </div>
 
-<div class="selected">
 
-الخصم المختار:
-
-<span id="selectedDiscount"></span>
-
-</div>
+<div id="scannerArea">
 
 <p>
 وجّه كاميرا الهاتف نحو QR بطاقة العميل
@@ -193,10 +203,12 @@ SALT PASS
 
 <div id="reader"></div>
 
-<div id="cameraError" class="error"></div>
+<div
+id="cameraError">
+</div>
 
 <button
-class="back"
+class="button back"
 onclick="goBack()">
 
 رجوع
@@ -206,50 +218,50 @@ onclick="goBack()">
 </div>
 
 
-<!-- ========================= -->
-<!-- النتيجة -->
-<!-- ========================= -->
-
 <div id="result">
 
 <h2>
-✅ البطاقة صالحة
+✅ تم قراءة البطاقة
 </h2>
 
 <p>
 
 <strong>
-رقم العضوية
+رقم العضوية:
 </strong>
 
 <br>
 
-<span id="memberId"></span>
+<span id="memberId">
+</span>
 
 </p>
 
 <p>
 
 <strong>
-الخصم
+العرض:
 </strong>
 
 <br>
 
-<span id="memberDiscount"></span>
+<span id="resultOffer">
+</span>
 
 </p>
 
-<button
-class="confirm"
-onclick="confirmDiscount()">
 
-✅ تأكيد تنفيذ الخصم
+<button
+class="button confirm"
+onclick="confirmOffer()">
+
+✅ تأكيد تنفيذ العرض
 
 </button>
 
+
 <button
-class="back"
+class="button back"
 onclick="goBack()">
 
 إلغاء
@@ -258,6 +270,7 @@ onclick="goBack()">
 
 </div>
 
+
 </div>
 
 
@@ -265,169 +278,85 @@ onclick="goBack()">
 
 
 // =====================================================
-// قراءة بيانات المحل من الرابط
+// PARAMETERS
 // =====================================================
 
-const urlParams =
+const params =
   new URLSearchParams(
     window.location.search
   );
 
 
 const SHOP_ID =
-  urlParams.get("shopId")
-  || "SH-0001";
+  params.get("shopId")
+  || "";
 
 
 const SHOP_NAME =
-  urlParams.get("shop")
-  || "مطعم السلط";
+  params.get("shop")
+  || "";
 
 
-const DISCOUNT_1 =
-  urlParams.get("d1")
-  || "15%";
+const OFFER_ID =
+  params.get("offerId")
+  || "";
 
 
-const DISCOUNT_2 =
-  urlParams.get("d2")
-  || "20%";
+const OFFER_TITLE =
+  params.get("offerTitle")
+  || "";
 
-
-const DISCOUNT_3 =
-  urlParams.get("d3")
-  || "30%";
-
-
-// =====================================================
-// المتغيرات
-// =====================================================
 
 let scanner = null;
-
-let selectedDiscount = "";
 
 let scannedMember = "";
 
 
 // =====================================================
-// عرض بيانات المحل
+// DISPLAY DATA
 // =====================================================
 
-function loadShop() {
-
-  document.getElementById(
-    "shopName"
-  ).innerText =
-    SHOP_NAME;
+document.getElementById(
+  "shopName"
+).innerText =
+  SHOP_NAME;
 
 
-  document.getElementById(
-    "scannerShopName"
-  ).innerText =
-    SHOP_NAME;
+document.getElementById(
+  "offerTitle"
+).innerText =
+  OFFER_TITLE;
 
 
-  const discounts = [
+// =====================================================
+// START CAMERA
+// =====================================================
 
-    DISCOUNT_1,
-
-    DISCOUNT_2,
-
-    DISCOUNT_3
-
-  ];
+function startScanner() {
 
 
-  const container =
+  if (!SHOP_ID) {
+
     document.getElementById(
-      "discountButtons"
-    );
+      "cameraError"
+    ).innerText =
+      "❌ لم يتم تحديد المحل.";
+
+    return;
+
+  }
 
 
-  container.innerHTML = "";
+  if (!OFFER_ID) {
 
+    document.getElementById(
+      "cameraError"
+    ).innerText =
+      "❌ لم يتم تحديد العرض.";
 
-  discounts.forEach(
-    function(discount, index) {
+    return;
 
-
-      if (!discount) {
-        return;
-      }
-
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-
-      button.className =
-        "discount d" +
-        (index + 1);
-
-
-      button.innerText =
-        discount +
-        " خصم";
-
-
-      button.onclick =
-        function() {
-
-          startScanner(
-            discount
-          );
-
-        };
-
-
-      container.appendChild(
-        button
-      );
-
-    }
-  );
-
-}
-
-
-// =====================================================
-// تشغيل الكاميرا
-// =====================================================
-
-function startScanner(
-  discount
-) {
-
-
-  selectedDiscount =
-    discount;
-
-
-  document.getElementById(
-    "home"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "scannerSection"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "selectedDiscount"
-  ).innerText =
-    discount;
-
-
-  document.getElementById(
-    "cameraError"
-  ).innerText =
-    "";
+  }
 
 
   scanner =
@@ -444,12 +373,14 @@ function startScanner(
     },
 
     {
-      fps: 10,
 
-      qrbox: {
-        width: 250,
-        height: 250
+      fps:10,
+
+      qrbox:{
+        width:250,
+        height:250
       }
+
     },
 
     function(decodedText) {
@@ -477,18 +408,20 @@ function startScanner(
 
     function(errorMessage) {
 
-      // تجاهل أخطاء القراءة العادية
+      // أخطاء المسح العادية يتم تجاهلها
 
     }
 
-  ).catch(function(error) {
+  )
+
+  .catch(function(error) {
 
 
     document.getElementById(
       "cameraError"
     ).innerText =
 
-      "❌ تعذر تشغيل الكاميرا. " +
+      "❌ تعذر فتح الكاميرا. " +
       "تأكد من السماح للمتصفح باستخدام الكاميرا.";
 
   });
@@ -497,14 +430,14 @@ function startScanner(
 
 
 // =====================================================
-// عرض النتيجة
+// SHOW RESULT
 // =====================================================
 
 function showResult() {
 
 
   document.getElementById(
-    "scannerSection"
+    "scannerArea"
   ).style.display =
     "none";
 
@@ -522,29 +455,18 @@ function showResult() {
 
 
   document.getElementById(
-    "memberDiscount"
+    "resultOffer"
   ).innerText =
-    selectedDiscount;
+    OFFER_TITLE;
 
 }
 
 
 // =====================================================
-// تأكيد الخصم
+// CONFIRM OFFER
 // =====================================================
 
-function confirmDiscount() {
-
-
-  if (!scannedMember) {
-
-    alert(
-      "❌ لم يتم العثور على رقم العضوية."
-    );
-
-    return;
-
-  }
+function confirmOffer() {
 
 
   const appsScriptUrl =
@@ -561,9 +483,9 @@ function confirmDiscount() {
       scannedMember
     ) +
 
-    "&discount=" +
+    "&offerId=" +
     encodeURIComponent(
-      selectedDiscount
+      OFFER_ID
     ) +
 
     "&shopId=" +
@@ -584,11 +506,10 @@ function confirmDiscount() {
 
 
 // =====================================================
-// رجوع
+// BACK
 // =====================================================
 
 function goBack() {
-
 
   try {
 
@@ -596,24 +517,23 @@ function goBack() {
 
       scanner.stop()
         .catch(
-          function() {}
+          function(){}
         );
 
     }
 
-  } catch (e) {}
+  } catch(e) {}
 
-
-  location.reload();
+  history.back();
 
 }
 
 
 // =====================================================
-// تشغيل الصفحة
+// START
 // =====================================================
 
-loadShop();
+startScanner();
 
 </script>
 
