@@ -3,506 +3,242 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<title>SALT PASS Scanner</title>
-
-<!-- ZXing Browser -->
-<script src="https://unpkg.com/@zxing/browser@latest"></script>
-
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-}
-
-body {
-
-  padding: 12px;
-
-  background: #f3f5f7;
-
-  font-family:
-    Arial,
-    Tahoma,
-    sans-serif;
-
-  text-align: center;
-
-}
-
-.container {
-
-  width: 100%;
-
-  max-width: 430px;
-
-  margin: auto;
-
-}
-
-.header {
-
-  background: #111;
-
-  color: white;
-
-  padding: 22px 15px;
-
-  border-radius: 22px;
-
-  margin-bottom: 14px;
-
-}
-
-.logo {
-
-  font-size: 28px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-
-}
-
-.shop {
-
-  font-size: 19px;
-
-  margin-top: 8px;
-
-}
-
-.offer {
-
-  color: #bbb;
-
-  font-size: 14px;
-
-  margin-top: 7px;
-
-  line-height: 1.5;
-
-}
-
-.card {
-
-  background: white;
-
-  border-radius: 20px;
-
-  padding: 14px;
-
-  box-shadow:
-    0 5px 20px
-    rgba(0,0,0,.08);
-
-}
-
-.instruction {
-
-  color: #555;
-
-  font-size: 14px;
-
-  line-height: 1.7;
-
-  margin-bottom: 12px;
-
-}
-
-
-/* ===============================
-   CAMERA
-   =============================== */
-
-.camera-wrap {
-
-  position: relative;
-
-  width: 100%;
-
-  aspect-ratio: 1 / 1;
-
-  background: #000;
-
-  border-radius: 16px;
-
-  overflow: hidden;
-
-}
-
-#video {
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-  display: block;
-
-  background: #000;
-
-}
-
-.frame {
-
-  position: absolute;
-
-  width: 64%;
-
-  height: 64%;
-
-  left: 50%;
-
-  top: 50%;
-
-  transform:
-    translate(-50%, -50%);
-
-  border:
-    3px solid white;
-
-  border-radius: 18px;
-
-  box-shadow:
-    0 0 0 9999px
-    rgba(0,0,0,.20);
-
-  pointer-events: none;
-
-}
-
-
-/* ===============================
-   FALLBACK IMAGE
-   =============================== */
-
-#fallback {
-
-  display: none;
-
-  margin-top: 15px;
-
-  background: #f7f7f7;
-
-  padding: 18px;
-
-  border-radius: 16px;
-
-}
-
-.fallback-title {
-
-  font-size: 18px;
-
-  font-weight: bold;
-
-}
-
-.fallback-text {
-
-  margin-top: 8px;
-
-  color: #666;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-
-}
-
-.camera-label {
-
-  display: block;
-
-  margin-top: 14px;
-
-  padding: 16px;
-
-  background: #111;
-
-  color: white;
-
-  border-radius: 13px;
-
-  font-size: 17px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-}
-
-.camera-input {
-
-  display: none;
-
-}
-
-
-/* ===============================
-   STATUS
-   =============================== */
-
-.status {
-
-  margin-top: 14px;
-
-  background: #f7f7f7;
-
-  padding: 12px;
-
-  border-radius: 12px;
-
-  color: #666;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-
-}
-
-
-/* ===============================
-   ERROR
-   =============================== */
-
-.error {
-
-  display: none;
-
-  margin-top: 12px;
-
-  padding: 12px;
-
-  border-radius: 12px;
-
-  background: #ffebee;
-
-  color: #c62828;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-
-}
-
-
-/* ===============================
-   PREVIEW
-   =============================== */
-
-#preview {
-
-  display: none;
-
-  width: 100%;
-
-  max-height: 350px;
-
-  object-fit: contain;
-
-  margin-top: 14px;
-
-  border-radius: 13px;
-
-  background: #eee;
-
-}
-
-
-/* ===============================
-   RESULT
-   =============================== */
-
-#result {
-
-  display: none;
-
-  margin-top: 15px;
-
-  background: #f1f8e9;
-
-  padding: 22px;
-
-  border-radius: 18px;
-
-}
-
-.success {
-
-  color: #2e7d32;
-
-  font-size: 20px;
-
-  font-weight: bold;
-
-}
-
-.member-id {
-
-  font-size: 27px;
-
-  font-weight: bold;
-
-  margin: 15px 0;
-
-}
-
-.offer-result {
-
-  font-size: 16px;
-
-  font-weight: bold;
-
-  line-height: 1.7;
-
-}
-
-
-/* ===============================
-   BUTTONS
-   =============================== */
-
-button {
-
-  width: 100%;
-
-  border: none;
-
-  border-radius: 13px;
-
-  padding: 16px;
-
-  margin-top: 12px;
-
-  font-size: 17px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-}
-
-.confirm {
-
-  background: #111;
-
-  color: white;
-
-}
-
-.back {
-
-  background: #e7e7e7;
-
-  color: #111;
-
-}
-
-</style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1">
+
+  <title>SALT PASS</title>
+
+  <!-- ZXing لقراءة QR من الصورة -->
+  <script src="https://unpkg.com/@zxing/browser@latest"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 15px;
+      background: #f3f5f7;
+      font-family: Arial, Tahoma, sans-serif;
+      text-align: center;
+      color: #111;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      margin: auto;
+    }
+
+    .header {
+      background: #111;
+      color: white;
+      padding: 24px 16px;
+      border-radius: 22px;
+      margin-bottom: 15px;
+    }
+
+    .logo {
+      font-size: 29px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .shop {
+      font-size: 20px;
+      margin-top: 9px;
+    }
+
+    .offer {
+      color: #bbb;
+      font-size: 14px;
+      margin-top: 7px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 22px 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    .instruction {
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
+    .sub-instruction {
+      margin-top: 8px;
+      color: #777;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .camera-button {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 14px;
+      background: #111;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .camera-input {
+      display: none;
+    }
+
+    .status {
+      margin-top: 16px;
+      padding: 13px;
+      border-radius: 12px;
+      background: #f7f7f7;
+      color: #666;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .error {
+      display: none;
+      margin-top: 13px;
+      padding: 13px;
+      border-radius: 12px;
+      background: #ffebee;
+      color: #c62828;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    #preview {
+      display: none;
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      margin-top: 15px;
+      border-radius: 14px;
+      background: #eee;
+    }
+
+    #result {
+      display: none;
+      margin-top: 15px;
+      background: #f1f8e9;
+      padding: 24px 18px;
+      border-radius: 18px;
+    }
+
+    .success {
+      color: #2e7d32;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .member-id {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .offer-result {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.7;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 13px;
+      padding: 16px;
+      margin-top: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .confirm {
+      background: #111;
+      color: white;
+    }
+
+    .retry {
+      background: #e7e7e7;
+      color: #111;
+    }
+
+    .back {
+      background: #e7e7e7;
+      color: #111;
+    }
+
+  </style>
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
+  <!-- ==========================================
+       HEADER
+       ========================================== -->
 
-<!-- ===================================
-     HEADER
-     =================================== -->
+  <div class="header">
 
-<div class="header">
+    <div class="logo">
+      SALT PASS
+    </div>
 
-  <div class="logo">
-    SALT PASS
+    <div
+      id="shopName"
+      class="shop">
+      جاري تحميل المحل...
+    </div>
+
+    <div
+      id="offerTitle"
+      class="offer">
+      جاري تحميل العرض...
+    </div>
+
   </div>
+
+
+  <!-- ==========================================
+       SCANNER
+       ========================================== -->
 
   <div
-    id="shopName"
-    class="shop">
-    جاري تحميل المحل...
-  </div>
+    id="scannerCard"
+    class="card">
 
-  <div
-    id="offerTitle"
-    class="offer">
-    جاري تحميل العرض...
-  </div>
+    <div class="instruction">
+      📷 التقط صورة لرمز QR الخاص بالعميل
+    </div>
 
-</div>
+    <div class="sub-instruction">
 
-
-<!-- ===================================
-     SCANNER
-     =================================== -->
-
-<div
-  id="scannerCard"
-  class="card">
-
-
-  <div class="instruction">
-
-    وجّه كاميرا الهاتف نحو QR بطاقة العميل
-
-  </div>
-
-
-  <div class="camera-wrap">
-
-    <video
-      id="video"
-      autoplay
-      muted
-      playsinline>
-    </video>
-
-    <div class="frame"></div>
-
-  </div>
-
-
-  <div
-    id="fallback">
-
-
-    <div class="fallback-title">
-
-      📷 استخدم كاميرا الهاتف
+      اضغط الزر، ثم صوّر QR البطاقة من قريب
+      واجعله واضحًا وكاملًا داخل الصورة.
 
     </div>
 
 
-    <div class="fallback-text">
-
-      إذا لم تعمل الكاميرا المباشرة،
-      اضغط الزر وافتح كاميرا الهاتف
-      لالتقاط صورة واضحة للـQR.
-
-    </div>
-
+    <!-- زر الكاميرا الأصلية -->
 
     <label
       for="cameraInput"
-      class="camera-label">
+      class="camera-button">
 
       📷 التقاط صورة QR
 
@@ -516,90 +252,92 @@ button {
       accept="image/*"
       capture="environment">
 
-  </div>
+
+    <!-- حالة النظام -->
+
+    <div
+      id="status"
+      class="status">
+
+      جاهز لالتقاط صورة البطاقة.
+
+    </div>
 
 
-  <img
-    id="preview"
-    alt="QR">
+    <!-- الصورة -->
+
+    <img
+      id="preview"
+      alt="صورة QR">
 
 
-  <div
-    id="status"
-    class="status">
+    <!-- الخطأ -->
 
-    ⏳ جاري تشغيل الماسح...
-
-  </div>
-
-
-  <div
-    id="error"
-    class="error">
-  </div>
+    <div
+      id="error"
+      class="error">
+    </div>
 
 
-  <button
-    class="back"
-    onclick="goBack()">
+    <button
+      class="back"
+      onclick="goBack()">
 
-    رجوع
+      رجوع
 
-  </button>
-
-
-</div>
-
-
-<!-- ===================================
-     RESULT
-     =================================== -->
-
-<div id="result">
-
-  <div class="success">
-
-    ✅ تم قراءة بطاقة العميل
+    </button>
 
   </div>
 
 
-  <div
-    id="memberId"
-    class="member-id">
+  <!-- ==========================================
+       RESULT
+       ========================================== -->
+
+  <div id="result">
+
+    <div class="success">
+
+      ✅ تم قراءة بطاقة العميل
+
+    </div>
+
+
+    <div
+      id="memberId"
+      class="member-id">
+    </div>
+
+
+    <div>
+      العرض:
+    </div>
+
+
+    <div
+      id="resultOffer"
+      class="offer-result">
+    </div>
+
+
+    <button
+      class="confirm"
+      onclick="confirmOffer()">
+
+      ✅ تأكيد تنفيذ العرض
+
+    </button>
+
+
+    <button
+      class="retry"
+      onclick="retryScan()">
+
+      🔄 مسح بطاقة أخرى
+
+    </button>
+
   </div>
-
-
-  <div>
-    العرض:
-  </div>
-
-
-  <div
-    id="resultOffer"
-    class="offer-result">
-  </div>
-
-
-  <button
-    class="confirm"
-    onclick="confirmOffer()">
-
-    ✅ تأكيد تنفيذ العرض
-
-  </button>
-
-
-  <button
-    class="back"
-    onclick="restart()">
-
-    🔄 إعادة المسح
-
-  </button>
-
-</div>
-
 
 </div>
 
@@ -637,11 +375,9 @@ const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-let codeReader = null;
-
-let controls = null;
-
 let scannedMemberId = "";
+
+let codeReader = null;
 
 
 // =====================================================
@@ -690,17 +426,15 @@ function showError(
   message
 ) {
 
-  const el =
+  const error =
     document.getElementById(
       "error"
     );
 
-
-  el.innerText =
+  error.innerText =
     message;
 
-
-  el.style.display =
+  error.style.display =
     "block";
 
 }
@@ -712,27 +446,25 @@ function showError(
 
 function hideError() {
 
-  const el =
+  const error =
     document.getElementById(
       "error"
     );
 
-
-  el.innerText =
+  error.innerText =
     "";
 
-
-  el.style.display =
+  error.style.display =
     "none";
 
 }
 
 
 // =====================================================
-// VALIDATE
+// INITIAL CHECK
 // =====================================================
 
-function validateParameters() {
+function checkParameters() {
 
   if (!SHOP_ID) {
 
@@ -762,39 +494,41 @@ function validateParameters() {
 
 
 // =====================================================
-// GET MEMBER ID
+// EXTRACT MEMBER ID
 // =====================================================
 
 function extractMemberId(
-  text
+  value
 ) {
 
-  const value =
+  const text =
     String(
-      text || ""
+      value || ""
     ).trim();
 
 
-  // QR مباشر
+  // الحالة 1:
+  // QR = SP-0006
 
   if (
     /^SP-\d+$/i.test(
-      value
+      text
     )
   ) {
 
-    return value.toUpperCase();
+    return text.toUpperCase();
 
   }
 
 
-  // QR رابط
+  // الحالة 2:
+  // QR يحتوي رابط البطاقة
 
   try {
 
     const url =
       new URL(
-        value
+        text
       );
 
 
@@ -815,13 +549,14 @@ function extractMemberId(
 
     }
 
-  } catch(e) {}
+  } catch (e) {}
 
 
-  // بحث داخل النص
+  // الحالة 3:
+  // SP-0006 موجود داخل النص
 
   const match =
-    value.match(
+    text.match(
       /SP-\d+/i
     );
 
@@ -839,33 +574,16 @@ function extractMemberId(
 
 
 // =====================================================
-// START ZXING CAMERA
+// READ IMAGE WITH ZXING
 // =====================================================
 
-async function startCamera() {
-
-  hideError();
-
-
-  if (
-    !validateParameters()
-  ) {
-
-    return;
-
-  }
-
-
-  setStatus(
-    "⏳ جاري تشغيل الكاميرا..."
-  );
-
+async function readImage(
+  image
+) {
 
   try {
 
-    if (
-      !codeReader
-    ) {
+    if (!codeReader) {
 
       codeReader =
         new ZXingBrowser.BrowserQRCodeReader();
@@ -873,77 +591,318 @@ async function startCamera() {
     }
 
 
-    const video =
-      document.getElementById(
-        "video"
+    /*
+      المحاولة الأولى
+    */
+
+    try {
+
+      const result =
+        await codeReader.decodeFromImageElement(
+          image
+        );
+
+
+      if (
+        result &&
+        result.text
+      ) {
+
+        return result.text;
+
+      }
+
+    } catch (firstError) {
+
+      console.log(
+        "First image decode failed:",
+        firstError
       );
+
+    }
 
 
     /*
-      نترك اختيار الكاميرا للمكتبة.
-      عند عدم إعطاء deviceId
-      تفضل الكاميرا الخلفية إذا كانت متاحة.
+      محاولة ثانية:
+      إنشاء Canvas
     */
 
-    controls =
-      await codeReader.decodeFromVideoDevice(
-
-        undefined,
-
-        video,
-
-        function(
-          result,
-          error
-        ) {
-
-          if (
-            result &&
-            result.text
-          ) {
-
-            handleScan(
-              result.text
-            );
-
-          }
-
-        }
-
+    const canvas =
+      document.createElement(
+        "canvas"
       );
 
 
-    setStatus(
-      "📷 الكاميرا تعمل — وجّه QR داخل الإطار"
+    const maxWidth =
+      1800;
+
+
+    let width =
+      image.naturalWidth;
+
+
+    let height =
+      image.naturalHeight;
+
+
+    if (
+      width > maxWidth
+    ) {
+
+      const ratio =
+        maxWidth / width;
+
+
+      width =
+        maxWidth;
+
+
+      height =
+        Math.round(
+          height * ratio
+        );
+
+    }
+
+
+    canvas.width =
+      width;
+
+
+    canvas.height =
+      height;
+
+
+    const context =
+      canvas.getContext(
+        "2d"
+      );
+
+
+    context.drawImage(
+      image,
+      0,
+      0,
+      width,
+      height
     );
 
 
-  } catch(error) {
+    const canvasImage =
+      new Image();
+
+
+    canvasImage.src =
+      canvas.toDataURL(
+        "image/png"
+      );
+
+
+    await new Promise(
+      function(resolve, reject) {
+
+        canvasImage.onload =
+          resolve;
+
+        canvasImage.onerror =
+          reject;
+
+      }
+    );
+
+
+    try {
+
+      const result2 =
+        await codeReader.decodeFromImageElement(
+          canvasImage
+        );
+
+
+      if (
+        result2 &&
+        result2.text
+      ) {
+
+        return result2.text;
+
+      }
+
+    } catch (secondError) {
+
+      console.log(
+        "Second image decode failed:",
+        secondError
+      );
+
+    }
+
+
+    return "";
+
+  } catch (error) {
 
     console.error(
-      "ZXing camera error:",
+      "readImage error:",
       error
     );
 
-
-    setStatus(
-      "الكاميرا المباشرة غير متاحة."
-    );
-
-
-    document.getElementById(
-      "fallback"
-    ).style.display =
-      "block";
-
-
-    showError(
-      "❌ تعذر تشغيل الكاميرا المباشرة. استخدم زر التقاط صورة QR."
-    );
+    return "";
 
   }
 
 }
+
+
+// =====================================================
+// IMAGE INPUT
+// =====================================================
+
+document.getElementById(
+  "cameraInput"
+).addEventListener(
+  "change",
+  async function(event) {
+
+    const file =
+      event.target.files &&
+      event.target.files[0];
+
+
+    if (!file) {
+
+      return;
+
+    }
+
+
+    hideError();
+
+
+    setStatus(
+      "⏳ جاري معالجة صورة QR..."
+    );
+
+
+    const preview =
+      document.getElementById(
+        "preview"
+      );
+
+
+    const image =
+      new Image();
+
+
+    const objectUrl =
+      URL.createObjectURL(
+        file
+      );
+
+
+    preview.src =
+      objectUrl;
+
+
+    preview.style.display =
+      "block";
+
+
+    image.onload =
+      async function() {
+
+        try {
+
+          const text =
+            await readImage(
+              image
+            );
+
+
+          if (!text) {
+
+            setStatus(
+              "لم يتم العثور على QR"
+            );
+
+
+            showError(
+
+              "⚠️ لم نتمكن من قراءة QR. " +
+              "أعد التصوير من مسافة أقرب، وتأكد أن QR كامل وواضح وغير مائل."
+
+            );
+
+
+            return;
+
+          }
+
+
+          const memberId =
+            extractMemberId(
+              text
+            );
+
+
+          if (!memberId) {
+
+            setStatus(
+              "QR غير صالح"
+            );
+
+
+            showError(
+              "⚠️ تم العثور على QR لكنه ليس بطاقة SALT PASS."
+            );
+
+
+            return;
+
+          }
+
+
+          handleScan(
+            memberId
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+
+          showError(
+            "❌ حدث خطأ أثناء قراءة الصورة."
+          );
+
+
+          setStatus(
+            "تعذر قراءة الصورة"
+          );
+
+        }
+
+      };
+
+
+    image.onerror =
+      function() {
+
+        showError(
+          "❌ تعذر فتح الصورة."
+        );
+
+        setStatus(
+          "تعذر فتح الصورة"
+        );
+
+      };
+
+  }
+);
 
 
 // =====================================================
@@ -954,25 +913,20 @@ function handleScan(
   value
 ) {
 
-  if (
-    scannedMemberId
-  ) {
-
-    return;
-
-  }
-
-
   const memberId =
     extractMemberId(
       value
-    );
+    ) || value;
 
 
-  if (!memberId) {
+  if (
+    !/^SP-\d+$/i.test(
+      memberId
+    )
+  ) {
 
     showError(
-      "⚠️ تم العثور على QR لكنه ليس بطاقة SALT PASS."
+      "⚠️ رقم بطاقة غير صالح."
     );
 
     return;
@@ -981,10 +935,7 @@ function handleScan(
 
 
   scannedMemberId =
-    memberId;
-
-
-  stopCamera();
+    memberId.toUpperCase();
 
 
   document.getElementById(
@@ -1006,207 +957,14 @@ function handleScan(
 
 
   setStatus(
-    "✅ تم التعرف على البطاقة"
+    "✅ تم التعرف على البطاقة."
   );
 
 }
 
 
 // =====================================================
-// STOP CAMERA
-// =====================================================
-
-function stopCamera() {
-
-  try {
-
-    if (
-      controls
-    ) {
-
-      controls.stop();
-
-    }
-
-  } catch(e) {}
-
-
-  controls =
-    null;
-
-}
-
-
-// =====================================================
-// IMAGE FALLBACK
-// =====================================================
-
-document.getElementById(
-  "cameraInput"
-).addEventListener(
-  "change",
-  async function(event) {
-
-    const file =
-      event.target.files &&
-      event.target.files[0];
-
-
-    if (!file) {
-      return;
-    }
-
-
-    hideError();
-
-
-    setStatus(
-      "⏳ جاري قراءة صورة QR..."
-    );
-
-
-    const image =
-      document.createElement(
-        "img"
-      );
-
-
-    const objectUrl =
-      URL.createObjectURL(
-        file
-      );
-
-
-    image.src =
-      objectUrl;
-
-
-    image.onload =
-      async function() {
-
-        try {
-
-          const preview =
-            document.getElementById(
-              "preview"
-            );
-
-
-          preview.src =
-            objectUrl;
-
-
-          preview.style.display =
-            "block";
-
-
-          if (
-            !codeReader
-          ) {
-
-            codeReader =
-              new ZXingBrowser.BrowserQRCodeReader();
-
-          }
-
-
-          let result = null;
-
-
-          try {
-
-            result =
-              await codeReader.decodeFromImageElement(
-                image
-              );
-
-          } catch(
-            decodeError
-          ) {
-
-            console.warn(
-              "Image decode failed:",
-              decodeError
-            );
-
-          }
-
-
-          if (
-            result &&
-            result.text
-          ) {
-
-            handleScan(
-              result.text
-            );
-
-
-            URL.revokeObjectURL(
-              objectUrl
-            );
-
-
-            return;
-
-          }
-
-
-          setStatus(
-            "لم يتم العثور على QR"
-          );
-
-
-          showError(
-
-            "⚠️ لم يتم العثور على QR. " +
-            "التقط الصورة من قريب واجعل QR كاملًا وواضحًا."
-
-          );
-
-
-        } catch(error) {
-
-          console.error(
-            "Image scanner error:",
-            error
-          );
-
-
-          setStatus(
-            "تعذر قراءة الصورة"
-          );
-
-
-          showError(
-            "❌ تعذر قراءة صورة QR."
-          );
-
-        }
-
-      };
-
-
-    image.onerror =
-      function() {
-
-        URL.revokeObjectURL(
-          objectUrl
-        );
-
-
-        showError(
-          "❌ تعذر فتح الصورة."
-        );
-
-      };
-
-  }
-);
-
-
-// =====================================================
-// CONFIRM
+// CONFIRM OFFER
 // =====================================================
 
 function confirmOffer() {
@@ -1215,28 +973,6 @@ function confirmOffer() {
 
     alert(
       "لم تتم قراءة بطاقة العميل."
-    );
-
-    return;
-
-  }
-
-
-  if (!SHOP_ID) {
-
-    alert(
-      "لم يتم تحديد المحل."
-    );
-
-    return;
-
-  }
-
-
-  if (!OFFER_ID) {
-
-    alert(
-      "لم يتم تحديد العرض."
     );
 
     return;
@@ -1276,10 +1012,10 @@ function confirmOffer() {
 
 
 // =====================================================
-// RESTART
+// RETRY
 // =====================================================
 
-function restart() {
+function retryScan() {
 
   scannedMemberId =
     "";
@@ -1309,19 +1045,12 @@ function restart() {
     "";
 
 
-  document.getElementById(
-    "fallback"
-  ).style.display =
-    "none";
+  hideError();
 
 
-  document.getElementById(
-    "liveCameraArea"
-  ).style.display =
-    "block";
-
-
-  startCamera();
+  setStatus(
+    "جاهز لالتقاط صورة جديدة."
+  );
 
 }
 
@@ -1332,18 +1061,9 @@ function restart() {
 
 function goBack() {
 
-  stopCamera();
-
   history.back();
 
 }
-
-
-// =====================================================
-// START
-// =====================================================
-
-startCamera();
 
 </script>
 
