@@ -3,279 +3,369 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>SALT PASS Scanner</title>
+  <title>SALT PASS Scanner</title>
 
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <!-- QR decoder for images -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 
-<style>
+  <style>
 
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-body {
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+    }
 
-  margin: 0;
+    body {
+      font-family:
+        Arial,
+        Tahoma,
+        sans-serif;
 
-  padding: 12px;
+      background: #f3f5f7;
 
-  background: #f3f5f7;
+      color: #111;
 
-  font-family:
-    Arial,
-    Tahoma,
-    sans-serif;
+      text-align: center;
 
-  text-align: center;
+      padding: 12px;
+    }
 
-}
+    .container {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+    }
 
-.container {
+    /* ==============================
+       HEADER
+       ============================== */
 
-  width: 100%;
+    .header {
+      background: #111;
+      color: #fff;
 
-  max-width: 430px;
+      border-radius: 22px;
 
-  margin: auto;
+      padding: 22px 15px;
 
-}
+      margin-bottom: 14px;
+    }
 
-.header {
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
 
-  background: #111;
+    .shop {
+      font-size: 19px;
+      margin-top: 8px;
+    }
 
-  color: white;
+    .offer {
+      font-size: 14px;
+      color: #bbb;
+      margin-top: 7px;
+      line-height: 1.5;
+    }
 
-  padding: 22px 15px;
+    /* ==============================
+       SCANNER CARD
+       ============================== */
 
-  border-radius: 22px;
+    .scanner-card {
+      background: #fff;
 
-  margin-bottom: 14px;
+      border-radius: 20px;
 
-}
+      padding: 13px;
 
-.logo {
+      box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.08);
+    }
 
-  font-size: 28px;
+    .instruction {
+      color: #555;
 
-  font-weight: 800;
+      font-size: 14px;
 
-  letter-spacing: 2px;
+      line-height: 1.7;
 
-}
+      margin-bottom: 12px;
+    }
 
-.shop {
+    /* ==============================
+       LIVE CAMERA
+       ============================== */
 
-  font-size: 19px;
+    .camera-wrap {
+      position: relative;
 
-  margin-top: 8px;
+      width: 100%;
 
-}
+      aspect-ratio: 1 / 1;
 
-.offer {
+      background: #000;
 
-  color: #bbb;
+      overflow: hidden;
 
-  margin-top: 7px;
+      border-radius: 16px;
+    }
 
-  font-size: 14px;
+    #video {
 
-}
+      width: 100%;
 
-.scanner {
+      height: 100%;
 
-  background: white;
+      object-fit: cover;
 
-  padding: 12px;
+      display: block;
 
-  border-radius: 20px;
+      background: #000;
 
-  box-shadow:
-    0 5px 20px
-    rgba(0,0,0,.08);
+    }
 
-}
+    .scan-frame {
 
-.camera-wrap {
+      position: absolute;
 
-  position: relative;
+      width: 64%;
 
-  width: 100%;
+      aspect-ratio: 1 / 1;
 
-  aspect-ratio: 1 / 1;
+      left: 50%;
 
-  overflow: hidden;
+      top: 50%;
 
-  border-radius: 15px;
+      transform:
+        translate(-50%, -50%);
 
-  background: #000;
+      border:
+        3px solid #fff;
 
-}
+      border-radius: 18px;
 
-#video {
+      pointer-events: none;
 
-  width: 100%;
+      box-shadow:
+        0 0 0 9999px
+        rgba(0,0,0,.20);
 
-  height: 100%;
+    }
 
-  object-fit: cover;
+    /* ==============================
+       FALLBACK CAMERA BUTTON
+       ============================== */
 
-  display: block;
+    .fallback-box {
 
-}
+      display: none;
 
-.scan-frame {
+      background: #f7f7f7;
 
-  position: absolute;
+      border-radius: 16px;
 
-  width: 65%;
+      padding: 18px;
 
-  aspect-ratio: 1 / 1;
+      margin-top: 14px;
+    }
 
-  left: 50%;
+    .fallback-title {
 
-  top: 50%;
+      font-size: 16px;
 
-  transform:
-    translate(-50%, -50%);
+      font-weight: bold;
 
-  border:
-    3px solid white;
+      margin-bottom: 8px;
+    }
 
-  border-radius: 18px;
+    .fallback-text {
 
-  pointer-events: none;
+      font-size: 13px;
 
-}
+      color: #666;
 
-.instruction {
+      line-height: 1.7;
 
-  margin: 14px 5px;
+      margin-bottom: 14px;
+    }
 
-  color: #555;
+    .camera-input {
 
-  font-size: 14px;
+      display: none;
+    }
 
-  line-height: 1.7;
+    .camera-button {
 
-}
+      display: block;
 
-.error {
+      width: 100%;
 
-  display: none;
+      padding: 16px;
 
-  margin-top: 12px;
+      border: none;
 
-  background: #ffebee;
+      border-radius: 13px;
 
-  color: #c62828;
+      background: #111;
 
-  padding: 12px;
+      color: #fff;
 
-  border-radius: 12px;
+      font-size: 17px;
 
-  font-size: 13px;
+      font-weight: bold;
 
-  line-height: 1.7;
+      cursor: pointer;
+    }
 
-}
+    /* ==============================
+       ERROR
+       ============================== */
 
-button {
+    .error {
 
-  width: 100%;
+      display: none;
 
-  border: none;
+      background: #ffebee;
 
-  border-radius: 13px;
+      color: #c62828;
 
-  padding: 16px;
+      padding: 12px;
 
-  margin-top: 12px;
+      margin-top: 12px;
 
-  font-size: 17px;
+      border-radius: 12px;
 
-  font-weight: bold;
+      font-size: 13px;
 
-  cursor: pointer;
+      line-height: 1.7;
+    }
 
-}
+    /* ==============================
+       RESULT
+       ============================== */
 
-.confirm {
+    #result {
 
-  background: #111;
+      display: none;
 
-  color: white;
+      margin-top: 15px;
 
-}
+      background: #f1f8e9;
 
-.back {
+      padding: 22px;
 
-  background: #e8e8e8;
+      border-radius: 18px;
+    }
 
-  color: #111;
+    .success {
 
-}
+      color: #2e7d32;
 
-#result {
+      font-size: 20px;
 
-  display: none;
+      font-weight: bold;
+    }
 
-  margin-top: 15px;
+    .member-id {
 
-  background: #f1f8e9;
+      font-size: 26px;
 
-  padding: 22px;
+      font-weight: bold;
 
-  border-radius: 18px;
+      margin: 15px 0;
+    }
 
-}
+    .offer-result {
 
-.success {
+      font-size: 16px;
 
-  color: #2e7d32;
+      font-weight: bold;
 
-  font-size: 20px;
+      line-height: 1.7;
+    }
 
-  font-weight: bold;
+    /* ==============================
+       BUTTONS
+       ============================== */
 
-}
+    button {
 
-.member {
+      width: 100%;
 
-  font-size: 26px;
+      border: none;
 
-  font-weight: bold;
+      border-radius: 13px;
 
-  margin: 15px 0;
+      padding: 16px;
 
-}
+      margin-top: 12px;
 
-.offer-result {
+      font-size: 17px;
 
-  font-size: 16px;
+      font-weight: bold;
 
-  font-weight: bold;
+      cursor: pointer;
+    }
 
-}
+    .confirm {
 
-#canvas {
+      background: #111;
 
-  display: none;
+      color: #fff;
+    }
 
-}
+    .back {
 
-</style>
+      background: #e6e6e6;
+
+      color: #111;
+    }
+
+    /* ==============================
+       SMALL IMAGE AREA
+       ============================== */
+
+    #imagePreview {
+
+      display: none;
+
+      max-width: 100%;
+
+      border-radius: 12px;
+
+      margin-top: 12px;
+    }
+
+  </style>
 
 </head>
 
+
 <body>
 
+
 <div class="container">
+
+
+  <!-- ==========================================
+       HEADER
+       ========================================== -->
 
   <div class="header">
 
@@ -298,19 +388,27 @@ button {
   </div>
 
 
+  <!-- ==========================================
+       SCANNER
+       ========================================== -->
+
   <div
-    id="scannerBox"
-    class="scanner">
+    id="scannerCard"
+    class="scanner-card">
 
 
     <div class="instruction">
 
-      وجّه كاميرا الهاتف نحو QR بطاقة العميل
+      وجّه الكاميرا نحو QR بطاقة العميل
 
     </div>
 
 
-    <div class="camera-wrap">
+    <!-- LIVE CAMERA -->
+
+    <div
+      id="liveCameraArea"
+      class="camera-wrap">
 
       <video
         id="video"
@@ -324,13 +422,60 @@ button {
     </div>
 
 
-    <canvas id="canvas"></canvas>
+    <!-- FALLBACK -->
 
+    <div
+      id="fallbackBox"
+      class="fallback-box">
+
+      <div class="fallback-title">
+
+        📷 استخدم كاميرا الهاتف
+
+      </div>
+
+
+      <div class="fallback-text">
+
+        تعذر تشغيل الكاميرا المباشرة داخل الصفحة.
+        اضغط الزر التالي لفتح كاميرا الهاتف
+        والتقاط صورة للـQR.
+
+      </div>
+
+
+      <label
+        for="cameraInput"
+        class="camera-button">
+
+        📷 التقاط صورة QR
+
+      </label>
+
+
+      <input
+        id="cameraInput"
+        class="camera-input"
+        type="file"
+        accept="image/*"
+        capture="environment">
+
+    </div>
+
+
+    <!-- ERROR -->
 
     <div
       id="error"
       class="error">
     </div>
+
+
+    <!-- PREVIEW -->
+
+    <img
+      id="imagePreview"
+      alt="QR Preview">
 
 
     <button
@@ -341,25 +486,32 @@ button {
 
     </button>
 
-
   </div>
 
+
+  <!-- ==========================================
+       RESULT
+       ========================================== -->
 
   <div id="result">
 
     <div class="success">
+
       ✅ تم قراءة بطاقة العميل
+
     </div>
 
 
     <div
       id="memberId"
-      class="member">
+      class="member-id">
     </div>
 
 
     <div>
+
       العرض:
+
     </div>
 
 
@@ -380,13 +532,14 @@ button {
 
     <button
       class="back"
-      onclick="restartScanner()">
+      onclick="restart()">
 
       🔄 إعادة المسح
 
     </button>
 
   </div>
+
 
 </div>
 
@@ -424,7 +577,14 @@ const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-let stream = null;
+/*
+  حالات النظام:
+  cameraStream = البث المباشر
+  scanning = هل نبحث عن QR
+  scannedMemberId = العضو الذي تمت قراءته
+*/
+
+let cameraStream = null;
 
 let scanning = false;
 
@@ -461,15 +621,15 @@ document.getElementById(
 
 function showError(message) {
 
-  const error =
+  const element =
     document.getElementById(
       "error"
     );
 
-  error.innerText =
+  element.innerText =
     message;
 
-  error.style.display =
+  element.style.display =
     "block";
 
 }
@@ -481,25 +641,25 @@ function showError(message) {
 
 function hideError() {
 
-  const error =
+  const element =
     document.getElementById(
       "error"
     );
 
-  error.style.display =
+  element.style.display =
     "none";
+
+  element.innerText =
+    "";
 
 }
 
 
 // =====================================================
-// CAMERA
+// CHECK PARAMETERS
 // =====================================================
 
-async function startCamera() {
-
-  hideError();
-
+function checkParameters() {
 
   if (!SHOP_ID) {
 
@@ -507,7 +667,7 @@ async function startCamera() {
       "❌ لم يتم تحديد المحل."
     );
 
-    return;
+    return false;
 
   }
 
@@ -517,6 +677,29 @@ async function startCamera() {
     showError(
       "❌ لم يتم تحديد العرض."
     );
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+// =====================================================
+// START LIVE CAMERA
+// =====================================================
+
+async function startLiveCamera() {
+
+  hideError();
+
+
+  if (
+    !checkParameters()
+  ) {
 
     return;
 
@@ -528,8 +711,8 @@ async function startCamera() {
     !navigator.mediaDevices.getUserMedia
   ) {
 
-    showError(
-      "❌ المتصفح لا يدعم تشغيل الكاميرا."
+    activateFallback(
+      "المتصفح لا يدعم الكاميرا المباشرة داخل الصفحة."
     );
 
     return;
@@ -540,18 +723,28 @@ async function startCamera() {
   try {
 
     /*
-      نطلب الكاميرا مباشرة من المتصفح.
-      بدون html5-qrcode.
+      نستخدم الطريقة الأساسية المباشرة.
+      لا نستخدم exact.
     */
 
-    stream =
-      await navigator.mediaDevices
+    cameraStream =
+      await navigator
+        .mediaDevices
         .getUserMedia({
 
           video: {
 
             facingMode: {
-              ideal: "environment"
+              ideal:
+                "environment"
+            },
+
+            width: {
+              ideal: 1280
+            },
+
+            height: {
+              ideal: 1280
             }
 
           },
@@ -568,7 +761,7 @@ async function startCamera() {
 
 
     video.srcObject =
-      stream;
+      cameraStream;
 
 
     await video.play();
@@ -578,22 +771,24 @@ async function startCamera() {
       true;
 
 
-    scanFrame();
+    scanVideoFrame();
 
 
   } catch (error) {
 
     console.error(
-      "getUserMedia:",
+      "Camera error:",
       error
     );
 
 
-    showError(
+    /*
+      لا نوقف النظام.
+      نعرض الحل الاحتياطي.
+    */
 
-      "❌ تعذر تشغيل كاميرا الهاتف داخل SALT PASS. " +
-      "أغلق أي صفحة أو تطبيق آخر يستخدم الكاميرا ثم أعد المحاولة."
-
+    activateFallback(
+      "تعذر تشغيل الكاميرا المباشرة داخل الصفحة."
     );
 
   }
@@ -602,13 +797,15 @@ async function startCamera() {
 
 
 // =====================================================
-// QR SCANNING
+// LIVE QR SCANNING
 // =====================================================
 
-function scanFrame() {
+function scanVideoFrame() {
 
   if (!scanning) {
+
     return;
+
   }
 
 
@@ -618,17 +815,18 @@ function scanFrame() {
     );
 
 
-  const canvas =
-    document.getElementById(
-      "canvas"
-    );
-
-
   if (
     video.readyState >= 2 &&
     video.videoWidth > 0 &&
     video.videoHeight > 0
   ) {
+
+
+    const canvas =
+      document.createElement(
+        "canvas"
+      );
+
 
     canvas.width =
       video.videoWidth;
@@ -673,30 +871,42 @@ function scanFrame() {
       );
 
 
-    const code =
-      jsQR(
+    if (
+      typeof jsQR ===
+      "function"
+    ) {
 
-        imageData.data,
+      const code =
+        jsQR(
 
-        imageData.width,
+          imageData.data,
 
-        imageData.height,
+          imageData.width,
 
-        {
-          inversionAttempts:
-            "attemptBoth"
-        }
+          imageData.height,
 
-      );
+          {
+
+            inversionAttempts:
+              "attemptBoth"
+
+          }
+
+        );
 
 
-    if (code && code.data) {
-
-      handleQRCode(
+      if (
+        code &&
         code.data
-      );
+      ) {
 
-      return;
+        handleScan(
+          code.data
+        );
+
+        return;
+
+      }
 
     }
 
@@ -705,17 +915,231 @@ function scanFrame() {
 
   animationId =
     requestAnimationFrame(
-      scanFrame
+      scanVideoFrame
     );
 
 }
 
 
 // =====================================================
+// FALLBACK
+// =====================================================
+
+function activateFallback(
+  message
+) {
+
+  stopCamera();
+
+
+  const liveArea =
+    document.getElementById(
+      "liveCameraArea"
+    );
+
+
+  liveArea.style.display =
+    "none";
+
+
+  const fallback =
+    document.getElementById(
+      "fallbackBox"
+    );
+
+
+  fallback.style.display =
+    "block";
+
+
+  if (message) {
+
+    showError(
+      message
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// IMAGE CAMERA INPUT
+// =====================================================
+
+document.getElementById(
+  "cameraInput"
+).addEventListener(
+  "change",
+  function(event) {
+
+    const file =
+      event.target.files &&
+      event.target.files[0];
+
+
+    if (!file) {
+
+      return;
+
+    }
+
+
+    hideError();
+
+
+    const image =
+      new Image();
+
+
+    const imageUrl =
+      URL.createObjectURL(
+        file
+      );
+
+
+    document.getElementById(
+      "imagePreview"
+    ).src =
+      imageUrl;
+
+
+    document.getElementById(
+      "imagePreview"
+    ).style.display =
+      "block";
+
+
+    image.onload =
+      function() {
+
+        try {
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+
+          canvas.width =
+            image.naturalWidth;
+
+
+          canvas.height =
+            image.naturalHeight;
+
+
+          const context =
+            canvas.getContext(
+              "2d",
+              {
+                willReadFrequently:
+                  true
+              }
+            );
+
+
+          context.drawImage(
+            image,
+            0,
+            0
+          );
+
+
+          const imageData =
+            context.getImageData(
+
+              0,
+              0,
+
+              canvas.width,
+              canvas.height
+
+            );
+
+
+          const code =
+            jsQR(
+
+              imageData.data,
+
+              imageData.width,
+
+              imageData.height,
+
+              {
+
+                inversionAttempts:
+                  "attemptBoth"
+
+              }
+
+            );
+
+
+          if (
+            code &&
+            code.data
+          ) {
+
+            handleScan(
+              code.data
+            );
+
+          } else {
+
+            showError(
+
+              "⚠️ لم يتم العثور على QR. " +
+              "قرّب البطاقة، اجعل QR واضحًا بالكامل، ثم أعد التقاط الصورة."
+
+            );
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+
+          showError(
+            "❌ تعذر قراءة صورة QR."
+          );
+
+        }
+
+        URL.revokeObjectURL(
+          imageUrl
+        );
+
+      };
+
+
+    image.onerror =
+      function() {
+
+        URL.revokeObjectURL(
+          imageUrl
+        );
+
+
+        showError(
+          "❌ تعذر فتح الصورة."
+        );
+
+      };
+
+  }
+);
+
+
+// =====================================================
 // HANDLE QR
 // =====================================================
 
-function handleQRCode(
+function handleScan(
   value
 ) {
 
@@ -728,13 +1152,8 @@ function handleQRCode(
   if (!memberId) {
 
     showError(
-      "⚠️ رمز QR ليس بطاقة SALT PASS."
+      "⚠️ هذا QR ليس بطاقة SALT PASS."
     );
-
-    animationId =
-      requestAnimationFrame(
-        scanFrame
-      );
 
     return;
 
@@ -749,7 +1168,7 @@ function handleQRCode(
 
 
   document.getElementById(
-    "scannerBox"
+    "scannerCard"
   ).style.display =
     "none";
 
@@ -782,7 +1201,10 @@ function extractMemberId(
     ).trim();
 
 
-  // QR يحتوي مباشرة SP-0001
+  /*
+    QR مباشر:
+    SP-0006
+  */
 
   if (
     /^SP-\d+$/i.test(
@@ -795,7 +1217,9 @@ function extractMemberId(
   }
 
 
-  // QR يحتوي رابط البطاقة
+  /*
+    QR يحتوي رابط البطاقة
+  */
 
   try {
 
@@ -825,7 +1249,9 @@ function extractMemberId(
   } catch (e) {}
 
 
-  // البحث داخل النص
+  /*
+    البحث داخل النص
+  */
 
   const match =
     text.match(
@@ -855,7 +1281,9 @@ function stopCamera() {
     false;
 
 
-  if (animationId) {
+  if (
+    animationId
+  ) {
 
     cancelAnimationFrame(
       animationId
@@ -867,9 +1295,11 @@ function stopCamera() {
   }
 
 
-  if (stream) {
+  if (
+    cameraStream
+  ) {
 
-    stream
+    cameraStream
       .getTracks()
       .forEach(
         function(track) {
@@ -880,7 +1310,7 @@ function stopCamera() {
       );
 
 
-    stream =
+    cameraStream =
       null;
 
   }
@@ -919,7 +1349,7 @@ function confirmOffer() {
   }
 
 
-  const url =
+  const finalUrl =
 
     APPS_SCRIPT_URL +
 
@@ -945,7 +1375,7 @@ function confirmOffer() {
 
 
   window.location.href =
-    url;
+    finalUrl;
 
 }
 
@@ -954,7 +1384,11 @@ function confirmOffer() {
 // RESTART
 // =====================================================
 
-async function restartScanner() {
+function restart() {
+
+  scannedMemberId =
+    "";
+
 
   document.getElementById(
     "result"
@@ -963,16 +1397,35 @@ async function restartScanner() {
 
 
   document.getElementById(
-    "scannerBox"
+    "scannerCard"
   ).style.display =
     "block";
 
 
-  scannedMemberId =
-    "";
+  document.getElementById(
+    "imagePreview"
+  ).style.display =
+    "none";
 
 
-  await startCamera();
+  /*
+    حاول الكاميرا المباشرة من جديد.
+    وإذا فشلت سيظهر fallback.
+  */
+
+  document.getElementById(
+    "liveCameraArea"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "fallbackBox"
+  ).style.display =
+    "none";
+
+
+  startLiveCamera();
 
 }
 
@@ -994,7 +1447,7 @@ function goBack() {
 // START
 // =====================================================
 
-startCamera();
+startLiveCamera();
 
 </script>
 
