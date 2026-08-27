@@ -11,111 +11,99 @@
 
 <title>SALT PASS Scanner</title>
 
-<!-- QR decoder -->
-<script
-  src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js">
-</script>
+<!-- ZXing Browser -->
+<script src="https://unpkg.com/@zxing/browser@latest"></script>
 
 <style>
 
 * {
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 body {
 
-  background:#f3f5f7;
+  padding: 12px;
+
+  background: #f3f5f7;
 
   font-family:
     Arial,
     Tahoma,
     sans-serif;
 
-  text-align:center;
-
-  padding:12px;
-
-  color:#111;
+  text-align: center;
 
 }
 
 .container {
 
-  width:100%;
+  width: 100%;
 
-  max-width:430px;
+  max-width: 430px;
 
-  margin:auto;
+  margin: auto;
 
 }
 
-/* ==========================================
-   HEADER
-   ========================================== */
-
 .header {
 
-  background:#111;
+  background: #111;
 
-  color:white;
+  color: white;
 
-  padding:22px 15px;
+  padding: 22px 15px;
 
-  border-radius:22px;
+  border-radius: 22px;
 
-  margin-bottom:14px;
+  margin-bottom: 14px;
 
 }
 
 .logo {
 
-  font-size:28px;
+  font-size: 28px;
 
-  font-weight:800;
+  font-weight: 800;
 
-  letter-spacing:2px;
+  letter-spacing: 2px;
 
 }
 
 .shop {
 
-  font-size:19px;
+  font-size: 19px;
 
-  margin-top:8px;
-
-}
-
-.offer-title {
-
-  color:#bbb;
-
-  font-size:14px;
-
-  margin-top:7px;
-
-  line-height:1.5;
+  margin-top: 8px;
 
 }
 
-/* ==========================================
-   MAIN CARD
-   ========================================== */
+.offer {
+
+  color: #bbb;
+
+  font-size: 14px;
+
+  margin-top: 7px;
+
+  line-height: 1.5;
+
+}
 
 .card {
 
-  background:white;
+  background: white;
 
-  border-radius:20px;
+  border-radius: 20px;
 
-  padding:15px;
+  padding: 14px;
 
   box-shadow:
     0 5px 20px
@@ -123,282 +111,306 @@ body {
 
 }
 
-/* ==========================================
-   LIVE CAMERA
-   ========================================== */
+.instruction {
 
-.camera-box {
+  color: #555;
 
-  position:relative;
+  font-size: 14px;
 
-  width:100%;
+  line-height: 1.7;
 
-  aspect-ratio:1 / 1;
+  margin-bottom: 12px;
 
-  background:#000;
+}
 
-  border-radius:16px;
 
-  overflow:hidden;
+/* ===============================
+   CAMERA
+   =============================== */
+
+.camera-wrap {
+
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  background: #000;
+
+  border-radius: 16px;
+
+  overflow: hidden;
 
 }
 
 #video {
 
-  width:100%;
+  width: 100%;
 
-  height:100%;
+  height: 100%;
 
-  object-fit:cover;
+  object-fit: cover;
 
-  display:block;
+  display: block;
 
-  background:#000;
+  background: #000;
 
 }
 
 .frame {
 
-  position:absolute;
+  position: absolute;
 
-  width:64%;
+  width: 64%;
 
-  height:64%;
+  height: 64%;
 
-  left:50%;
+  left: 50%;
 
-  top:50%;
+  top: 50%;
 
   transform:
-    translate(-50%,-50%);
+    translate(-50%, -50%);
 
   border:
     3px solid white;
 
-  border-radius:18px;
+  border-radius: 18px;
 
   box-shadow:
     0 0 0 9999px
     rgba(0,0,0,.20);
 
-  pointer-events:none;
+  pointer-events: none;
 
 }
 
-/* ==========================================
-   FALLBACK
-   ========================================== */
+
+/* ===============================
+   FALLBACK IMAGE
+   =============================== */
 
 #fallback {
 
-  display:none;
+  display: none;
 
-  margin-top:15px;
+  margin-top: 15px;
 
-  background:#f8f8f8;
+  background: #f7f7f7;
 
-  border-radius:16px;
+  padding: 18px;
 
-  padding:18px;
+  border-radius: 16px;
 
 }
 
 .fallback-title {
 
-  font-size:18px;
+  font-size: 18px;
 
-  font-weight:bold;
+  font-weight: bold;
 
 }
 
 .fallback-text {
 
-  color:#666;
+  margin-top: 8px;
 
-  font-size:13px;
+  color: #666;
 
-  line-height:1.7;
+  font-size: 13px;
 
-  margin:
-    8px 0 15px;
+  line-height: 1.7;
 
 }
 
 .camera-label {
 
-  display:block;
+  display: block;
 
-  width:100%;
+  margin-top: 14px;
 
-  padding:16px;
+  padding: 16px;
 
-  background:#111;
+  background: #111;
 
-  color:white;
+  color: white;
 
-  border-radius:13px;
+  border-radius: 13px;
 
-  font-size:17px;
+  font-size: 17px;
 
-  font-weight:bold;
+  font-weight: bold;
 
-  cursor:pointer;
-
-}
-
-/* ==========================================
-   PREVIEW
-   ========================================== */
-
-#preview {
-
-  display:none;
-
-  width:100%;
-
-  max-height:350px;
-
-  object-fit:contain;
-
-  margin-top:15px;
-
-  border-radius:14px;
-
-  background:#eee;
+  cursor: pointer;
 
 }
 
-/* ==========================================
+.camera-input {
+
+  display: none;
+
+}
+
+
+/* ===============================
    STATUS
-   ========================================== */
+   =============================== */
 
 .status {
 
-  margin-top:15px;
+  margin-top: 14px;
 
-  padding:13px;
+  background: #f7f7f7;
 
-  background:#f7f7f7;
+  padding: 12px;
 
-  border-radius:12px;
+  border-radius: 12px;
 
-  color:#666;
+  color: #666;
 
-  font-size:13px;
+  font-size: 13px;
 
-  line-height:1.7;
+  line-height: 1.7;
 
 }
+
+
+/* ===============================
+   ERROR
+   =============================== */
 
 .error {
 
-  display:none;
+  display: none;
 
-  margin-top:13px;
+  margin-top: 12px;
 
-  padding:13px;
+  padding: 12px;
 
-  border-radius:12px;
+  border-radius: 12px;
 
-  background:#ffebee;
+  background: #ffebee;
 
-  color:#c62828;
+  color: #c62828;
 
-  font-size:13px;
+  font-size: 13px;
 
-  line-height:1.7;
-
-}
-
-.success-message {
-
-  color:#2e7d32;
-
-  font-weight:bold;
+  line-height: 1.7;
 
 }
 
-/* ==========================================
+
+/* ===============================
+   PREVIEW
+   =============================== */
+
+#preview {
+
+  display: none;
+
+  width: 100%;
+
+  max-height: 350px;
+
+  object-fit: contain;
+
+  margin-top: 14px;
+
+  border-radius: 13px;
+
+  background: #eee;
+
+}
+
+
+/* ===============================
    RESULT
-   ========================================== */
+   =============================== */
 
 #result {
 
-  display:none;
+  display: none;
 
-  margin-top:15px;
+  margin-top: 15px;
 
-  background:#f1f8e9;
+  background: #f1f8e9;
 
-  border-radius:18px;
+  padding: 22px;
 
-  padding:22px;
+  border-radius: 18px;
+
+}
+
+.success {
+
+  color: #2e7d32;
+
+  font-size: 20px;
+
+  font-weight: bold;
 
 }
 
 .member-id {
 
-  font-size:28px;
+  font-size: 27px;
 
-  font-weight:bold;
+  font-weight: bold;
 
-  margin:15px 0;
-
-}
-
-.result-offer {
-
-  font-size:16px;
-
-  font-weight:bold;
-
-  line-height:1.7;
+  margin: 15px 0;
 
 }
 
-/* ==========================================
+.offer-result {
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  line-height: 1.7;
+
+}
+
+
+/* ===============================
    BUTTONS
-   ========================================== */
+   =============================== */
 
 button {
 
-  width:100%;
+  width: 100%;
 
-  border:none;
+  border: none;
 
-  border-radius:13px;
+  border-radius: 13px;
 
-  padding:16px;
+  padding: 16px;
 
-  margin-top:12px;
+  margin-top: 12px;
 
-  font-size:17px;
+  font-size: 17px;
 
-  font-weight:bold;
+  font-weight: bold;
 
-  cursor:pointer;
+  cursor: pointer;
 
 }
 
 .confirm {
 
-  background:#111;
+  background: #111;
 
-  color:white;
+  color: white;
 
 }
 
 .back {
 
-  background:#e6e6e6;
+  background: #e7e7e7;
 
-  color:#111;
-
-}
-
-.hidden-canvas {
-
-  display:none;
+  color: #111;
 
 }
 
@@ -406,15 +418,16 @@ button {
 
 </head>
 
+
 <body>
 
 
 <div class="container">
 
 
-<!-- ==========================================
+<!-- ===================================
      HEADER
-     ========================================== -->
+     =================================== -->
 
 <div class="header">
 
@@ -430,67 +443,59 @@ button {
 
   <div
     id="offerTitle"
-    class="offer-title">
+    class="offer">
     جاري تحميل العرض...
   </div>
 
 </div>
 
 
-<!-- ==========================================
+<!-- ===================================
      SCANNER
-     ========================================== -->
+     =================================== -->
 
 <div
   id="scannerCard"
   class="card">
 
 
-  <div class="status">
+  <div class="instruction">
 
-    وجّه الكاميرا نحو QR بطاقة العميل
-
-  </div>
-
-
-  <!-- LIVE CAMERA -->
-
-  <div
-    id="liveCameraArea"
-    style="margin-top:12px;">
-
-    <div class="camera-box">
-
-      <video
-        id="video"
-        autoplay
-        muted
-        playsinline>
-      </video>
-
-      <div class="frame"></div>
-
-    </div>
+    وجّه كاميرا الهاتف نحو QR بطاقة العميل
 
   </div>
 
 
-  <!-- FALLBACK -->
+  <div class="camera-wrap">
+
+    <video
+      id="video"
+      autoplay
+      muted
+      playsinline>
+    </video>
+
+    <div class="frame"></div>
+
+  </div>
+
 
   <div
     id="fallback">
 
+
     <div class="fallback-title">
 
-      📷 استخدام كاميرا الهاتف
+      📷 استخدم كاميرا الهاتف
 
     </div>
 
+
     <div class="fallback-text">
 
-      تعذر قراءة QR بالكاميرا المباشرة.
-      اضغط الزر التالي لفتح كاميرا الهاتف
-      والتقاط صورة للبطاقة.
+      إذا لم تعمل الكاميرا المباشرة،
+      اضغط الزر وافتح كاميرا الهاتف
+      لالتقاط صورة واضحة للـQR.
 
     </div>
 
@@ -506,33 +511,27 @@ button {
 
     <input
       id="cameraInput"
+      class="camera-input"
       type="file"
       accept="image/*"
-      capture="environment"
-      style="display:none;">
+      capture="environment">
 
   </div>
 
 
-  <!-- IMAGE PREVIEW -->
-
   <img
     id="preview"
-    alt="صورة QR">
+    alt="QR">
 
-
-  <!-- STATUS -->
 
   <div
     id="status"
     class="status">
 
-    جاري تشغيل الكاميرا...
+    ⏳ جاري تشغيل الماسح...
 
   </div>
 
-
-  <!-- ERROR -->
 
   <div
     id="error"
@@ -552,15 +551,13 @@ button {
 </div>
 
 
-<!-- ==========================================
+<!-- ===================================
      RESULT
-     ========================================== -->
+     =================================== -->
 
 <div id="result">
 
-
-  <div
-    class="success-message">
+  <div class="success">
 
     ✅ تم قراءة بطاقة العميل
 
@@ -580,7 +577,7 @@ button {
 
   <div
     id="resultOffer"
-    class="result-offer">
+    class="offer-result">
   </div>
 
 
@@ -601,22 +598,10 @@ button {
 
   </button>
 
-
 </div>
 
 
-<!-- hidden canvases -->
-
-<canvas
-  id="canvas"
-  class="hidden-canvas">
-</canvas>
-
-
-<canvas
-  id="canvas2"
-  class="hidden-canvas">
-</canvas>
+</div>
 
 
 <script>
@@ -652,11 +637,9 @@ const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-let stream = null;
+let codeReader = null;
 
-let scanning = false;
-
-let animationFrame = null;
+let controls = null;
 
 let scannedMemberId = "";
 
@@ -688,13 +671,13 @@ document.getElementById(
 // =====================================================
 
 function setStatus(
-  text
+  message
 ) {
 
   document.getElementById(
     "status"
   ).innerText =
-    text;
+    message;
 
 }
 
@@ -707,17 +690,17 @@ function showError(
   message
 ) {
 
-  const element =
+  const el =
     document.getElementById(
       "error"
     );
 
 
-  element.innerText =
+  el.innerText =
     message;
 
 
-  element.style.display =
+  el.style.display =
     "block";
 
 }
@@ -729,27 +712,27 @@ function showError(
 
 function hideError() {
 
-  const element =
+  const el =
     document.getElementById(
       "error"
     );
 
 
-  element.innerText =
+  el.innerText =
     "";
 
 
-  element.style.display =
+  el.style.display =
     "none";
 
 }
 
 
 // =====================================================
-// PARAMETERS CHECK
+// VALIDATE
 // =====================================================
 
-function validParameters() {
+function validateParameters() {
 
   if (!SHOP_ID) {
 
@@ -779,7 +762,84 @@ function validParameters() {
 
 
 // =====================================================
-// START DIRECT CAMERA
+// GET MEMBER ID
+// =====================================================
+
+function extractMemberId(
+  text
+) {
+
+  const value =
+    String(
+      text || ""
+    ).trim();
+
+
+  // QR مباشر
+
+  if (
+    /^SP-\d+$/i.test(
+      value
+    )
+  ) {
+
+    return value.toUpperCase();
+
+  }
+
+
+  // QR رابط
+
+  try {
+
+    const url =
+      new URL(
+        value
+      );
+
+
+    const card =
+      url.searchParams.get(
+        "card"
+      );
+
+
+    if (
+      card &&
+      /^SP-\d+$/i.test(
+        card
+      )
+    ) {
+
+      return card.toUpperCase();
+
+    }
+
+  } catch(e) {}
+
+
+  // بحث داخل النص
+
+  const match =
+    value.match(
+      /SP-\d+/i
+    );
+
+
+  if (match) {
+
+    return match[0].toUpperCase();
+
+  }
+
+
+  return "";
+
+}
+
+
+// =====================================================
+// START ZXING CAMERA
 // =====================================================
 
 async function startCamera() {
@@ -788,7 +848,7 @@ async function startCamera() {
 
 
   if (
-    !validParameters()
+    !validateParameters()
   ) {
 
     return;
@@ -796,51 +856,21 @@ async function startCamera() {
   }
 
 
-  /*
-    إذا كانت الكاميرا متاحة
-    نحاول تشغيلها مباشرة.
-  */
-
-  if (
-    !navigator.mediaDevices ||
-    !navigator.mediaDevices.getUserMedia
-  ) {
-
-    showFallback(
-      "المتصفح لا يوفر الكاميرا المباشرة."
-    );
-
-    return;
-
-  }
+  setStatus(
+    "⏳ جاري تشغيل الكاميرا..."
+  );
 
 
   try {
 
-    stream =
-      await navigator
-        .mediaDevices
-        .getUserMedia({
+    if (
+      !codeReader
+    ) {
 
-          video: {
+      codeReader =
+        new ZXingBrowser.BrowserQRCodeReader();
 
-            facingMode: {
-              ideal: "environment"
-            },
-
-            width: {
-              ideal: 1280
-            },
-
-            height: {
-              ideal: 1280
-            }
-
-          },
-
-          audio:false
-
-        });
+    }
 
 
     const video =
@@ -849,23 +879,38 @@ async function startCamera() {
       );
 
 
-    video.srcObject =
-      stream;
+    /*
+      نترك اختيار الكاميرا للمكتبة.
+      عند عدم إعطاء deviceId
+      تفضل الكاميرا الخلفية إذا كانت متاحة.
+    */
 
+    controls =
+      await codeReader.decodeFromVideoDevice(
 
-    await video.play();
+        undefined,
 
+        video,
 
-    document.getElementById(
-      "liveCameraArea"
-    ).style.display =
-      "block";
+        function(
+          result,
+          error
+        ) {
 
+          if (
+            result &&
+            result.text
+          ) {
 
-    document.getElementById(
-      "fallback"
-    ).style.display =
-      "none";
+            handleScan(
+              result.text
+            );
+
+          }
+
+        }
+
+      );
 
 
     setStatus(
@@ -873,569 +918,50 @@ async function startCamera() {
     );
 
 
-    scanning =
-      true;
-
-
-    scanVideo();
-
-
   } catch(error) {
 
     console.error(
-      "DIRECT CAMERA ERROR",
+      "ZXing camera error:",
       error
     );
 
 
-    showFallback(
-      "تعذر تشغيل الكاميرا المباشرة."
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// FALLBACK
-// =====================================================
-
-function showFallback(
-  message
-) {
-
-  stopCamera();
-
-
-  document.getElementById(
-    "liveCameraArea"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "fallback"
-  ).style.display =
-    "block";
-
-
-  setStatus(
-    message
-  );
-
-}
-
-
-// =====================================================
-// LIVE QR SCAN
-// =====================================================
-
-function scanVideo() {
-
-  if (!scanning) {
-    return;
-  }
-
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  const canvas =
-    document.getElementById(
-      "canvas"
-    );
-
-
-  if (
-    video.readyState >= 2 &&
-    video.videoWidth > 0 &&
-    video.videoHeight > 0
-  ) {
-
-
-    canvas.width =
-      video.videoWidth;
-
-
-    canvas.height =
-      video.videoHeight;
-
-
-    const context =
-      canvas.getContext(
-        "2d",
-        {
-          willReadFrequently:true
-        }
-      );
-
-
-    context.drawImage(
-
-      video,
-
-      0,
-      0,
-
-      canvas.width,
-      canvas.height
-
-    );
-
-
-    const image =
-      context.getImageData(
-
-        0,
-        0,
-
-        canvas.width,
-        canvas.height
-
-      );
-
-
-    if (
-      typeof jsQR ===
-      "function"
-    ) {
-
-      const code =
-        jsQR(
-
-          image.data,
-
-          image.width,
-
-          image.height,
-
-          {
-            inversionAttempts:
-              "attemptBoth"
-          }
-
-        );
-
-
-      if (
-        code &&
-        code.data
-      ) {
-
-        handleQRCode(
-          code.data
-        );
-
-        return;
-
-      }
-
-    }
-
-  }
-
-
-  animationFrame =
-    requestAnimationFrame(
-      scanVideo
-    );
-
-}
-
-
-// =====================================================
-// IMAGE INPUT
-// =====================================================
-
-document.getElementById(
-  "cameraInput"
-).addEventListener(
-  "change",
-  function(event) {
-
-    const file =
-      event.target.files &&
-      event.target.files[0];
-
-
-    if (!file) {
-      return;
-    }
-
-
-    hideError();
-
-
     setStatus(
-      "⏳ جاري معالجة صورة QR..."
+      "الكاميرا المباشرة غير متاحة."
     );
 
 
-    stopCamera();
+    document.getElementById(
+      "fallback"
+    ).style.display =
+      "block";
 
-
-    const image =
-      new Image();
-
-
-    const objectUrl =
-      URL.createObjectURL(
-        file
-      );
-
-
-    image.onload =
-      async function() {
-
-        try {
-
-          document.getElementById(
-            "preview"
-          ).src =
-            objectUrl;
-
-
-          document.getElementById(
-            "preview"
-          ).style.display =
-            "block";
-
-
-          /*
-            نجرب أكثر من حجم للصورة.
-            هذا مهم إذا كان QR صغيرًا داخل الصورة.
-          */
-
-          const result =
-            await decodeImageMultipleWays(
-              image
-            );
-
-
-          if (
-            result
-          ) {
-
-            handleQRCode(
-              result
-            );
-
-            return;
-
-          }
-
-
-          showError(
-
-            "⚠️ لم يتم العثور على QR في الصورة. " +
-
-            "صوّر البطاقة من قريب، واجعل QR واضحًا وكاملًا داخل الصورة."
-
-          );
-
-
-          setStatus(
-            "لم يتم العثور على QR"
-          );
-
-
-        } catch(error) {
-
-          console.error(
-            "IMAGE DECODE ERROR",
-            error
-          );
-
-
-          showError(
-            "❌ حدث خطأ أثناء قراءة صورة QR."
-          );
-
-
-          setStatus(
-            "تعذر قراءة الصورة"
-          );
-
-        } finally {
-
-          URL.revokeObjectURL(
-            objectUrl
-          );
-
-        }
-
-      };
-
-
-    image.onerror =
-      function() {
-
-        URL.revokeObjectURL(
-          objectUrl
-        );
-
-
-        showError(
-          "❌ تعذر فتح الصورة."
-        );
-
-      };
-
-
-    image.src =
-      objectUrl;
-
-  }
-);
-
-
-// =====================================================
-// MULTIPLE IMAGE DECODING
-// =====================================================
-
-async function decodeImageMultipleWays(
-  image
-) {
-
-  if (
-    typeof jsQR !==
-    "function"
-  ) {
 
     showError(
-      "❌ لم يتم تحميل قارئ QR. تأكد من اتصال الإنترنت."
+      "❌ تعذر تشغيل الكاميرا المباشرة. استخدم زر التقاط صورة QR."
     );
 
-    return "";
-
   }
-
-
-  /*
-    الأحجام التي سنجربها.
-  */
-
-  const widths = [
-
-    image.naturalWidth,
-
-    Math.min(
-      1500,
-      image.naturalWidth * 1.5
-    ),
-
-    Math.min(
-      2000,
-      image.naturalWidth * 2
-    )
-
-  ];
-
-
-  for (
-    let i=0;
-    i<widths.length;
-    i++
-  ) {
-
-    const result =
-      decodeAtSize(
-        image,
-        widths[i],
-        false
-      );
-
-
-    if (result) {
-
-      return result;
-
-    }
-
-
-    /*
-      نجرب أيضًا صورة grayscale.
-    */
-
-    const grayResult =
-      decodeAtSize(
-        image,
-        widths[i],
-        true
-      );
-
-
-    if (grayResult) {
-
-      return grayResult;
-
-    }
-
-  }
-
-
-  return "";
 
 }
 
 
 // =====================================================
-// DECODE AT SIZE
+// HANDLE SCAN
 // =====================================================
 
-function decodeAtSize(
-  image,
-  targetWidth,
-  grayscale
-) {
-
-  const ratio =
-    image.naturalHeight /
-    image.naturalWidth;
-
-
-  const targetHeight =
-    Math.round(
-      targetWidth *
-      ratio
-    );
-
-
-  const canvas =
-    document.getElementById(
-      "canvas2"
-    );
-
-
-  canvas.width =
-    targetWidth;
-
-
-  canvas.height =
-    targetHeight;
-
-
-  const context =
-    canvas.getContext(
-      "2d",
-      {
-        willReadFrequently:true
-      }
-    );
-
-
-  context.drawImage(
-
-    image,
-
-    0,
-    0,
-
-    targetWidth,
-    targetHeight
-
-  );
-
-
-  let imageData =
-    context.getImageData(
-
-      0,
-      0,
-
-      targetWidth,
-      targetHeight
-
-    );
-
-
-  /*
-    إذا كنا نجرب grayscale
-  */
-
-  if (grayscale) {
-
-    const data =
-      imageData.data;
-
-
-    for (
-      let i=0;
-      i<data.length;
-      i+=4
-    ) {
-
-      const gray =
-        Math.round(
-
-          0.299 * data[i] +
-
-          0.587 * data[i+1] +
-
-          0.114 * data[i+2]
-
-        );
-
-
-      data[i] =
-        gray;
-
-
-      data[i+1] =
-        gray;
-
-
-      data[i+2] =
-        gray;
-
-    }
-
-  }
-
-
-  const code =
-    jsQR(
-
-      imageData.data,
-
-      imageData.width,
-
-      imageData.height,
-
-      {
-        inversionAttempts:
-          "attemptBoth"
-      }
-
-    );
-
-
-  if (
-    code &&
-    code.data
-  ) {
-
-    return code.data;
-
-  }
-
-
-  return "";
-
-}
-
-
-// =====================================================
-// HANDLE QR
-// =====================================================
-
-function handleQRCode(
+function handleScan(
   value
 ) {
+
+  if (
+    scannedMemberId
+  ) {
+
+    return;
+
+  }
+
 
   const memberId =
     extractMemberId(
@@ -1487,151 +1013,196 @@ function handleQRCode(
 
 
 // =====================================================
-// EXTRACT MEMBER ID
+// STOP CAMERA
 // =====================================================
 
-function extractMemberId(
-  value
-) {
-
-  const text =
-    String(
-      value || ""
-    ).trim();
-
-
-  /*
-    الحالة 1:
-    QR = SP-0006
-  */
-
-  if (
-    /^SP-\d+$/i.test(
-      text
-    )
-  ) {
-
-    return text.toUpperCase();
-
-  }
-
-
-  /*
-    الحالة 2:
-    QR يحتوي URL
-  */
+function stopCamera() {
 
   try {
 
-    const url =
-      new URL(
-        text
-      );
-
-
-    const card =
-      url.searchParams.get(
-        "card"
-      );
-
-
     if (
-      card &&
-      /^SP-\d+$/i.test(
-        card
-      )
+      controls
     ) {
 
-      return card.toUpperCase();
+      controls.stop();
 
     }
 
   } catch(e) {}
 
 
-  /*
-    الحالة 3:
-    العثور على SP-XXXX داخل النص
-  */
-
-  const match =
-    text.match(
-      /SP-\d+/i
-    );
-
-
-  if (match) {
-
-    return match[0].toUpperCase();
-
-  }
-
-
-  return "";
+  controls =
+    null;
 
 }
 
 
 // =====================================================
-// STOP CAMERA
+// IMAGE FALLBACK
 // =====================================================
 
-function stopCamera() {
+document.getElementById(
+  "cameraInput"
+).addEventListener(
+  "change",
+  async function(event) {
 
-  scanning =
-    false;
+    const file =
+      event.target.files &&
+      event.target.files[0];
 
 
-  if (
-    animationFrame
-  ) {
+    if (!file) {
+      return;
+    }
 
-    cancelAnimationFrame(
-      animationFrame
+
+    hideError();
+
+
+    setStatus(
+      "⏳ جاري قراءة صورة QR..."
     );
 
 
-    animationFrame =
-      null;
-
-  }
-
-
-  if (
-    stream
-  ) {
-
-    stream
-      .getTracks()
-      .forEach(
-        function(track) {
-
-          track.stop();
-
-        }
+    const image =
+      document.createElement(
+        "img"
       );
 
 
-    stream =
-      null;
+    const objectUrl =
+      URL.createObjectURL(
+        file
+      );
+
+
+    image.src =
+      objectUrl;
+
+
+    image.onload =
+      async function() {
+
+        try {
+
+          const preview =
+            document.getElementById(
+              "preview"
+            );
+
+
+          preview.src =
+            objectUrl;
+
+
+          preview.style.display =
+            "block";
+
+
+          if (
+            !codeReader
+          ) {
+
+            codeReader =
+              new ZXingBrowser.BrowserQRCodeReader();
+
+          }
+
+
+          let result = null;
+
+
+          try {
+
+            result =
+              await codeReader.decodeFromImageElement(
+                image
+              );
+
+          } catch(
+            decodeError
+          ) {
+
+            console.warn(
+              "Image decode failed:",
+              decodeError
+            );
+
+          }
+
+
+          if (
+            result &&
+            result.text
+          ) {
+
+            handleScan(
+              result.text
+            );
+
+
+            URL.revokeObjectURL(
+              objectUrl
+            );
+
+
+            return;
+
+          }
+
+
+          setStatus(
+            "لم يتم العثور على QR"
+          );
+
+
+          showError(
+
+            "⚠️ لم يتم العثور على QR. " +
+            "التقط الصورة من قريب واجعل QR كاملًا وواضحًا."
+
+          );
+
+
+        } catch(error) {
+
+          console.error(
+            "Image scanner error:",
+            error
+          );
+
+
+          setStatus(
+            "تعذر قراءة الصورة"
+          );
+
+
+          showError(
+            "❌ تعذر قراءة صورة QR."
+          );
+
+        }
+
+      };
+
+
+    image.onerror =
+      function() {
+
+        URL.revokeObjectURL(
+          objectUrl
+        );
+
+
+        showError(
+          "❌ تعذر فتح الصورة."
+        );
+
+      };
 
   }
-
-
-  const video =
-    document.getElementById(
-      "video"
-    );
-
-
-  if (video) {
-
-    video.srcObject =
-      null;
-
-  }
-
-}
+);
 
 
 // =====================================================
@@ -1651,7 +1222,29 @@ function confirmOffer() {
   }
 
 
-  const finalUrl =
+  if (!SHOP_ID) {
+
+    alert(
+      "لم يتم تحديد المحل."
+    );
+
+    return;
+
+  }
+
+
+  if (!OFFER_ID) {
+
+    alert(
+      "لم يتم تحديد العرض."
+    );
+
+    return;
+
+  }
+
+
+  const url =
 
     APPS_SCRIPT_URL +
 
@@ -1677,7 +1270,7 @@ function confirmOffer() {
 
 
   window.location.href =
-    finalUrl;
+    url;
 
 }
 
@@ -1711,29 +1304,24 @@ function restart() {
 
 
   document.getElementById(
-    "fallback"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
-    "liveCameraArea"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
     "cameraInput"
   ).value =
     "";
 
 
-  hideError();
+  document.getElementById(
+    "fallback"
+  ).style.display =
+    "none";
 
 
-  setStatus(
-    "📷 يمكنك التقاط صورة QR من كاميرا الهاتف"
-  );
+  document.getElementById(
+    "liveCameraArea"
+  ).style.display =
+    "block";
+
+
+  startCamera();
 
 }
 
