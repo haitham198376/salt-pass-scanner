@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1, maximum-scale=1">
+      content="width=device-width, initial-scale=1">
 
 <title>SALT PASS Scanner</title>
 
@@ -33,103 +33,77 @@ body {
     Tahoma,
     sans-serif;
 
-  background:
-    #f3f5f7;
+  background: #f3f5f7;
 
-  color:
-    #111;
+  color: #111;
 
-  text-align:
-    center;
+  text-align: center;
 
-  padding:
-    15px;
+  padding: 12px;
 
 }
 
 .container {
 
-  width:
-    100%;
+  width: 100%;
 
-  max-width:
-    430px;
+  max-width: 430px;
 
-  margin:
-    0 auto;
+  margin: 0 auto;
 
 }
 
 .header {
 
-  background:
-    #111;
+  background: #111;
 
-  color:
-    white;
+  color: white;
 
-  border-radius:
-    22px;
+  border-radius: 22px;
 
-  padding:
-    22px 15px;
+  padding: 22px 15px;
 
-  margin-bottom:
-    15px;
+  margin-bottom: 14px;
 
 }
 
 .logo {
 
-  font-size:
-    28px;
+  font-size: 28px;
 
-  font-weight:
-    800;
+  font-weight: 800;
 
-  letter-spacing:
-    2px;
+  letter-spacing: 2px;
 
 }
 
 .shop {
 
-  font-size:
-    19px;
+  font-size: 19px;
 
-  margin-top:
-    8px;
+  margin-top: 8px;
 
 }
 
 .offer {
 
-  margin-top:
-    8px;
+  color: #bdbdbd;
 
-  color:
-    #bdbdbd;
+  font-size: 14px;
 
-  font-size:
-    14px;
+  margin-top: 8px;
+
+  line-height: 1.5;
 
 }
 
-
-/* ===============================
-   CAMERA BOX
-   =============================== */
-
 .scanner-card {
 
-  background:
-    white;
+  background: white;
 
-  border-radius:
-    20px;
+  border-radius: 20px;
 
-  padding:
-    15px;
+  padding: 12px;
 
   box-shadow:
     0 5px 20px
@@ -137,284 +111,222 @@ body {
 
 }
 
+.instruction {
 
-/*
-   مهم جدًا:
-   جعل الماسح بعرض الشاشة
-   وعدم السماح له بالخروج من المربع.
-*/
+  color: #555;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  margin-bottom: 12px;
+
+}
+
+
+/* =====================================
+   QR SCANNER
+   ===================================== */
 
 #reader {
 
-  width:
-    100% !important;
+  width: 100% !important;
 
-  max-width:
-    100%;
+  max-width: 100% !important;
 
-  margin:
-    0 auto;
+  margin: 0 auto;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  border-radius:
-    16px;
+  border-radius: 15px;
 
 }
-
-
-/* عناصر html5-qrcode */
 
 #reader video {
 
-  width:
-    100% !important;
+  width: 100% !important;
 
-  max-width:
-    100% !important;
+  max-width: 100% !important;
 
-  height:
-    auto !important;
+  height: auto !important;
 
-  display:
-    block;
+  display: block;
 
-  object-fit:
-    cover;
+  object-fit: cover;
 
 }
 
+#reader__dashboard {
 
-/* إخفاء عناصر اختيار الكاميرا غير الضرورية */
+  width: 100% !important;
 
-#reader__dashboard_section_swaplink {
+}
 
-  display:
-    none !important;
+#reader__dashboard_section {
+
+  width: 100% !important;
 
 }
 
 #reader__dashboard_section_csr {
 
-  width:
-    100% !important;
+  width: 100% !important;
 
 }
 
-#reader__dashboard_section_csr span {
+#reader__dashboard_section_csr button {
 
-  display:
-    none !important;
+  width: 100%;
+
+  margin-top: 8px;
 
 }
 
+#reader__scan_region {
 
-/* =================================
-   تعليمات
-   ================================= */
-
-.instruction {
-
-  margin-top:
-    15px;
-
-  color:
-    #666;
-
-  font-size:
-    14px;
-
-  line-height:
-    1.7;
+  width: 100% !important;
 
 }
 
 
-/* =================================
-   الأخطاء
-   ================================= */
+/* =====================================
+   ERROR
+   ===================================== */
 
-.error {
+#error {
 
-  color:
-    #c62828;
+  display: none;
 
-  background:
-    #ffebee;
+  background: #ffebee;
 
-  padding:
-    12px;
+  color: #c62828;
 
-  border-radius:
-    12px;
+  padding: 13px;
 
-  margin-top:
-    15px;
+  border-radius: 12px;
 
-  line-height:
-    1.7;
+  margin-top: 12px;
 
-  font-size:
-    13px;
+  line-height: 1.7;
+
+  font-size: 13px;
 
 }
 
 
-/* =================================
-   النتيجة
-   ================================= */
+/* =====================================
+   RESULT
+   ===================================== */
 
 #result {
 
-  display:
-    none;
+  display: none;
 
-  background:
-    #f1f8e9;
+  background: #f1f8e9;
 
-  border-radius:
-    18px;
+  border-radius: 18px;
 
-  padding:
-    22px;
+  padding: 22px;
 
-  margin-top:
-    15px;
+  margin-top: 15px;
 
 }
 
 .success {
 
-  color:
-    #2e7d32;
+  color: #2e7d32;
+
+  font-weight: bold;
+
+  font-size: 20px;
 
 }
 
-.member-id {
+.member {
 
-  font-size:
-    24px;
+  font-size: 25px;
 
-  font-weight:
-    bold;
+  font-weight: bold;
 
-  margin:
-    12px 0;
+  margin: 15px 0;
 
 }
 
-.offer-name {
+.offerResult {
 
-  font-size:
-    17px;
+  font-size: 16px;
 
-  font-weight:
-    bold;
-
-}
-
-button {
-
-  width:
-    100%;
-
-  border:
-    none;
-
-  border-radius:
-    13px;
-
-  padding:
-    16px;
-
-  margin-top:
-    12px;
-
-  font-size:
-    17px;
-
-  font-weight:
-    bold;
-
-  cursor:
-    pointer;
-
-}
-
-.confirm {
-
-  background:
-    #111;
-
-  color:
-    white;
-
-}
-
-.cancel {
-
-  background:
-    #e5e5e5;
-
-  color:
-    #111;
+  font-weight: bold;
 
 }
 
 
-/* =================================
-   شاشة نجاح
-   ================================= */
+/* =====================================
+   COMPLETED
+   ===================================== */
 
 #completed {
 
-  display:
-    none;
+  display: none;
 
-  background:
-    white;
+  background: white;
 
-  border-radius:
-    18px;
+  border-radius: 18px;
 
-  padding:
-    25px;
+  padding: 25px;
 
-  margin-top:
-    15px;
+  margin-top: 15px;
 
 }
 
 .done {
 
-  color:
-    #2e7d32;
+  color: #2e7d32;
 
-  font-size:
-    22px;
+  font-size: 22px;
 
-  font-weight:
-    bold;
+  font-weight: bold;
 
 }
 
 
-@media (
-  max-width: 380px
-) {
+/* =====================================
+   BUTTONS
+   ===================================== */
 
-  body {
-    padding: 10px;
-  }
+button {
 
-  .header {
-    padding: 19px 12px;
-  }
+  width: 100%;
 
-  .logo {
-    font-size: 25px;
-  }
+  border: none;
+
+  border-radius: 13px;
+
+  padding: 16px;
+
+  margin-top: 12px;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+}
+
+.confirm {
+
+  background: #111;
+
+  color: white;
+
+}
+
+.back {
+
+  background: #e5e5e5;
+
+  color: #111;
 
 }
 
@@ -429,9 +341,9 @@ button {
 <div class="container">
 
 
-<!-- ======================================
+<!-- ===================================
      HEADER
-     ====================================== -->
+     =================================== -->
 
 <div class="header">
 
@@ -443,7 +355,7 @@ SALT PASS
 id="shopName"
 class="shop">
 
-جاري تحميل اسم المحل...
+جارٍ تحميل المحل...
 
 </div>
 
@@ -451,21 +363,20 @@ class="shop">
 id="offerTitle"
 class="offer">
 
-جاري تحميل العرض...
+جارٍ تحميل العرض...
 
 </div>
 
 </div>
 
 
-<!-- ======================================
+<!-- ===================================
      SCANNER
-     ====================================== -->
+     =================================== -->
 
 <div
 id="scannerCard"
 class="scanner-card">
-
 
 <div class="instruction">
 
@@ -478,57 +389,48 @@ class="scanner-card">
 
 
 <div
-id="cameraError"
-class="error"
+id="error"
 style="display:none">
 
 </div>
 
 
 <button
-class="cancel"
+class="back"
 onclick="goBack()">
 
 رجوع
 
 </button>
 
-
 </div>
 
 
-<!-- ======================================
+<!-- ===================================
      RESULT
-     ====================================== -->
+     =================================== -->
 
 <div id="result">
 
-
 <div class="success">
-
 ✅ تم قراءة بطاقة العميل
-
 </div>
 
 
 <div
 id="memberId"
-class="member-id">
-
+class="member">
 </div>
 
 
 <div>
-
 العرض:
-
 </div>
 
 
 <div
 id="resultOffer"
-class="offer-name">
-
+class="offerResult">
 </div>
 
 
@@ -542,34 +444,31 @@ onclick="confirmOffer()">
 
 
 <button
-class="cancel"
+class="back"
 onclick="restartScanner()">
 
-إلغاء وإعادة المسح
+إعادة المسح
 
 </button>
-
 
 </div>
 
 
-<!-- ======================================
+<!-- ===================================
      COMPLETED
-     ====================================== -->
+     =================================== -->
 
 <div id="completed">
 
 <div class="done">
-
 ✅ تمت العملية بنجاح
-
 </div>
 
 <p>
-تم تسجيل استخدام العرض في SALT PASS.
+تم تسجيل استخدام العرض بنجاح في SALT PASS.
 </p>
 
-<div id="transactionNumber"></div>
+<div id="transaction"></div>
 
 </div>
 
@@ -580,9 +479,9 @@ onclick="restartScanner()">
 <script>
 
 
-// =====================================================
+// =====================================
 // PARAMETERS
-// =====================================================
+// =====================================
 
 const params =
   new URLSearchParams(
@@ -591,23 +490,19 @@ const params =
 
 
 const SHOP_ID =
-  params.get("shopId")
-  || "";
+  params.get("shopId") || "";
 
 
 const SHOP_NAME =
-  params.get("shop")
-  || "";
+  params.get("shop") || "";
 
 
 const OFFER_ID =
-  params.get("offerId")
-  || "";
+  params.get("offerId") || "";
 
 
 const OFFER_TITLE =
-  params.get("offerTitle")
-  || "";
+  params.get("offerTitle") || "";
 
 
 const APPS_SCRIPT_URL =
@@ -615,18 +510,14 @@ const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
 
 
-// =====================================================
-// VARIABLES
-// =====================================================
-
 let scanner = null;
 
 let scannedMemberId = "";
 
 
-// =====================================================
+// =====================================
 // DISPLAY
-// =====================================================
+// =====================================
 
 document.getElementById(
   "shopName"
@@ -646,16 +537,39 @@ document.getElementById(
   OFFER_TITLE || "العرض";
 
 
-// =====================================================
-// CHECK PARAMETERS
-// =====================================================
+// =====================================
+// ERROR DISPLAY
+// =====================================
 
-function checkParameters() {
+function showError(message) {
 
-  if (!SHOP_ID) {
+  const error =
+    document.getElementById(
+      "error"
+    );
 
-    showCameraError(
-      "❌ لم يتم تحديد المحل."
+  error.innerText =
+    message;
+
+  error.style.display =
+    "block";
+
+}
+
+
+// =====================================
+// CHECK HTTPS
+// =====================================
+
+function checkEnvironment() {
+
+  if (
+    location.protocol !== "https:" &&
+    location.hostname !== "localhost"
+  ) {
+
+    showError(
+      "❌ يجب فتح الماسح من رابط HTTPS."
     );
 
     return false;
@@ -663,10 +577,13 @@ function checkParameters() {
   }
 
 
-  if (!OFFER_ID) {
+  if (
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
 
-    showCameraError(
-      "❌ لم يتم تحديد العرض."
+    showError(
+      "❌ المتصفح لا يدعم الوصول إلى الكاميرا."
     );
 
     return false;
@@ -679,182 +596,304 @@ function checkParameters() {
 }
 
 
-// =====================================================
+// =====================================
 // START SCANNER
-// =====================================================
+// =====================================
 
-function startScanner() {
+async function startScanner() {
 
-  if (!checkParameters()) {
+  if (!SHOP_ID) {
+
+    showError(
+      "❌ لم يتم تحديد المحل."
+    );
+
     return;
+
   }
 
 
-  document.getElementById(
-    "scannerCard"
-  ).style.display =
-    "block";
+  if (!OFFER_ID) {
+
+    showError(
+      "❌ لم يتم تحديد العرض."
+    );
+
+    return;
+
+  }
 
 
-  document.getElementById(
-    "result"
-  ).style.display =
-    "none";
+  if (!checkEnvironment()) {
+
+    return;
+
+  }
 
 
-  document.getElementById(
-    "completed"
-  ).style.display =
-    "none";
+  try {
+
+    // التأكد من إمكانية الوصول للكاميرا
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+
+        video: {
+          facingMode: "environment"
+        },
+
+        audio: false
+
+      });
+
+
+    // إيقاف الاختبار بعد التأكد
+
+    stream
+      .getTracks()
+      .forEach(
+        function(track) {
+          track.stop();
+        }
+      );
+
+
+  } catch (error) {
+
+    console.error(
+      "Camera permission error:",
+      error
+    );
+
+
+    showError(
+
+      "❌ المتصفح سمح بالموقع، لكن لم يتمكن من تشغيل الكاميرا. " +
+      "تأكد من عدم استخدام الكاميرا في تطبيق أو تبويب آخر."
+
+    );
+
+
+    return;
+
+  }
 
 
   try {
 
     if (scanner) {
 
-      scanner.clear()
-        .catch(
-          function(){}
-        );
+      try {
+
+        await scanner.clear();
+
+      } catch(e) {}
 
     }
 
-  } catch(e) {}
+
+    scanner =
+      new Html5Qrcode(
+        "reader"
+      );
 
 
-  scanner =
-    new Html5Qrcode(
-      "reader"
+    // =================================
+    // الطريقة الأساسية
+    // =================================
+
+    try {
+
+      await scanner.start(
+
+        {
+          facingMode: "environment"
+        },
+
+        {
+
+          fps: 10,
+
+          qrbox:
+            function(
+              width,
+              height
+            ) {
+
+              const size =
+                Math.floor(
+                  Math.min(
+                    width,
+                    height
+                  ) * 0.70
+                );
+
+
+              return {
+
+                width:
+                  Math.min(
+                    size,
+                    250
+                  ),
+
+                height:
+                  Math.min(
+                    size,
+                    250
+                  )
+
+              };
+
+            }
+
+        },
+
+        function(decodedText) {
+
+          handleScan(
+            decodedText
+          );
+
+        },
+
+        function(errorMessage) {}
+
+      );
+
+
+    } catch (environmentError) {
+
+      console.warn(
+        "Environment camera failed:",
+        environmentError
+      );
+
+
+      // =================================
+      // محاولة ثانية
+      // =================================
+
+      const cameras =
+        await Html5Qrcode
+          .getCameras();
+
+
+      if (
+        !cameras ||
+        cameras.length === 0
+      ) {
+
+        throw new Error(
+          "لم يتم العثور على كاميرا."
+        );
+
+      }
+
+
+      const cameraId =
+        cameras[
+          cameras.length - 1
+        ].id;
+
+
+      await scanner.start(
+
+        cameraId,
+
+        {
+
+          fps: 10,
+
+          qrbox:
+            function(
+              width,
+              height
+            ) {
+
+              const size =
+                Math.floor(
+                  Math.min(
+                    width,
+                    height
+                  ) * 0.70
+                );
+
+
+              return {
+
+                width:
+                  Math.min(
+                    size,
+                    250
+                  ),
+
+                height:
+                  Math.min(
+                    size,
+                    250
+                  )
+
+              };
+
+            }
+
+        },
+
+        function(decodedText) {
+
+          handleScan(
+            decodedText
+          );
+
+        },
+
+        function(errorMessage) {}
+
+      );
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "Scanner error:",
+      error
     );
 
 
-  scanner.start(
+    showError(
+      "❌ تعذر تشغيل الكاميرا. أغلق أي تطبيق يستخدم الكاميرا، ثم أعد تحميل الصفحة."
+    );
 
-    {
-      facingMode:
-        {
-          exact:
-            "environment"
-        }
-    },
-
-    {
-
-      fps:
-        10,
-
-      aspectRatio:
-        1.0,
-
-      qrbox:
-        function(
-          viewfinderWidth,
-          viewfinderHeight
-        ) {
-
-          const minDimension =
-            Math.min(
-              viewfinderWidth,
-              viewfinderHeight
-            );
-
-
-          const size =
-            Math.min(
-              250,
-              Math.floor(
-                minDimension * 0.70
-              )
-            );
-
-
-          return {
-            width:
-              size,
-
-            height:
-              size
-          };
-
-        }
-
-    },
-
-    function(decodedText) {
-
-      handleScan(
-        decodedText
-      );
-
-    },
-
-    function(errorMessage) {
-
-      // تجاهل أخطاء البحث العادية
-      // لأنها تظهر أثناء تحريك الكاميرا.
-
-    }
-
-  )
-
-  .catch(
-    function(error) {
-
-      console.error(
-        error
-      );
-
-
-      showCameraError(
-
-        "❌ تعذر فتح الكاميرا. " +
-
-        "تأكد من إعطاء الموقع صلاحية استخدام الكاميرا."
-
-      );
-
-    }
-  );
+  }
 
 }
 
 
-// =====================================================
+// =====================================
 // HANDLE SCAN
-// =====================================================
+// =====================================
 
 function handleScan(
   decodedText
 ) {
 
-
-  let memberId =
+  let value =
     String(
       decodedText || ""
     ).trim();
 
 
-  /*
-    البطاقة الحالية عندنا
-    تحتوي على:
-
-    SP-0006
-
-    لكن هذه الدالة أيضًا تتعامل
-    مع الحالات التي يكون فيها QR
-    رابطًا كاملًا.
-  */
-
-
   if (
-    memberId.startsWith(
+    value.startsWith(
       "SP-"
     )
   ) {
 
-    // الوضع الصحيح
-    memberId =
-      memberId;
+    scannedMemberId =
+      value;
 
   } else {
 
@@ -862,7 +901,7 @@ function handleScan(
 
       const url =
         new URL(
-          memberId
+          value
         );
 
 
@@ -874,61 +913,47 @@ function handleScan(
 
       if (
         card &&
-        card.startsWith(
-          "SP-"
-        )
+        /^SP-\d+$/i.test(card)
       ) {
 
-        memberId =
-          card;
+        scannedMemberId =
+          card.toUpperCase();
 
       } else {
 
-        // البحث عن SP-XXXX داخل النص
-
         const match =
-          memberId.match(
+          value.match(
             /SP-\d+/i
           );
 
 
-        if (
-          match
-        ) {
+        if (!match) {
 
-          memberId =
-            match[0].toUpperCase();
-
-        } else {
-
-          showCameraError(
-            "⚠️ تم قراءة QR لكنه ليس QR لبطاقة SALT PASS."
+          showError(
+            "⚠️ رمز QR ليس بطاقة SALT PASS."
           );
 
           return;
 
         }
 
+
+        scannedMemberId =
+          match[0].toUpperCase();
+
       }
 
     } catch(e) {
 
       const match =
-        memberId.match(
+        value.match(
           /SP-\d+/i
         );
 
 
-      if (
-        match
-      ) {
+      if (!match) {
 
-        memberId =
-          match[0].toUpperCase();
-
-      } else {
-
-        showCameraError(
+        showError(
           "⚠️ رمز QR غير صالح."
         );
 
@@ -936,13 +961,13 @@ function handleScan(
 
       }
 
+
+      scannedMemberId =
+        match[0].toUpperCase();
+
     }
 
   }
-
-
-  scannedMemberId =
-    memberId;
 
 
   stopScanner();
@@ -968,17 +993,15 @@ function handleScan(
 }
 
 
-// =====================================================
+// =====================================
 // STOP SCANNER
-// =====================================================
+// =====================================
 
 function stopScanner() {
 
   try {
 
-    if (
-      scanner
-    ) {
+    if (scanner) {
 
       scanner.stop()
         .catch(
@@ -992,9 +1015,9 @@ function stopScanner() {
 }
 
 
-// =====================================================
-// CONFIRM OFFER
-// =====================================================
+// =====================================
+// CONFIRM
+// =====================================
 
 function confirmOffer() {
 
@@ -1002,28 +1025,6 @@ function confirmOffer() {
 
     alert(
       "لم تتم قراءة بطاقة العميل."
-    );
-
-    return;
-
-  }
-
-
-  if (!OFFER_ID) {
-
-    alert(
-      "لم يتم تحديد العرض."
-    );
-
-    return;
-
-  }
-
-
-  if (!SHOP_ID) {
-
-    alert(
-      "لم يتم تحديد المحل."
     );
 
     return;
@@ -1056,25 +1057,17 @@ function confirmOffer() {
     );
 
 
-  /*
-    الانتقال إلى Apps Script
-    لتسجيل العملية في Transactions.
-  */
-
   window.location.href =
     finalUrl;
 
 }
 
 
-// =====================================================
+// =====================================
 // RESTART
-// =====================================================
+// =====================================
 
 function restartScanner() {
-
-  scannedMemberId =
-    "";
 
   document.getElementById(
     "result"
@@ -1082,63 +1075,39 @@ function restartScanner() {
     "none";
 
 
+  document.getElementById(
+    "error"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "scannerCard"
+  ).style.display =
+    "block";
+
+
   startScanner();
 
 }
 
 
-// =====================================================
+// =====================================
 // BACK
-// =====================================================
+// =====================================
 
 function goBack() {
 
   stopScanner();
 
-
-  if (
-    document.referrer
-  ) {
-
-    history.back();
-
-  } else {
-
-    window.location.href =
-      "https://haitham198376.github.io/salt-pass-scanner/";
-
-  }
+  history.back();
 
 }
 
 
-// =====================================================
-// ERROR
-// =====================================================
-
-function showCameraError(
-  message
-) {
-
-  const error =
-    document.getElementById(
-      "cameraError"
-    );
-
-
-  error.innerText =
-    message;
-
-
-  error.style.display =
-    "block";
-
-}
-
-
-// =====================================================
+// =====================================
 // START
-// =====================================================
+// =====================================
 
 startScanner();
 
