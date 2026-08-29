@@ -5,8 +5,9 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1">
 
 <title>SALT PASS Scanner</title>
 
@@ -22,6 +23,7 @@ body {
   background: #f3f5f7;
   font-family: Arial, Tahoma, sans-serif;
   text-align: center;
+  color: #111;
 }
 
 .container {
@@ -32,7 +34,7 @@ body {
 
 .header {
   background: #111;
-  color: #fff;
+  color: white;
   padding: 24px 15px;
   border-radius: 22px;
   margin-bottom: 15px;
@@ -45,32 +47,31 @@ body {
 }
 
 .shop {
-  margin-top: 8px;
   font-size: 20px;
+  margin-top: 8px;
 }
 
 .offer {
-  margin-top: 7px;
   color: #bbb;
   font-size: 14px;
+  margin-top: 7px;
   line-height: 1.6;
 }
 
 .card {
-  background: #fff;
+  background: white;
   padding: 22px 16px;
   border-radius: 20px;
   box-shadow: 0 5px 20px rgba(0,0,0,.08);
 }
 
 .title {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: bold;
-  line-height: 1.7;
 }
 
 .text {
-  margin-top: 8px;
+  margin-top: 9px;
   color: #666;
   font-size: 13px;
   line-height: 1.8;
@@ -79,11 +80,11 @@ body {
 .camera-button {
   display: block;
   width: 100%;
-  margin-top: 20px;
   padding: 18px;
+  margin-top: 20px;
   border-radius: 14px;
   background: #111;
-  color: #fff;
+  color: white;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
@@ -95,9 +96,9 @@ body {
 
 .status {
   margin-top: 15px;
+  background: #f7f7f7;
   padding: 13px;
   border-radius: 12px;
-  background: #f7f7f7;
   color: #666;
   font-size: 13px;
   line-height: 1.7;
@@ -107,9 +108,9 @@ body {
   display: none;
   margin-top: 13px;
   padding: 13px;
-  border-radius: 12px;
   background: #ffebee;
   color: #c62828;
+  border-radius: 12px;
   font-size: 13px;
   line-height: 1.7;
 }
@@ -117,7 +118,7 @@ body {
 #preview {
   display: none;
   width: 100%;
-  max-height: 360px;
+  max-height: 350px;
   object-fit: contain;
   margin-top: 15px;
   border-radius: 14px;
@@ -163,11 +164,11 @@ button {
 
 .confirm {
   background: #111;
-  color: #fff;
+  color: white;
 }
 
 .retry {
-  background: #e7e7e7;
+  background: #e6e6e6;
   color: #111;
 }
 
@@ -185,31 +186,25 @@ button {
       SALT PASS
     </div>
 
-    <div
-      id="shopName"
-      class="shop">
+    <div id="shopName" class="shop">
       جاري تحميل المحل...
     </div>
 
-    <div
-      id="offerTitle"
-      class="offer">
+    <div id="offerTitle" class="offer">
       جاري تحميل العرض...
     </div>
 
   </div>
 
 
-  <div
-    id="scannerCard"
-    class="card">
+  <div id="scannerCard" class="card">
 
     <div class="title">
       📷 مسح بطاقة العميل
     </div>
 
     <div class="text">
-      اضغط الزر لفتح كاميرا الهاتف الأصلية والتقاط صورة واضحة لرمز QR.
+      اضغط الزر لفتح كاميرا الهاتف والتقاط صورة QR البطاقة.
     </div>
 
     <label
@@ -227,6 +222,7 @@ button {
       accept="image/*"
       capture="environment">
 
+
     <div
       id="status"
       class="status">
@@ -235,14 +231,17 @@ button {
 
     </div>
 
+
     <img
       id="preview"
       alt="QR">
+
 
     <div
       id="error"
       class="error">
     </div>
+
 
     <button
       class="retry"
@@ -296,15 +295,7 @@ button {
 </div>
 
 
-<script type="module">
-
-/*
-  qr-scanner:
-  يدعم المسح من ملف/Blob مباشرة.
-*/
-
-import QrScanner
-  from "https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.min.js";
+<script>
 
 
 // =====================================================
@@ -340,10 +331,6 @@ const APPS_SCRIPT_URL =
 let scannedMemberId = "";
 
 
-// =====================================================
-// DISPLAY
-// =====================================================
-
 document.getElementById(
   "shopName"
 ).innerText =
@@ -363,42 +350,31 @@ document.getElementById(
 
 
 // =====================================================
-// STATUS
+// STATUS / ERROR
 // =====================================================
 
-function setStatus(message) {
+function setStatus(text) {
 
   document.getElementById(
     "status"
-  ).innerText =
-    message;
+  ).innerText = text;
 
 }
 
 
-// =====================================================
-// ERROR
-// =====================================================
-
-function showError(message) {
+function showError(text) {
 
   const el =
     document.getElementById(
       "error"
     );
 
-  el.innerText =
-    message;
+  el.innerText = text;
 
-  el.style.display =
-    "block";
+  el.style.display = "block";
 
 }
 
-
-// =====================================================
-// HIDE ERROR
-// =====================================================
 
 function hideError() {
 
@@ -407,26 +383,57 @@ function hideError() {
       "error"
     );
 
-  el.innerText =
-    "";
+  el.innerText = "";
 
-  el.style.display =
-    "none";
+  el.style.display = "none";
 
 }
 
 
 // =====================================================
-// EXTRACT MEMBER ID
+// CHECK
+// =====================================================
+
+function checkParams() {
+
+  if (!SHOP_ID) {
+
+    showError(
+      "❌ لم يتم تحديد المحل."
+    );
+
+    return false;
+
+  }
+
+
+  if (!OFFER_ID) {
+
+    showError(
+      "❌ لم يتم تحديد العرض."
+    );
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+// =====================================================
+// MEMBER ID
 // =====================================================
 
 function extractMemberId(text) {
 
   const value =
-    String(text || "").trim();
+    String(
+      text || ""
+    ).trim();
 
-
-  // SP-0006
 
   if (
     /^SP-\d+$/i.test(
@@ -439,17 +446,17 @@ function extractMemberId(text) {
   }
 
 
-  // URL
-
   try {
 
     const url =
       new URL(value);
 
+
     const card =
       url.searchParams.get(
         "card"
       );
+
 
     if (
       card &&
@@ -464,8 +471,6 @@ function extractMemberId(text) {
 
   } catch (e) {}
 
-
-  // text contains SP-XXXX
 
   const match =
     value.match(
@@ -486,7 +491,447 @@ function extractMemberId(text) {
 
 
 // =====================================================
-// FILE INPUT
+// IMAGE LOAD
+// =====================================================
+
+function loadImage(
+  file
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const image =
+        new Image();
+
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
+
+      image.onload =
+        function() {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+          resolve(image);
+
+        };
+
+
+      image.onerror =
+        function() {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+          reject(
+            new Error(
+              "image-load-error"
+            )
+          );
+
+        };
+
+
+      image.src =
+        url;
+
+    }
+  );
+
+}
+
+
+// =====================================================
+// NATIVE BARCODE DETECTOR
+// =====================================================
+
+async function nativeDetect(
+  file
+) {
+
+  if (
+    !("BarcodeDetector" in window)
+  ) {
+
+    return "";
+
+  }
+
+
+  try {
+
+    let supported = [];
+
+
+    if (
+      BarcodeDetector
+        .getSupportedFormats
+    ) {
+
+      supported =
+        await BarcodeDetector
+          .getSupportedFormats();
+
+    }
+
+
+    if (
+      supported.length &&
+      !supported.includes("qr_code")
+    ) {
+
+      return "";
+
+    }
+
+
+    const detector =
+      new BarcodeDetector({
+        formats: ["qr_code"]
+      });
+
+
+    /*
+      نضع مهلة حتى لا يبقى النظام
+      على "جاري المعالجة" للأبد.
+    */
+
+    const detection =
+      Promise.race([
+
+        detector.detect(file),
+
+        new Promise(
+          function(_, reject) {
+
+            setTimeout(
+              function() {
+
+                reject(
+                  new Error(
+                    "detector-timeout"
+                  )
+                );
+
+              },
+              4000
+            );
+
+          }
+        )
+
+      ]);
+
+
+    const barcodes =
+      await detection;
+
+
+    if (
+      !barcodes ||
+      !barcodes.length
+    ) {
+
+      return "";
+
+    }
+
+
+    return (
+      barcodes[0].rawValue
+      || ""
+    );
+
+  } catch (error) {
+
+    console.log(
+      "Native detector unavailable:",
+      error
+    );
+
+    return "";
+
+  }
+
+}
+
+
+// =====================================================
+// FALLBACK: HTML5 QR CODE
+// =====================================================
+
+async function fallbackDecode(
+  file
+) {
+
+  /*
+    تحميل المكتبة فقط عند الحاجة.
+  */
+
+  if (
+    !window.Html5Qrcode
+  ) {
+
+    await loadScript(
+      "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
+    );
+
+  }
+
+
+  if (
+    !window.Html5Qrcode
+  ) {
+
+    return "";
+
+  }
+
+
+  const reader =
+    document.createElement(
+      "div"
+    );
+
+
+  reader.id =
+    "hiddenQrReader";
+
+
+  reader.style.display =
+    "none";
+
+
+  document.body.appendChild(
+    reader
+  );
+
+
+  const scanner =
+    new Html5Qrcode(
+      "hiddenQrReader"
+    );
+
+
+  try {
+
+    /*
+      مهلة 6 ثوانٍ.
+      إذا لم يقرأ الصورة لا يعلق البرنامج.
+    */
+
+    const result =
+      await Promise.race([
+
+        scanner.scanFile(
+          file,
+          true
+        ),
+
+        new Promise(
+          function(_, reject) {
+
+            setTimeout(
+              function() {
+
+                reject(
+                  new Error(
+                    "scan-timeout"
+                  )
+                );
+
+              },
+              6000
+            );
+
+          }
+        )
+
+      ]);
+
+
+    return result || "";
+
+  } catch (error) {
+
+    console.log(
+      "Fallback decoder:",
+      error
+    );
+
+    return "";
+
+  } finally {
+
+    try {
+
+      await scanner.clear();
+
+    } catch(e) {}
+
+
+    reader.remove();
+
+  }
+
+}
+
+
+// =====================================================
+// LOAD SCRIPT
+// =====================================================
+
+function loadScript(
+  src
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const script =
+        document.createElement(
+          "script"
+        );
+
+
+      script.src =
+        src;
+
+
+      script.onload =
+        resolve;
+
+
+      script.onerror =
+        reject;
+
+
+      document.head.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+// =====================================================
+// PROCESS PHOTO
+// =====================================================
+
+async function processPhoto(
+  file
+) {
+
+  hideError();
+
+
+  setStatus(
+    "⏳ جاري قراءة QR..."
+  );
+
+
+  /*
+    1) الطريقة الأصلية للمتصفح
+  */
+
+  let decoded =
+    await nativeDetect(
+      file
+    );
+
+
+  /*
+    2) إذا لم تنجح،
+       نستخدم قارئ احتياطي.
+  */
+
+  if (!decoded) {
+
+    setStatus(
+      "⏳ جاري تجربة طريقة قراءة احتياطية..."
+    );
+
+
+    decoded =
+      await fallbackDecode(
+        file
+      );
+
+  }
+
+
+  /*
+    3) النتيجة
+  */
+
+  const memberId =
+    extractMemberId(
+      decoded
+    );
+
+
+  if (
+    memberId
+  ) {
+
+    scannedMemberId =
+      memberId;
+
+
+    document.getElementById(
+      "scannerCard"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "result"
+    ).style.display =
+      "block";
+
+
+    document.getElementById(
+      "memberId"
+    ).innerText =
+      scannedMemberId;
+
+
+    setStatus(
+      "✅ تم التعرف على البطاقة."
+    );
+
+
+    return;
+
+  }
+
+
+  setStatus(
+    "لم يتم العثور على QR."
+  );
+
+
+  showError(
+
+    "⚠️ لم تتم قراءة QR. " +
+    "جرّب تصوير الرمز من قريب جدًا، واجعل المربع الأبيض والأسود ظاهرًا بالكامل."
+
+  );
+
+}
+
+
+// =====================================================
+// CAMERA IMAGE
 // =====================================================
 
 document.getElementById(
@@ -501,16 +946,19 @@ document.getElementById(
 
 
     if (!file) {
+
       return;
+
     }
 
 
-    hideError();
+    if (
+      !checkParams()
+    ) {
 
+      return;
 
-    setStatus(
-      "⏳ جاري قراءة صورة QR..."
-    );
+    }
 
 
     const preview =
@@ -533,111 +981,15 @@ document.getElementById(
       "block";
 
 
-    try {
-
-      /*
-        qr-scanner يدعم File/Blob
-        مباشرة.
-      */
-
-      const result =
-        await QrScanner.scanImage(
-          file,
-          {
-            returnDetailedScanResult:
-              true,
-
-            alsoTryWithoutScanRegion:
-              true,
-
-            maxScansPerSecond:
-              10
-          }
-        );
+    await processPhoto(
+      file
+    );
 
 
-      const decodedText =
-        result &&
-        result.data
-          ? result.data
-          : "";
-
-
-      const memberId =
-        extractMemberId(
-          decodedText
-        );
-
-
-      if (!memberId) {
-
-        setStatus(
-          "تم العثور على QR غير تابع لـ SALT PASS."
-        );
-
-
-        showError(
-          "⚠️ تم قراءة QR، لكن الرمز ليس بطاقة SALT PASS."
-        );
-
-
-        return;
-
-      }
-
-
-      scannedMemberId =
-        memberId;
-
-
-      /*
-        نجاح
-      */
-
-      document.getElementById(
-        "scannerCard"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "result"
-      ).style.display =
-        "block";
-
-
-      document.getElementById(
-        "memberId"
-      ).innerText =
-        scannedMemberId;
-
-
-      setStatus(
-        "✅ تم التعرف على البطاقة."
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "QR IMAGE ERROR:",
-        error
-      );
-
-
-      setStatus(
-        "لم يتم العثور على QR."
-      );
-
-
-      showError(
-
-        "⚠️ لم نتمكن من قراءة QR من الصورة. " +
-        "أعد التصوير من مسافة أقرب، واجعل الرمز كاملًا وواضحًا."
-
-      );
-
-    }
+    /*
+      نترك الصورة حتى يستطيع المستخدم
+      التأكد من أنها واضحة.
+    */
 
   }
 );
@@ -653,28 +1005,6 @@ function confirmOffer() {
 
     alert(
       "لم تتم قراءة بطاقة العميل."
-    );
-
-    return;
-
-  }
-
-
-  if (!SHOP_ID) {
-
-    alert(
-      "المحل غير محدد."
-    );
-
-    return;
-
-  }
-
-
-  if (!OFFER_ID) {
-
-    alert(
-      "العرض غير محدد."
     );
 
     return;
