@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -8,8 +10,9 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>SALT PASS - Scanner</title>
+  <title>SALT PASS</title>
 
+  <!-- مكتبة قراءة QR -->
   <script
     src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
   </script>
@@ -29,9 +32,14 @@
     }
 
     .container{
+      width:100%;
       max-width:500px;
       margin:0 auto;
     }
+
+    /* =========================================
+       HEADER
+       ========================================= */
 
     .header{
       background:#111;
@@ -49,7 +57,7 @@
 
     .shop-name{
       margin-top:10px;
-      font-size:23px;
+      font-size:24px;
       font-weight:bold;
     }
 
@@ -59,6 +67,11 @@
       font-size:13px;
     }
 
+
+    /* =========================================
+       CARD
+       ========================================= */
+
     .card{
       background:#fff;
       margin-top:15px;
@@ -67,33 +80,56 @@
       box-shadow:0 6px 20px rgba(0,0,0,.06);
     }
 
-    .title{
+    .section-title{
       font-size:20px;
       font-weight:bold;
-      margin-bottom:15px;
+      margin-bottom:14px;
     }
+
+
+    /* =========================================
+       DISCOUNTS
+       ========================================= */
 
     .discount{
       width:100%;
-      border:0;
+      border:none;
       background:#111;
-      color:#fff;
+      color:white;
       padding:18px;
       margin-top:10px;
       border-radius:15px;
       text-align:right;
       cursor:pointer;
-      font-size:18px;
+      font-size:19px;
       font-weight:bold;
+      transition:.2s;
+    }
+
+    .discount:hover{
+      opacity:.9;
     }
 
     .discount.selected{
       outline:3px solid #777;
+      transform:scale(1.01);
     }
 
-    .scan{
+    .discount-sub{
+      margin-top:6px;
+      color:#bbb;
+      font-size:12px;
+      font-weight:normal;
+    }
+
+
+    /* =========================================
+       SCANNER
+       ========================================= */
+
+    .scan-button{
       width:100%;
-      border:0;
+      border:none;
       background:#111;
       color:#fff;
       padding:18px;
@@ -109,8 +145,22 @@
     }
 
     #reader video{
-      border-radius:15px;
+      width:100% !important;
+      border-radius:16px;
     }
+
+    #reader__dashboard_section{
+      margin-top:10px;
+    }
+
+    #reader button{
+      border-radius:10px !important;
+    }
+
+
+    /* =========================================
+       STATUS
+       ========================================= */
 
     .status{
       margin-top:14px;
@@ -120,6 +170,11 @@
       color:#666;
       line-height:1.8;
     }
+
+
+    /* =========================================
+       CUSTOMER
+       ========================================= */
 
     .customer{
       display:none;
@@ -137,12 +192,41 @@
     .customer-id{
       margin-top:7px;
       color:#666;
+      font-size:14px;
     }
 
-    .confirm{
+
+    /* =========================================
+       SELECTED DISCOUNT
+       ========================================= */
+
+    .selected-box{
+      display:none;
+      margin-top:15px;
+      padding:18px;
+      background:#eef7ee;
+      border-radius:15px;
+    }
+
+    .selected-label{
+      color:#555;
+    }
+
+    .selected-discount{
+      margin-top:8px;
+      font-size:26px;
+      font-weight:bold;
+    }
+
+
+    /* =========================================
+       CONFIRM
+       ========================================= */
+
+    .confirm-button{
       display:none;
       width:100%;
-      border:0;
+      border:none;
       background:#111;
       color:white;
       padding:17px;
@@ -152,6 +236,11 @@
       font-weight:bold;
       cursor:pointer;
     }
+
+
+    /* =========================================
+       MESSAGE
+       ========================================= */
 
     .message{
       display:none;
@@ -171,12 +260,32 @@
       color:#b71c1c;
     }
 
+
+    /* =========================================
+       EMPTY
+       ========================================= */
+
+    .empty{
+      padding:15px;
+      background:#f6f6f6;
+      color:#666;
+      border-radius:13px;
+      line-height:1.7;
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
+
+
+  <!-- =========================================
+       HEADER
+       ========================================= -->
 
   <div class="header">
 
@@ -185,24 +294,29 @@
     </div>
 
     <div
-      class="shop-name"
       id="shopName"
+      class="shop-name"
     >
       المحل
     </div>
 
     <div
-      class="shop-id"
       id="shopId"
+      class="shop-id"
     >
     </div>
 
   </div>
 
 
+
+  <!-- =========================================
+       DISCOUNTS
+       ========================================= -->
+
   <div class="card">
 
-    <div class="title">
+    <div class="section-title">
       الخصومات المتاحة
     </div>
 
@@ -211,61 +325,94 @@
   </div>
 
 
+
+  <!-- =========================================
+       SCANNER
+       ========================================= -->
+
   <div class="card">
 
-    <div class="title">
+    <div class="section-title">
       بطاقة العميل
     </div>
 
     <button
-      class="scan"
+      class="scan-button"
       onclick="startScanner()"
     >
       📷 مسح بطاقة العميل
     </button>
 
+
     <div id="reader"></div>
 
+
     <div
+      id="scanStatus"
       class="status"
-      id="status"
     >
-      اضغط على الزر لفتح كاميرا الهاتف.
+      اضغط على الزر لفتح كاميرا الهاتف ومسح QR العميل.
     </div>
 
+
+    <!-- CUSTOMER -->
 
     <div
-      class="customer"
       id="customer"
+      class="customer"
     >
 
       <div
-        class="customer-name"
         id="customerName"
+        class="customer-name"
       >
       </div>
 
       <div
-        class="customer-id"
         id="customerId"
+        class="customer-id"
       >
       </div>
 
     </div>
 
+
+    <!-- SELECTED DISCOUNT -->
+
+    <div
+      id="selectedBox"
+      class="selected-box"
+    >
+
+      <div class="selected-label">
+        الخصم المختار:
+      </div>
+
+      <div
+        id="selectedDiscount"
+        class="selected-discount"
+      >
+      </div>
+
+    </div>
+
+
+    <!-- CONFIRM -->
 
     <button
-      class="confirm"
       id="confirmButton"
-      onclick="continueToTransaction()"
+      class="confirm-button"
+      onclick="confirmTransaction()"
     >
-      ✅ متابعة تسجيل العملية
+      ✅ تأكيد استخدام الخصم
     </button>
 
 
+    <!-- MESSAGE -->
+
     <div
-      class="message"
       id="message"
+      class="message"
     >
     </div>
 
@@ -274,602 +421,988 @@
 </div>
 
 
+
 <script>
 
-  // =================================================
-  // قراءة بيانات المحل من الرابط
-  // =================================================
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+/* =====================================================
+   إعدادات المحل
+   ===================================================== */
 
 
-  const SHOP_ID =
-    params.get("shopId") || "";
+/*
+  رابط Google Apps Script الرئيسي.
+  هذا هو نفس رابط الـ Web App المستخدم عندك.
+*/
+
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
 
 
-  const SHOP_NAME =
-    params.get("shop") ||
-    "";
+/*
+  قراءة بيانات الرابط.
+*/
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
 
-  const D1 =
-    formatDiscount(
-      params.get("d1")
-    );
+/*
+  Shop ID
+*/
+
+const SHOP_ID =
+  params.get("shopId") || "";
 
 
-  const D2 =
-    formatDiscount(
-      params.get("d2")
-    );
+/*
+  اسم المحل
+*/
+
+const SHOP_NAME =
+  params.get("shop") ||
+  "";
 
 
-  const D3 =
-    formatDiscount(
-      params.get("d3")
-    );
+/*
+  الخصومات المرسلة بالرابط.
+*/
+
+const D1 =
+  formatDiscount(
+    params.get("d1")
+  );
+
+const D2 =
+  formatDiscount(
+    params.get("d2")
+  );
+
+const D3 =
+  formatDiscount(
+    params.get("d3")
+  );
 
 
-  const discounts = [];
+/*
+  تجميع الخصومات.
+*/
+
+const discounts = [];
 
 
-  if(D1){
-    discounts.push(D1);
+if(D1){
+  discounts.push(D1);
+}
+
+
+if(D2){
+  discounts.push(D2);
+}
+
+
+if(D3){
+  discounts.push(D3);
+}
+
+
+/*
+  متغيرات العملية.
+*/
+
+let scanner = null;
+
+let scannerRunning = false;
+
+let scannedMemberId = "";
+
+let selectedDiscount = "";
+
+
+/*
+  عرض بيانات المحل.
+*/
+
+document.getElementById(
+  "shopId"
+).innerText =
+  SHOP_ID;
+
+
+document.getElementById(
+  "shopName"
+).innerText =
+  SHOP_NAME || "المحل";
+
+
+renderDiscounts();
+
+
+
+/* =====================================================
+   تنسيق النسبة
+   ===================================================== */
+
+function formatDiscount(value){
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === ""
+  ){
+
+    return "";
   }
 
-  if(D2){
-    discounts.push(D2);
+
+  let text =
+    String(value).trim();
+
+
+  if(!text){
+
+    return "";
   }
 
-  if(D3){
-    discounts.push(D3);
-  }
 
+  /*
+    إذا كانت مكتوبة أصلًا:
+    15%
+    20%
+    30%
+  */
 
-  document.getElementById(
-    "shopId"
-  ).innerText =
-    SHOP_ID;
-
-
-  document.getElementById(
-    "shopName"
-  ).innerText =
-    SHOP_NAME || "المحل";
-
-
-  renderDiscounts();
-
-
-  let scanner = null;
-
-  let scannerRunning = false;
-
-  let scannedMemberId = "";
-
-  let selectedDiscount = "";
-
-
-  // =================================================
-  // تنسيق الخصم
-  // =================================================
-
-  function formatDiscount(value){
-
-    if(
-      value === null ||
-      value === undefined ||
-      value === ""
-    ){
-
-      return "";
-    }
-
-
-    let text =
-      String(value).trim();
-
-
-    if(!text){
-      return "";
-    }
-
-
-    if(
-      text.includes("%")
-    ){
-
-      return text;
-    }
-
-
-    let num =
-      parseFloat(
-        text.replace(
-          ",",
-          "."
-        )
-      );
-
-
-    if(
-      !isNaN(num) &&
-      num > 0 &&
-      num < 1
-    ){
-
-      return (
-        Math.round(
-          num * 100
-        ) + "%"
-      );
-    }
-
-
-    if(
-      !isNaN(num) &&
-      num >= 1 &&
-      num < 100
-    ){
-
-      return (
-        Math.round(num) +
-        "%"
-      );
-    }
-
+  if(
+    text.includes("%")
+  ){
 
     return text;
   }
 
 
-  // =================================================
-  // عرض الخصومات
-  // =================================================
+  /*
+    إذا كانت رقمًا مثل:
+    0.15
+  */
 
-  function renderDiscounts(){
-
-    const box =
-      document.getElementById(
-        "discounts"
-      );
-
-
-    box.innerHTML = "";
+  let num =
+    parseFloat(
+      text.replace(
+        ",",
+        "."
+      )
+    );
 
 
-    if(
-      discounts.length === 0
-    ){
+  if(
+    !isNaN(num) &&
+    num > 0 &&
+    num < 1
+  ){
 
-      box.innerHTML =
-        `
-        <div class="status">
-          لا توجد خصومات مضافة لهذا المحل.
+    return (
+      Math.round(
+        num * 100
+      ) + "%"
+    );
+  }
+
+
+  /*
+    إذا كانت:
+    15
+    20
+    30
+  */
+
+  if(
+    !isNaN(num) &&
+    num >= 1 &&
+    num < 100
+  ){
+
+    return (
+      Math.round(num) +
+      "%"
+    );
+  }
+
+
+  return text;
+}
+
+
+
+/* =====================================================
+   عرض الخصومات
+   ===================================================== */
+
+function renderDiscounts(){
+
+  const box =
+    document.getElementById(
+      "discounts"
+    );
+
+
+  box.innerHTML = "";
+
+
+  if(
+    discounts.length === 0
+  ){
+
+    box.innerHTML = `
+
+      <div class="empty">
+        لا توجد خصومات مضافة لهذا المحل حاليًا.
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  discounts.forEach(
+    function(discount){
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "discount";
+
+
+      button.innerHTML = `
+
+        <div>
+          خصم ${escapeHtml(discount)}
         </div>
-        `;
 
-      return;
-    }
+        <div class="discount-sub">
+          اضغط لاختيار هذا الخصم
+        </div>
+
+      `;
 
 
-    discounts.forEach(
-      function(discount){
+      button.onclick =
+        function(){
 
-        const button =
-          document.createElement(
-            "button"
+          selectDiscount(
+            discount,
+            button
           );
 
-
-        button.className =
-          "discount";
+        };
 
 
-        button.innerText =
-          "خصم " + discount;
+      box.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
 
 
-        button.onclick =
-          function(){
 
-            selectDiscount(
-              discount,
-              button
-            );
+/* =====================================================
+   اختيار الخصم
+   ===================================================== */
 
-          };
+function selectDiscount(
+  discount,
+  button
+){
+
+  if(!scannedMemberId){
+
+    showMessage(
+      "قم بمسح بطاقة العميل أولًا.",
+      false
+    );
+
+    return;
+  }
 
 
-        box.appendChild(
-          button
+  selectedDiscount =
+    discount;
+
+
+  document
+    .querySelectorAll(
+      ".discount"
+    )
+    .forEach(
+      function(item){
+
+        item.classList.remove(
+          "selected"
         );
 
       }
     );
 
+
+  button.classList.add(
+    "selected"
+  );
+
+
+  document.getElementById(
+    "selectedDiscount"
+  ).innerText =
+    "خصم " + discount;
+
+
+  document.getElementById(
+    "selectedBox"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "confirmButton"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "selectedBox"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+
+/* =====================================================
+   تشغيل الماسح
+   ===================================================== */
+
+function startScanner(){
+
+  if(scannerRunning){
+
+    return;
   }
 
 
-  // =================================================
-  // اختيار الخصم
-  // =================================================
-
-  function selectDiscount(
-    discount,
-    button
-  ){
-
-    selectedDiscount =
-      discount;
+  hideMessage();
 
 
-    document
-      .querySelectorAll(
-        ".discount"
-      )
-      .forEach(
-        function(item){
-
-          item.classList.remove(
-            "selected"
-          );
-
-        }
-      );
+  document.getElementById(
+    "scanStatus"
+  ).innerText =
+    "⏳ جاري تشغيل الكاميرا...";
 
 
-    button.classList.add(
-      "selected"
+  scanner =
+    new Html5Qrcode(
+      "reader"
     );
 
 
-    if(scannedMemberId){
+  scannerRunning =
+    true;
 
-      document.getElementById(
-        "confirmButton"
-      ).style.display =
-        "block";
+
+  scanner.start(
+
+    {
+      facingMode:
+        "environment"
+    },
+
+    {
+      fps:10,
+
+      qrbox:{
+        width:250,
+        height:250
+      }
+
+    },
+
+    function(decodedText){
+
+      handleScan(
+        decodedText
+      );
+
+    },
+
+    function(errorMessage){
+
+      /*
+        نتجاهل أخطاء القراءة المؤقتة.
+      */
 
     }
 
+  )
 
-    showStatus(
-      "✅ تم اختيار " +
-      "خصم " +
-      discount
-    );
+  .then(function(){
 
-  }
+    document.getElementById(
+      "scanStatus"
+    ).innerText =
+      "📷 وجّه الكاميرا إلى QR الموجود على بطاقة العميل.";
 
+  })
 
-  // =================================================
-  // تشغيل الكاميرا
-  // =================================================
-
-  function startScanner(){
-
-    if(scannerRunning){
-
-      return;
-    }
-
-
-    showStatus(
-      "⏳ جاري تشغيل الكاميرا..."
-    );
-
-
-    scanner =
-      new Html5Qrcode(
-        "reader"
-      );
-
+  .catch(function(error){
 
     scannerRunning =
-      true;
+      false;
 
 
-    scanner.start(
+    showMessage(
+      "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا.",
+      false
+    );
 
-      {
-        facingMode:
-          "environment"
-      },
+  });
 
-      {
-        fps:10,
+}
 
-        qrbox:{
-          width:250,
-          height:250
-        }
 
-      },
 
-      function(decodedText){
+/* =====================================================
+   معالجة QR
+   ===================================================== */
 
-        handleScan(
-          decodedText
-        );
+function handleScan(
+  decodedText
+){
 
-      },
+  let memberId =
+    "";
 
-      function(errorMessage){
 
-        // تجاهل أخطاء القراءة المؤقتة
+  /*
+    QR بطاقة العميل يحتوي رابطًا مثل:
 
-      }
+    .../exec?member=SP-0001
+  */
 
-    )
 
-    .then(function(){
+  try{
 
-      showStatus(
-        "📷 وجّه الكاميرا إلى QR بطاقة العميل."
+    const url =
+      new URL(
+        decodedText
       );
 
-    })
 
-    .catch(function(error){
+    memberId =
+      url.searchParams.get(
+        "member"
+      ) ||
+      url.searchParams.get(
+        "card"
+      ) ||
+      "";
 
-      scannerRunning =
-        false;
+  }
 
+  catch(error){
 
-      showMessage(
-        "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا.",
-        false
-      );
+    /*
+      إذا كان QR نفسه مجرد SP-0001
+    */
 
-    });
+    memberId =
+      String(
+        decodedText || ""
+      ).trim();
 
   }
 
 
-  // =================================================
-  // معالجة QR
-  // =================================================
+  /*
+    نتأكد أنه Member ID.
+  */
 
-  function handleScan(
-    decodedText
+  if(
+    !/^SP-\d+$/i.test(
+      memberId
+    )
   ){
 
-    let memberId =
-      "";
+    showMessage(
+      "هذا QR ليس بطاقة SALT PASS صالحة.",
+      false
+    );
+
+    return;
+  }
 
 
-    try{
-
-      const url =
-        new URL(
-          decodedText
-        );
+  scannedMemberId =
+    memberId;
 
 
-      memberId =
-        url.searchParams.get(
-          "member"
-        ) ||
-        url.searchParams.get(
-          "card"
-        ) ||
-        "";
-
-    }
-
-    catch(error){
-
-      memberId =
-        String(
-          decodedText || ""
-        ).trim();
-
-    }
+  stopScanner();
 
 
-    if(!memberId){
+  /*
+    إظهار رقم العضوية مباشرة.
+  */
 
-      showMessage(
-        "هذا QR ليس بطاقة SALT PASS.",
-        false
-      );
-
-      return;
-    }
-
-
-    scannedMemberId =
-      memberId;
+  document.getElementById(
+    "customerName"
+  ).innerText =
+    "جاري التحقق من البطاقة...";
 
 
-    stopScanner();
+  document.getElementById(
+    "customerId"
+  ).innerText =
+    "Member ID: " +
+    memberId;
 
 
-    document.getElementById(
-      "customerName"
-    ).innerText =
-      "التحقق من العميل...";
+  document.getElementById(
+    "customer"
+  ).style.display =
+    "block";
 
 
-    document.getElementById(
-      "customerId"
-    ).innerText =
-      memberId;
+  document.getElementById(
+    "scanStatus"
+  ).innerText =
+    "⏳ جاري التحقق من بطاقة العميل...";
 
 
-    document.getElementById(
-      "customer"
-    ).style.display =
-      "block";
+  /*
+    التحقق من العميل عن طريق Apps Script.
+  */
 
-
-    /*
-      نرسل المستخدم مؤقتًا إلى Apps Script
-      للتحقق من البطاقة.
-    */
-
-    const appsScriptUrl =
-      "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
-
-
-    /*
-      نفتح بطاقة العميل للتحقق منها.
-      الخطوة التالية سنجعل Apps Script يعيد
-      المستخدم إلى صفحة المحل مع بيانات العميل.
-    */
-
-    showStatus(
-      "✅ تم قراءة QR العميل: " +
+  const verifyUrl =
+    APPS_SCRIPT_URL +
+    "?verifyMember=" +
+    encodeURIComponent(
       memberId
     );
 
 
-    document.getElementById(
-      "confirmButton"
-    ).style.display =
-      "block";
+  /*
+    فتح رابط التحقق في الخلفية
+    باستخدام iframe مخفي.
+  */
 
-  }
+  verifyMember(
+    memberId
+  );
 
-
-  // =================================================
-  // إيقاف الكاميرا
-  // =================================================
-
-  function stopScanner(){
-
-    if(
-      scanner &&
-      scannerRunning
-    ){
-
-      scanner.stop()
-
-        .then(function(){
-
-          scannerRunning =
-            false;
-
-        })
-
-        .catch(function(){
-
-          scannerRunning =
-            false;
-
-        });
-
-    }
-
-  }
+}
 
 
-  // =================================================
-  // متابعة العملية
-  // =================================================
 
-  function continueToTransaction(){
+/* =====================================================
+   التحقق من العميل
+   ===================================================== */
 
-    if(!scannedMemberId){
+function verifyMember(
+  memberId
+){
 
-      showMessage(
-        "لم يتم تحديد العميل.",
-        false
-      );
+  /*
+    نستخدم Apps Script Web App.
+    التطبيق يعيد صفحة HTML بسيطة،
+    لذلك هنا نستخدم fetch.
+  */
 
-      return;
-    }
-
-
-    if(!selectedDiscount){
-
-      showMessage(
-        "اختر الخصم الذي استخدمه العميل أولًا.",
-        false
-      );
-
-      return;
-    }
-
-
-    /*
-      مؤقتًا نعرض النتيجة.
-      في الخطوة التالية سنربط هذا مباشرة
-      بدالة Apps Script التي تكتب في Transactions.
-    */
-
-    showMessage(
-      "✅ العميل: " +
-      scannedMemberId +
-      "<br>" +
-      "✅ الخصم: " +
-      selectedDiscount +
-      "<br><br>" +
-      "الخطوة التالية: تسجيل العملية في Transactions.",
-      true
+  const url =
+    APPS_SCRIPT_URL +
+    "?verifyMember=" +
+    encodeURIComponent(
+      memberId
     );
 
-  }
+
+  fetch(
+    url,
+    {
+      method:"GET",
+      mode:"cors",
+      cache:"no-store"
+    }
+  )
+
+  .then(
+    function(response){
+
+      return response.text();
+
+    }
+  )
+
+  .then(
+    function(text){
+
+      /*
+        في حال أعاد Apps Script
+        البيانات كنص JSON.
+      */
+
+      try{
+
+        const member =
+          JSON.parse(
+            text
+          );
 
 
-  // =================================================
-  // رسالة عادية
-  // =================================================
+        if(
+          !member ||
+          !member.id
+        ){
 
-  function showStatus(
-    text
+          showMessage(
+            "بطاقة العميل غير موجودة.",
+            false
+          );
+
+          return;
+        }
+
+
+        if(
+          String(
+            member.status
+          ).toUpperCase()
+          !==
+          "ACTIVE"
+        ){
+
+          showMessage(
+            "بطاقة العميل غير فعالة.",
+            false
+          );
+
+          return;
+        }
+
+
+        document.getElementById(
+          "customerName"
+        ).innerText =
+          member.name;
+
+
+        document.getElementById(
+          "customerId"
+        ).innerText =
+          "Member ID: " +
+          member.id;
+
+
+        document.getElementById(
+          "scanStatus"
+        ).innerText =
+          "✅ تم التعرف على العميل بنجاح.";
+
+
+      }
+
+      catch(error){
+
+        /*
+          إذا لم يرجع JSON،
+          نعتبر أن القراءة نفسها ناجحة.
+        */
+
+        document.getElementById(
+          "customerName"
+        ).innerText =
+          "العميل " +
+          memberId;
+
+
+        document.getElementById(
+          "customerId"
+        ).innerText =
+          "Member ID: " +
+          memberId;
+
+
+        document.getElementById(
+          "scanStatus"
+        ).innerText =
+          "✅ تم قراءة بطاقة العميل.";
+
+      }
+
+    }
+  )
+
+  .catch(
+    function(error){
+
+      /*
+        إذا منع المتصفح الطلب بسبب CORS،
+        نعرض العميل المقروء.
+        وسيتم التحقق النهائي عند تسجيل العملية.
+      */
+
+      document.getElementById(
+        "customerName"
+      ).innerText =
+        "العميل " +
+        memberId;
+
+
+      document.getElementById(
+        "customerId"
+      ).innerText =
+        "Member ID: " +
+        memberId;
+
+
+      document.getElementById(
+        "scanStatus"
+      ).innerText =
+        "✅ تم قراءة بطاقة العميل.";
+
+    }
+  );
+
+}
+
+
+
+/* =====================================================
+   إيقاف الكاميرا
+   ===================================================== */
+
+function stopScanner(){
+
+  if(
+    scanner &&
+    scannerRunning
   ){
 
-    const box =
-      document.getElementById(
-        "status"
+    scanner.stop()
+
+      .then(
+        function(){
+
+          scannerRunning =
+            false;
+
+        }
+      )
+
+      .catch(
+        function(){
+
+          scannerRunning =
+            false;
+
+        }
       );
-
-
-    box.innerText =
-      text;
-
-    box.className =
-      "status";
 
   }
 
+}
 
-  // =================================================
-  // رسالة نجاح / خطأ
-  // =================================================
 
-  function showMessage(
-    text,
+
+/* =====================================================
+   تأكيد العملية
+   ===================================================== */
+
+function confirmTransaction(){
+
+  if(!scannedMemberId){
+
+    showMessage(
+      "لم يتم تحديد العميل.",
+      false
+    );
+
+    return;
+  }
+
+
+  if(!selectedDiscount){
+
+    showMessage(
+      "اختر الخصم أولًا.",
+      false
+    );
+
+    return;
+  }
+
+
+  /*
+    زر التأكيد
+  */
+
+  const button =
+    document.getElementById(
+      "confirmButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    "⏳ جاري تسجيل العملية...";
+
+
+  showMessage(
+    "⏳ جاري تسجيل العملية في النظام...",
+    true
+  );
+
+
+  /*
+    رابط تسجيل العملية.
+  */
+
+  const transactionUrl =
+    APPS_SCRIPT_URL +
+
+    "?action=record" +
+
+    "&shopId=" +
+    encodeURIComponent(
+      SHOP_ID
+    ) +
+
+    "&memberId=" +
+    encodeURIComponent(
+      scannedMemberId
+    ) +
+
+    "&discount=" +
+    encodeURIComponent(
+      selectedDiscount
+    );
+
+
+  /*
+    ننتقل إلى Apps Script
+    لتسجيل العملية.
+  */
+
+  window.location.href =
+    transactionUrl;
+
+}
+
+
+
+/* =====================================================
+   إظهار رسالة
+   ===================================================== */
+
+function showMessage(
+  text,
+  success
+){
+
+  const box =
+    document.getElementById(
+      "message"
+    );
+
+
+  box.innerHTML =
+    text;
+
+
+  box.className =
     success
-  ){
-
-    const box =
-      document.getElementById(
-        "message"
-      );
+      ? "message success"
+      : "message error";
 
 
-    box.innerHTML =
-      text;
+  box.style.display =
+    "block";
+
+}
 
 
-    box.className =
-      success
-        ? "message success"
-        : "message error";
+
+/* =====================================================
+   إخفاء الرسالة
+   ===================================================== */
+
+function hideMessage(){
+
+  const box =
+    document.getElementById(
+      "message"
+    );
 
 
-    box.style.display =
-      "block";
+  box.style.display =
+    "none";
 
-  }
+}
+
+
+
+/* =====================================================
+   حماية HTML
+   ===================================================== */
+
+function escapeHtml(
+  value
+){
+
+  return String(
+    value == null
+      ? ""
+      : value
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
 
 </script>
 
 </body>
+
 </html>
