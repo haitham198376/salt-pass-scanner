@@ -1,179 +1,177 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
+  <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1">
+  <title>SALT PASS - Scanner</title>
 
-<title>SALT PASS Scanner</title>
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+  </script>
 
-<style>
+  <style>
 
-* {
-  box-sizing: border-box;
-}
+    *{
+      box-sizing:border-box;
+    }
 
-body {
-  margin: 0;
-  padding: 15px;
-  background: #f3f5f7;
-  font-family: Arial, Tahoma, sans-serif;
-  text-align: center;
-  color: #111;
-}
+    body{
+      margin:0;
+      padding:20px;
+      background:#f3f5f7;
+      font-family:Arial,Tahoma,sans-serif;
+      color:#111;
+    }
 
-.container {
-  width: 100%;
-  max-width: 430px;
-  margin: auto;
-}
+    .container{
+      max-width:500px;
+      margin:0 auto;
+    }
 
-.header {
-  background: #111;
-  color: white;
-  padding: 24px 15px;
-  border-radius: 22px;
-  margin-bottom: 15px;
-}
+    .header{
+      background:#111;
+      color:#fff;
+      padding:28px 20px;
+      border-radius:24px;
+      text-align:center;
+    }
 
-.logo {
-  font-size: 29px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
+    .logo{
+      font-size:30px;
+      font-weight:800;
+      letter-spacing:2px;
+    }
 
-.shop {
-  font-size: 20px;
-  margin-top: 8px;
-}
+    .shop-name{
+      margin-top:10px;
+      font-size:23px;
+      font-weight:bold;
+    }
 
-.offer {
-  color: #bbb;
-  font-size: 14px;
-  margin-top: 7px;
-  line-height: 1.6;
-}
+    .shop-id{
+      margin-top:6px;
+      color:#aaa;
+      font-size:13px;
+    }
 
-.card {
-  background: white;
-  padding: 22px 16px;
-  border-radius: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,.08);
-}
+    .card{
+      background:#fff;
+      margin-top:15px;
+      padding:20px;
+      border-radius:20px;
+      box-shadow:0 6px 20px rgba(0,0,0,.06);
+    }
 
-.title {
-  font-size: 19px;
-  font-weight: bold;
-}
+    .title{
+      font-size:20px;
+      font-weight:bold;
+      margin-bottom:15px;
+    }
 
-.text {
-  margin-top: 9px;
-  color: #666;
-  font-size: 13px;
-  line-height: 1.8;
-}
+    .discount{
+      width:100%;
+      border:0;
+      background:#111;
+      color:#fff;
+      padding:18px;
+      margin-top:10px;
+      border-radius:15px;
+      text-align:right;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:bold;
+    }
 
-.camera-button {
-  display: block;
-  width: 100%;
-  padding: 18px;
-  margin-top: 20px;
-  border-radius: 14px;
-  background: #111;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .discount.selected{
+      outline:3px solid #777;
+    }
 
-.camera-input {
-  display: none;
-}
+    .scan{
+      width:100%;
+      border:0;
+      background:#111;
+      color:#fff;
+      padding:18px;
+      border-radius:14px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
 
-.status {
-  margin-top: 15px;
-  background: #f7f7f7;
-  padding: 13px;
-  border-radius: 12px;
-  color: #666;
-  font-size: 13px;
-  line-height: 1.7;
-}
+    #reader{
+      width:100%;
+      margin-top:18px;
+    }
 
-.error {
-  display: none;
-  margin-top: 13px;
-  padding: 13px;
-  background: #ffebee;
-  color: #c62828;
-  border-radius: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
+    #reader video{
+      border-radius:15px;
+    }
 
-#preview {
-  display: none;
-  width: 100%;
-  max-height: 350px;
-  object-fit: contain;
-  margin-top: 15px;
-  border-radius: 14px;
-  background: #eee;
-}
+    .status{
+      margin-top:14px;
+      padding:13px;
+      border-radius:12px;
+      background:#f4f4f4;
+      color:#666;
+      line-height:1.8;
+    }
 
-#result {
-  display: none;
-  margin-top: 15px;
-  background: #f1f8e9;
-  padding: 24px 18px;
-  border-radius: 18px;
-}
+    .customer{
+      display:none;
+      margin-top:15px;
+      padding:18px;
+      background:#f7f7f7;
+      border-radius:15px;
+    }
 
-.success {
-  color: #2e7d32;
-  font-size: 21px;
-  font-weight: bold;
-}
+    .customer-name{
+      font-size:21px;
+      font-weight:bold;
+    }
 
-.member-id {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 15px 0;
-}
+    .customer-id{
+      margin-top:7px;
+      color:#666;
+    }
 
-.offer-result {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1.7;
-}
+    .confirm{
+      display:none;
+      width:100%;
+      border:0;
+      background:#111;
+      color:white;
+      padding:17px;
+      border-radius:13px;
+      margin-top:15px;
+      font-size:17px;
+      font-weight:bold;
+      cursor:pointer;
+    }
 
-button {
-  width: 100%;
-  border: none;
-  border-radius: 13px;
-  padding: 16px;
-  margin-top: 12px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .message{
+      display:none;
+      margin-top:15px;
+      padding:14px;
+      border-radius:12px;
+      line-height:1.8;
+    }
 
-.confirm {
-  background: #111;
-  color: white;
-}
+    .success{
+      background:#e9f7ec;
+      color:#256b32;
+    }
 
-.retry {
-  background: #e6e6e6;
-  color: #111;
-}
+    .error{
+      background:#ffecec;
+      color:#b71c1c;
+    }
 
-</style>
-
+  </style>
 </head>
 
 <body>
@@ -186,109 +184,90 @@ button {
       SALT PASS
     </div>
 
-    <div id="shopName" class="shop">
-      جاري تحميل المحل...
+    <div
+      class="shop-name"
+      id="shopName"
+    >
+      المحل
     </div>
 
-    <div id="offerTitle" class="offer">
-      جاري تحميل العرض...
+    <div
+      class="shop-id"
+      id="shopId"
+    >
     </div>
 
   </div>
 
 
-  <div id="scannerCard" class="card">
+  <div class="card">
 
     <div class="title">
-      📷 مسح بطاقة العميل
+      الخصومات المتاحة
     </div>
 
-    <div class="text">
-      اضغط الزر لفتح كاميرا الهاتف والتقاط صورة QR البطاقة.
-    </div>
-
-    <label
-      for="cameraInput"
-      class="camera-button">
-
-      📷 التقاط صورة QR
-
-    </label>
-
-    <input
-      id="cameraInput"
-      class="camera-input"
-      type="file"
-      accept="image/*"
-      capture="environment">
-
-
-    <div
-      id="status"
-      class="status">
-
-      جاهز لالتقاط صورة QR.
-
-    </div>
-
-
-    <img
-      id="preview"
-      alt="QR">
-
-
-    <div
-      id="error"
-      class="error">
-    </div>
-
-
-    <button
-      class="retry"
-      onclick="goBack()">
-
-      رجوع
-
-    </button>
+    <div id="discounts"></div>
 
   </div>
 
 
-  <div id="result">
+  <div class="card">
 
-    <div class="success">
-      ✅ تم قراءة بطاقة العميل
+    <div class="title">
+      بطاقة العميل
     </div>
+
+    <button
+      class="scan"
+      onclick="startScanner()"
+    >
+      📷 مسح بطاقة العميل
+    </button>
+
+    <div id="reader"></div>
 
     <div
-      id="memberId"
-      class="member-id">
+      class="status"
+      id="status"
+    >
+      اضغط على الزر لفتح كاميرا الهاتف.
     </div>
 
-    <div>
-      العرض:
-    </div>
 
     <div
-      id="resultOffer"
-      class="offer-result">
+      class="customer"
+      id="customer"
+    >
+
+      <div
+        class="customer-name"
+        id="customerName"
+      >
+      </div>
+
+      <div
+        class="customer-id"
+        id="customerId"
+      >
+      </div>
+
     </div>
+
 
     <button
       class="confirm"
-      onclick="confirmOffer()">
-
-      ✅ تأكيد تنفيذ العرض
-
+      id="confirmButton"
+      onclick="continueToTransaction()"
+    >
+      ✅ متابعة تسجيل العملية
     </button>
 
-    <button
-      class="retry"
-      onclick="retry()">
 
-      🔄 مسح بطاقة أخرى
-
-    </button>
+    <div
+      class="message"
+      id="message"
+    >
+    </div>
 
   </div>
 
@@ -297,808 +276,600 @@ button {
 
 <script>
 
+  // =================================================
+  // قراءة بيانات المحل من الرابط
+  // =================================================
 
-// =====================================================
-// PARAMETERS
-// =====================================================
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-
-const SHOP_ID =
-  params.get("shopId") || "";
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
 
-const SHOP_NAME =
-  params.get("shop") || "";
+  const SHOP_ID =
+    params.get("shopId") || "";
 
 
-const OFFER_ID =
-  params.get("offerId") || "";
+  const SHOP_NAME =
+    params.get("shop") ||
+    "";
 
 
-const OFFER_TITLE =
-  params.get("offerTitle") || "";
+  const D1 =
+    formatDiscount(
+      params.get("d1")
+    );
 
 
-const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwmLk-7BH1pZozto0tKbk1LqmM6g6jUcoMAR1XzslGxVwmwJAhNkrCjW5ARBNky8wdl/exec";
+  const D2 =
+    formatDiscount(
+      params.get("d2")
+    );
 
 
-let scannedMemberId = "";
+  const D3 =
+    formatDiscount(
+      params.get("d3")
+    );
 
 
-document.getElementById(
-  "shopName"
-).innerText =
-  SHOP_NAME || "SALT PASS";
+  const discounts = [];
 
 
-document.getElementById(
-  "offerTitle"
-).innerText =
-  OFFER_TITLE || "العرض";
+  if(D1){
+    discounts.push(D1);
+  }
 
+  if(D2){
+    discounts.push(D2);
+  }
 
-document.getElementById(
-  "resultOffer"
-).innerText =
-  OFFER_TITLE || "العرض";
+  if(D3){
+    discounts.push(D3);
+  }
 
-
-// =====================================================
-// STATUS / ERROR
-// =====================================================
-
-function setStatus(text) {
 
   document.getElementById(
-    "status"
-  ).innerText = text;
-
-}
-
-
-function showError(text) {
-
-  const el =
-    document.getElementById(
-      "error"
-    );
-
-  el.innerText = text;
-
-  el.style.display = "block";
-
-}
+    "shopId"
+  ).innerText =
+    SHOP_ID;
 
 
-function hideError() {
-
-  const el =
-    document.getElementById(
-      "error"
-    );
-
-  el.innerText = "";
-
-  el.style.display = "none";
-
-}
+  document.getElementById(
+    "shopName"
+  ).innerText =
+    SHOP_NAME || "المحل";
 
 
-// =====================================================
-// CHECK
-// =====================================================
-
-function checkParams() {
-
-  if (!SHOP_ID) {
-
-    showError(
-      "❌ لم يتم تحديد المحل."
-    );
-
-    return false;
-
-  }
+  renderDiscounts();
 
 
-  if (!OFFER_ID) {
+  let scanner = null;
 
-    showError(
-      "❌ لم يتم تحديد العرض."
-    );
+  let scannerRunning = false;
 
-    return false;
+  let scannedMemberId = "";
 
-  }
+  let selectedDiscount = "";
 
 
-  return true;
+  // =================================================
+  // تنسيق الخصم
+  // =================================================
 
-}
+  function formatDiscount(value){
 
+    if(
+      value === null ||
+      value === undefined ||
+      value === ""
+    ){
 
-// =====================================================
-// MEMBER ID
-// =====================================================
-
-function extractMemberId(text) {
-
-  const value =
-    String(
-      text || ""
-    ).trim();
-
-
-  if (
-    /^SP-\d+$/i.test(
-      value
-    )
-  ) {
-
-    return value.toUpperCase();
-
-  }
+      return "";
+    }
 
 
-  try {
-
-    const url =
-      new URL(value);
+    let text =
+      String(value).trim();
 
 
-    const card =
-      url.searchParams.get(
-        "card"
+    if(!text){
+      return "";
+    }
+
+
+    if(
+      text.includes("%")
+    ){
+
+      return text;
+    }
+
+
+    let num =
+      parseFloat(
+        text.replace(
+          ",",
+          "."
+        )
       );
 
 
-    if (
-      card &&
-      /^SP-\d+$/i.test(
-        card
-      )
-    ) {
+    if(
+      !isNaN(num) &&
+      num > 0 &&
+      num < 1
+    ){
 
-      return card.toUpperCase();
-
+      return (
+        Math.round(
+          num * 100
+        ) + "%"
+      );
     }
 
-  } catch (e) {}
+
+    if(
+      !isNaN(num) &&
+      num >= 1 &&
+      num < 100
+    ){
+
+      return (
+        Math.round(num) +
+        "%"
+      );
+    }
 
 
-  const match =
-    value.match(
-      /SP-\d+/i
+    return text;
+  }
+
+
+  // =================================================
+  // عرض الخصومات
+  // =================================================
+
+  function renderDiscounts(){
+
+    const box =
+      document.getElementById(
+        "discounts"
+      );
+
+
+    box.innerHTML = "";
+
+
+    if(
+      discounts.length === 0
+    ){
+
+      box.innerHTML =
+        `
+        <div class="status">
+          لا توجد خصومات مضافة لهذا المحل.
+        </div>
+        `;
+
+      return;
+    }
+
+
+    discounts.forEach(
+      function(discount){
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.className =
+          "discount";
+
+
+        button.innerText =
+          "خصم " + discount;
+
+
+        button.onclick =
+          function(){
+
+            selectDiscount(
+              discount,
+              button
+            );
+
+          };
+
+
+        box.appendChild(
+          button
+        );
+
+      }
     );
-
-
-  if (match) {
-
-    return match[0].toUpperCase();
 
   }
 
 
-  return "";
+  // =================================================
+  // اختيار الخصم
+  // =================================================
 
-}
+  function selectDiscount(
+    discount,
+    button
+  ){
+
+    selectedDiscount =
+      discount;
 
 
-// =====================================================
-// IMAGE LOAD
-// =====================================================
+    document
+      .querySelectorAll(
+        ".discount"
+      )
+      .forEach(
+        function(item){
 
-function loadImage(
-  file
-) {
+          item.classList.remove(
+            "selected"
+          );
 
-  return new Promise(
-    function(resolve, reject) {
+        }
+      );
 
-      const image =
-        new Image();
 
+    button.classList.add(
+      "selected"
+    );
+
+
+    if(scannedMemberId){
+
+      document.getElementById(
+        "confirmButton"
+      ).style.display =
+        "block";
+
+    }
+
+
+    showStatus(
+      "✅ تم اختيار " +
+      "خصم " +
+      discount
+    );
+
+  }
+
+
+  // =================================================
+  // تشغيل الكاميرا
+  // =================================================
+
+  function startScanner(){
+
+    if(scannerRunning){
+
+      return;
+    }
+
+
+    showStatus(
+      "⏳ جاري تشغيل الكاميرا..."
+    );
+
+
+    scanner =
+      new Html5Qrcode(
+        "reader"
+      );
+
+
+    scannerRunning =
+      true;
+
+
+    scanner.start(
+
+      {
+        facingMode:
+          "environment"
+      },
+
+      {
+        fps:10,
+
+        qrbox:{
+          width:250,
+          height:250
+        }
+
+      },
+
+      function(decodedText){
+
+        handleScan(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage){
+
+        // تجاهل أخطاء القراءة المؤقتة
+
+      }
+
+    )
+
+    .then(function(){
+
+      showStatus(
+        "📷 وجّه الكاميرا إلى QR بطاقة العميل."
+      );
+
+    })
+
+    .catch(function(error){
+
+      scannerRunning =
+        false;
+
+
+      showMessage(
+        "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا.",
+        false
+      );
+
+    });
+
+  }
+
+
+  // =================================================
+  // معالجة QR
+  // =================================================
+
+  function handleScan(
+    decodedText
+  ){
+
+    let memberId =
+      "";
+
+
+    try{
 
       const url =
-        URL.createObjectURL(
-          file
+        new URL(
+          decodedText
         );
 
 
-      image.onload =
-        function() {
-
-          URL.revokeObjectURL(
-            url
-          );
-
-          resolve(image);
-
-        };
-
-
-      image.onerror =
-        function() {
-
-          URL.revokeObjectURL(
-            url
-          );
-
-          reject(
-            new Error(
-              "image-load-error"
-            )
-          );
-
-        };
-
-
-      image.src =
-        url;
+      memberId =
+        url.searchParams.get(
+          "member"
+        ) ||
+        url.searchParams.get(
+          "card"
+        ) ||
+        "";
 
     }
-  );
 
-}
+    catch(error){
 
-
-// =====================================================
-// NATIVE BARCODE DETECTOR
-// =====================================================
-
-async function nativeDetect(
-  file
-) {
-
-  if (
-    !("BarcodeDetector" in window)
-  ) {
-
-    return "";
-
-  }
-
-
-  try {
-
-    let supported = [];
-
-
-    if (
-      BarcodeDetector
-        .getSupportedFormats
-    ) {
-
-      supported =
-        await BarcodeDetector
-          .getSupportedFormats();
+      memberId =
+        String(
+          decodedText || ""
+        ).trim();
 
     }
 
 
-    if (
-      supported.length &&
-      !supported.includes("qr_code")
-    ) {
-
-      return "";
-
-    }
-
-
-    const detector =
-      new BarcodeDetector({
-        formats: ["qr_code"]
-      });
-
-
-    /*
-      نضع مهلة حتى لا يبقى النظام
-      على "جاري المعالجة" للأبد.
-    */
-
-    const detection =
-      Promise.race([
-
-        detector.detect(file),
-
-        new Promise(
-          function(_, reject) {
-
-            setTimeout(
-              function() {
-
-                reject(
-                  new Error(
-                    "detector-timeout"
-                  )
-                );
-
-              },
-              4000
-            );
-
-          }
-        )
-
-      ]);
-
-
-    const barcodes =
-      await detection;
-
-
-    if (
-      !barcodes ||
-      !barcodes.length
-    ) {
-
-      return "";
-
-    }
-
-
-    return (
-      barcodes[0].rawValue
-      || ""
-    );
-
-  } catch (error) {
-
-    console.log(
-      "Native detector unavailable:",
-      error
-    );
-
-    return "";
-
-  }
-
-}
-
-
-// =====================================================
-// FALLBACK: HTML5 QR CODE
-// =====================================================
-
-async function fallbackDecode(
-  file
-) {
-
-  /*
-    تحميل المكتبة فقط عند الحاجة.
-  */
-
-  if (
-    !window.Html5Qrcode
-  ) {
-
-    await loadScript(
-      "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"
-    );
-
-  }
-
-
-  if (
-    !window.Html5Qrcode
-  ) {
-
-    return "";
-
-  }
-
-
-  const reader =
-    document.createElement(
-      "div"
-    );
-
-
-  reader.id =
-    "hiddenQrReader";
-
-
-  reader.style.display =
-    "none";
-
-
-  document.body.appendChild(
-    reader
-  );
-
-
-  const scanner =
-    new Html5Qrcode(
-      "hiddenQrReader"
-    );
-
-
-  try {
-
-    /*
-      مهلة 6 ثوانٍ.
-      إذا لم يقرأ الصورة لا يعلق البرنامج.
-    */
-
-    const result =
-      await Promise.race([
-
-        scanner.scanFile(
-          file,
-          true
-        ),
-
-        new Promise(
-          function(_, reject) {
-
-            setTimeout(
-              function() {
-
-                reject(
-                  new Error(
-                    "scan-timeout"
-                  )
-                );
-
-              },
-              6000
-            );
-
-          }
-        )
-
-      ]);
-
-
-    return result || "";
-
-  } catch (error) {
-
-    console.log(
-      "Fallback decoder:",
-      error
-    );
-
-    return "";
-
-  } finally {
-
-    try {
-
-      await scanner.clear();
-
-    } catch(e) {}
-
-
-    reader.remove();
-
-  }
-
-}
-
-
-// =====================================================
-// LOAD SCRIPT
-// =====================================================
-
-function loadScript(
-  src
-) {
-
-  return new Promise(
-    function(resolve, reject) {
-
-      const script =
-        document.createElement(
-          "script"
-        );
-
-
-      script.src =
-        src;
-
-
-      script.onload =
-        resolve;
-
-
-      script.onerror =
-        reject;
-
-
-      document.head.appendChild(
-        script
+    if(!memberId){
+
+      showMessage(
+        "هذا QR ليس بطاقة SALT PASS.",
+        false
       );
 
+      return;
     }
-  );
 
-}
-
-
-// =====================================================
-// PROCESS PHOTO
-// =====================================================
-
-async function processPhoto(
-  file
-) {
-
-  hideError();
-
-
-  setStatus(
-    "⏳ جاري قراءة QR..."
-  );
-
-
-  /*
-    1) الطريقة الأصلية للمتصفح
-  */
-
-  let decoded =
-    await nativeDetect(
-      file
-    );
-
-
-  /*
-    2) إذا لم تنجح،
-       نستخدم قارئ احتياطي.
-  */
-
-  if (!decoded) {
-
-    setStatus(
-      "⏳ جاري تجربة طريقة قراءة احتياطية..."
-    );
-
-
-    decoded =
-      await fallbackDecode(
-        file
-      );
-
-  }
-
-
-  /*
-    3) النتيجة
-  */
-
-  const memberId =
-    extractMemberId(
-      decoded
-    );
-
-
-  if (
-    memberId
-  ) {
 
     scannedMemberId =
       memberId;
 
 
-    document.getElementById(
-      "scannerCard"
-    ).style.display =
-      "none";
+    stopScanner();
 
 
     document.getElementById(
-      "result"
-    ).style.display =
-      "block";
-
-
-    document.getElementById(
-      "memberId"
+      "customerName"
     ).innerText =
-      scannedMemberId;
+      "التحقق من العميل...";
 
 
-    setStatus(
-      "✅ تم التعرف على البطاقة."
-    );
+    document.getElementById(
+      "customerId"
+    ).innerText =
+      memberId;
 
 
-    return;
-
-  }
-
-
-  setStatus(
-    "لم يتم العثور على QR."
-  );
-
-
-  showError(
-
-    "⚠️ لم تتم قراءة QR. " +
-    "جرّب تصوير الرمز من قريب جدًا، واجعل المربع الأبيض والأسود ظاهرًا بالكامل."
-
-  );
-
-}
-
-
-// =====================================================
-// CAMERA IMAGE
-// =====================================================
-
-document.getElementById(
-  "cameraInput"
-).addEventListener(
-  "change",
-  async function(event) {
-
-    const file =
-      event.target.files &&
-      event.target.files[0];
-
-
-    if (!file) {
-
-      return;
-
-    }
-
-
-    if (
-      !checkParams()
-    ) {
-
-      return;
-
-    }
-
-
-    const preview =
-      document.getElementById(
-        "preview"
-      );
-
-
-    const previewUrl =
-      URL.createObjectURL(
-        file
-      );
-
-
-    preview.src =
-      previewUrl;
-
-
-    preview.style.display =
+    document.getElementById(
+      "customer"
+    ).style.display =
       "block";
-
-
-    await processPhoto(
-      file
-    );
 
 
     /*
-      نترك الصورة حتى يستطيع المستخدم
-      التأكد من أنها واضحة.
+      نرسل المستخدم مؤقتًا إلى Apps Script
+      للتحقق من البطاقة.
     */
 
-  }
-);
+    const appsScriptUrl =
+      "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
 
 
-// =====================================================
-// CONFIRM
-// =====================================================
+    /*
+      نفتح بطاقة العميل للتحقق منها.
+      الخطوة التالية سنجعل Apps Script يعيد
+      المستخدم إلى صفحة المحل مع بيانات العميل.
+    */
 
-function confirmOffer() {
-
-  if (!scannedMemberId) {
-
-    alert(
-      "لم تتم قراءة بطاقة العميل."
-    );
-
-    return;
-
-  }
-
-
-  const url =
-
-    APPS_SCRIPT_URL +
-
-    "?memberId=" +
-    encodeURIComponent(
-      scannedMemberId
-    ) +
-
-    "&offerId=" +
-    encodeURIComponent(
-      OFFER_ID
-    ) +
-
-    "&shopId=" +
-    encodeURIComponent(
-      SHOP_ID
-    ) +
-
-    "&shop=" +
-    encodeURIComponent(
-      SHOP_NAME
+    showStatus(
+      "✅ تم قراءة QR العميل: " +
+      memberId
     );
 
 
-  window.location.href =
-    url;
+    document.getElementById(
+      "confirmButton"
+    ).style.display =
+      "block";
 
-}
-
-
-// =====================================================
-// RETRY
-// =====================================================
-
-function retry() {
-
-  scannedMemberId =
-    "";
+  }
 
 
-  document.getElementById(
-    "result"
-  ).style.display =
-    "none";
+  // =================================================
+  // إيقاف الكاميرا
+  // =================================================
+
+  function stopScanner(){
+
+    if(
+      scanner &&
+      scannerRunning
+    ){
+
+      scanner.stop()
+
+        .then(function(){
+
+          scannerRunning =
+            false;
+
+        })
+
+        .catch(function(){
+
+          scannerRunning =
+            false;
+
+        });
+
+    }
+
+  }
 
 
-  document.getElementById(
-    "scannerCard"
-  ).style.display =
-    "block";
+  // =================================================
+  // متابعة العملية
+  // =================================================
+
+  function continueToTransaction(){
+
+    if(!scannedMemberId){
+
+      showMessage(
+        "لم يتم تحديد العميل.",
+        false
+      );
+
+      return;
+    }
 
 
-  document.getElementById(
-    "preview"
-  ).style.display =
-    "none";
+    if(!selectedDiscount){
+
+      showMessage(
+        "اختر الخصم الذي استخدمه العميل أولًا.",
+        false
+      );
+
+      return;
+    }
 
 
-  document.getElementById(
-    "cameraInput"
-  ).value =
-    "";
+    /*
+      مؤقتًا نعرض النتيجة.
+      في الخطوة التالية سنربط هذا مباشرة
+      بدالة Apps Script التي تكتب في Transactions.
+    */
+
+    showMessage(
+      "✅ العميل: " +
+      scannedMemberId +
+      "<br>" +
+      "✅ الخصم: " +
+      selectedDiscount +
+      "<br><br>" +
+      "الخطوة التالية: تسجيل العملية في Transactions.",
+      true
+    );
+
+  }
 
 
-  hideError();
+  // =================================================
+  // رسالة عادية
+  // =================================================
+
+  function showStatus(
+    text
+  ){
+
+    const box =
+      document.getElementById(
+        "status"
+      );
 
 
-  setStatus(
-    "جاهز لالتقاط صورة QR."
-  );
+    box.innerText =
+      text;
 
-}
+    box.className =
+      "status";
+
+  }
 
 
-// =====================================================
-// BACK
-// =====================================================
+  // =================================================
+  // رسالة نجاح / خطأ
+  // =================================================
 
-function goBack() {
+  function showMessage(
+    text,
+    success
+  ){
 
-  history.back();
+    const box =
+      document.getElementById(
+        "message"
+      );
 
-}
+
+    box.innerHTML =
+      text;
+
+
+    box.className =
+      success
+        ? "message success"
+        : "message error";
+
+
+    box.style.display =
+      "block";
+
+  }
 
 </script>
 
 </body>
-
 </html>
