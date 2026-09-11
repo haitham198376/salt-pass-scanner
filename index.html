@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
 
   <meta charset="UTF-8">
@@ -12,7 +11,6 @@
 
   <title>SALT PASS</title>
 
-  <!-- مكتبة قراءة QR -->
   <script
     src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
   </script>
@@ -34,12 +32,8 @@
     .container{
       width:100%;
       max-width:500px;
-      margin:0 auto;
+      margin:auto;
     }
-
-    /* =========================================
-       HEADER
-       ========================================= */
 
     .header{
       background:#111;
@@ -67,11 +61,6 @@
       font-size:13px;
     }
 
-
-    /* =========================================
-       CARD
-       ========================================= */
-
     .card{
       background:#fff;
       margin-top:15px;
@@ -86,50 +75,45 @@
       margin-bottom:14px;
     }
 
-
-    /* =========================================
-       DISCOUNTS
-       ========================================= */
-
-    .discount{
+    .offer{
       width:100%;
-      border:none;
+      border:0;
       background:#111;
-      color:white;
+      color:#fff;
       padding:18px;
       margin-top:10px;
       border-radius:15px;
       text-align:right;
       cursor:pointer;
+    }
+
+    .offer.selected{
+      outline:3px solid #777;
+    }
+
+    .offer-title{
       font-size:19px;
       font-weight:bold;
-      transition:.2s;
     }
 
-    .discount:hover{
-      opacity:.9;
-    }
-
-    .discount.selected{
-      outline:3px solid #777;
-      transform:scale(1.01);
-    }
-
-    .discount-sub{
-      margin-top:6px;
+    .offer-details{
+      margin-top:7px;
       color:#bbb;
-      font-size:12px;
-      font-weight:normal;
+      font-size:13px;
+      line-height:1.7;
     }
 
-
-    /* =========================================
-       SCANNER
-       ========================================= */
+    .empty{
+      padding:15px;
+      background:#f6f6f6;
+      color:#666;
+      border-radius:13px;
+      line-height:1.7;
+    }
 
     .scan-button{
       width:100%;
-      border:none;
+      border:0;
       background:#111;
       color:#fff;
       padding:18px;
@@ -149,20 +133,7 @@
       border-radius:16px;
     }
 
-    #reader__dashboard_section{
-      margin-top:10px;
-    }
-
-    #reader button{
-      border-radius:10px !important;
-    }
-
-
-    /* =========================================
-       STATUS
-       ========================================= */
-
-    .status{
+    #scanStatus{
       margin-top:14px;
       padding:13px;
       border-radius:12px;
@@ -170,11 +141,6 @@
       color:#666;
       line-height:1.8;
     }
-
-
-    /* =========================================
-       CUSTOMER
-       ========================================= */
 
     .customer{
       display:none;
@@ -195,11 +161,6 @@
       font-size:14px;
     }
 
-
-    /* =========================================
-       SELECTED DISCOUNT
-       ========================================= */
-
     .selected-box{
       display:none;
       margin-top:15px;
@@ -212,23 +173,18 @@
       color:#555;
     }
 
-    .selected-discount{
+    .selected-title{
       margin-top:8px;
-      font-size:26px;
+      font-size:21px;
       font-weight:bold;
     }
-
-
-    /* =========================================
-       CONFIRM
-       ========================================= */
 
     .confirm-button{
       display:none;
       width:100%;
-      border:none;
+      border:0;
       background:#111;
-      color:white;
+      color:#fff;
       padding:17px;
       border-radius:13px;
       margin-top:15px;
@@ -236,11 +192,6 @@
       font-weight:bold;
       cursor:pointer;
     }
-
-
-    /* =========================================
-       MESSAGE
-       ========================================= */
 
     .message{
       display:none;
@@ -260,32 +211,20 @@
       color:#b71c1c;
     }
 
-
-    /* =========================================
-       EMPTY
-       ========================================= */
-
-    .empty{
+    .loading{
       padding:15px;
       background:#f6f6f6;
       color:#666;
       border-radius:13px;
-      line-height:1.7;
     }
 
   </style>
 
 </head>
 
-
 <body>
 
 <div class="container">
-
-
-  <!-- =========================================
-       HEADER
-       ========================================= -->
 
   <div class="header">
 
@@ -297,7 +236,7 @@
       id="shopName"
       class="shop-name"
     >
-      المحل
+      جاري تحميل المحل...
     </div>
 
     <div
@@ -309,26 +248,24 @@
   </div>
 
 
-
-  <!-- =========================================
-       DISCOUNTS
-       ========================================= -->
+  <!-- العروض -->
 
   <div class="card">
 
     <div class="section-title">
-      الخصومات المتاحة
+      العروض والخصومات
     </div>
 
-    <div id="discounts"></div>
+    <div id="offers">
+      <div class="loading">
+        ⏳ جاري تحميل العروض...
+      </div>
+    </div>
 
   </div>
 
 
-
-  <!-- =========================================
-       SCANNER
-       ========================================= -->
+  <!-- العميل -->
 
   <div class="card">
 
@@ -337,25 +274,19 @@
     </div>
 
     <button
+      id="scanButton"
       class="scan-button"
       onclick="startScanner()"
     >
       📷 مسح بطاقة العميل
     </button>
 
-
     <div id="reader"></div>
 
-
-    <div
-      id="scanStatus"
-      class="status"
-    >
-      اضغط على الزر لفتح كاميرا الهاتف ومسح QR العميل.
+    <div id="scanStatus">
+      اضغط على الزر لفتح الكاميرا ومسح QR العميل.
     </div>
 
-
-    <!-- CUSTOMER -->
 
     <div
       id="customer"
@@ -377,38 +308,32 @@
     </div>
 
 
-    <!-- SELECTED DISCOUNT -->
-
     <div
       id="selectedBox"
       class="selected-box"
     >
 
       <div class="selected-label">
-        الخصم المختار:
+        العرض المختار:
       </div>
 
       <div
-        id="selectedDiscount"
-        class="selected-discount"
+        id="selectedTitle"
+        class="selected-title"
       >
       </div>
 
     </div>
 
 
-    <!-- CONFIRM -->
-
     <button
       id="confirmButton"
       class="confirm-button"
       onclick="confirmTransaction()"
     >
-      ✅ تأكيد استخدام الخصم
+      ✅ تأكيد استخدام العرض
     </button>
 
-
-    <!-- MESSAGE -->
 
     <div
       id="message"
@@ -421,27 +346,15 @@
 </div>
 
 
-
 <script>
 
-
 /* =====================================================
-   إعدادات المحل
+   الإعدادات
    ===================================================== */
-
-
-/*
-  رابط Google Apps Script الرئيسي.
-  هذا هو نفس رابط الـ Web App المستخدم عندك.
-*/
 
 const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
 
-
-/*
-  قراءة بيانات الرابط.
-*/
 
 const params =
   new URLSearchParams(
@@ -449,68 +362,15 @@ const params =
   );
 
 
-/*
-  Shop ID
-*/
-
 const SHOP_ID =
   params.get("shopId") || "";
 
 
-/*
-  اسم المحل
-*/
+/* =====================================================
+   المتغيرات
+   ===================================================== */
 
-const SHOP_NAME =
-  params.get("shop") ||
-  "";
-
-
-/*
-  الخصومات المرسلة بالرابط.
-*/
-
-const D1 =
-  formatDiscount(
-    params.get("d1")
-  );
-
-const D2 =
-  formatDiscount(
-    params.get("d2")
-  );
-
-const D3 =
-  formatDiscount(
-    params.get("d3")
-  );
-
-
-/*
-  تجميع الخصومات.
-*/
-
-const discounts = [];
-
-
-if(D1){
-  discounts.push(D1);
-}
-
-
-if(D2){
-  discounts.push(D2);
-}
-
-
-if(D3){
-  discounts.push(D3);
-}
-
-
-/*
-  متغيرات العملية.
-*/
+let offers = [];
 
 let scanner = null;
 
@@ -518,156 +378,258 @@ let scannerRunning = false;
 
 let scannedMemberId = "";
 
-let selectedDiscount = "";
+let scannedMemberName = "";
 
-
-/*
-  عرض بيانات المحل.
-*/
-
-document.getElementById(
-  "shopId"
-).innerText =
-  SHOP_ID;
-
-
-document.getElementById(
-  "shopName"
-).innerText =
-  SHOP_NAME || "المحل";
-
-
-renderDiscounts();
-
+let selectedOffer = null;
 
 
 /* =====================================================
-   تنسيق النسبة
+   تحميل اسم المحل
    ===================================================== */
 
-function formatDiscount(value){
+function loadShop(){
 
-  if(
-    value === null ||
-    value === undefined ||
-    value === ""
-  ){
-
-    return "";
-  }
-
-
-  let text =
-    String(value).trim();
-
-
-  if(!text){
-
-    return "";
-  }
+  document.getElementById(
+    "shopId"
+  ).innerText =
+    SHOP_ID;
 
 
   /*
-    إذا كانت مكتوبة أصلًا:
-    15%
-    20%
-    30%
+    نحاول جلب بيانات المحل من Apps Script
+    عبر API بسيط.
   */
 
-  if(
-    text.includes("%")
-  ){
-
-    return text;
-  }
-
-
-  /*
-    إذا كانت رقمًا مثل:
-    0.15
-  */
-
-  let num =
-    parseFloat(
-      text.replace(
-        ",",
-        "."
-      )
+  const url =
+    APPS_SCRIPT_URL +
+    "?shopInfo=" +
+    encodeURIComponent(
+      SHOP_ID
     );
 
 
-  if(
-    !isNaN(num) &&
-    num > 0 &&
-    num < 1
-  ){
+  fetch(
+    url,
+    {
+      method:"GET",
+      cache:"no-store"
+    }
+  )
 
-    return (
-      Math.round(
-        num * 100
-      ) + "%"
-    );
-  }
+  .then(
+    function(response){
+      return response.json();
+    }
+  )
 
+  .then(
+    function(data){
 
-  /*
-    إذا كانت:
-    15
-    20
-    30
-  */
+      if(
+        data &&
+        data.success &&
+        data.name
+      ){
 
-  if(
-    !isNaN(num) &&
-    num >= 1 &&
-    num < 100
-  ){
+        document.getElementById(
+          "shopName"
+        ).innerText =
+          data.name;
 
-    return (
-      Math.round(num) +
-      "%"
-    );
-  }
+      }
 
+    }
+  )
 
-  return text;
+  .catch(
+    function(){
+
+      /*
+        إذا لم تتوفر بيانات المحل من API،
+        نستخدم الاسم الموجود بالرابط.
+      */
+
+      const urlShop =
+        params.get("shop") || "المحل";
+
+      document.getElementById(
+        "shopName"
+      ).innerText =
+        urlShop;
+
+    }
+  );
+
 }
 
 
-
 /* =====================================================
-   عرض الخصومات
+   تحميل العروض من Offers
    ===================================================== */
 
-function renderDiscounts(){
+function loadOffers(){
 
   const box =
     document.getElementById(
-      "discounts"
+      "offers"
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML = `
+
+    <div class="loading">
+      ⏳ جاري تحميل العروض...
+    </div>
+
+  `;
+
+
+  const callbackName =
+    "saltPassOffersCallback";
+
+
+  window[
+    callbackName
+  ] =
+    function(data){
+
+      try{
+
+        if(
+          !data ||
+          !data.success
+        ){
+
+          throw new Error(
+            "تعذر تحميل العروض."
+          );
+
+        }
+
+
+        offers =
+          data.offers || [];
+
+
+        renderOffers();
+
+      }
+
+      catch(error){
+
+        box.innerHTML = `
+
+          <div class="empty">
+            ❌ ${escapeHtml(
+              error.message ||
+              "تعذر تحميل العروض."
+            )}
+          </div>
+
+        `;
+
+      }
+
+
+      /*
+        إزالة السكربت بعد التنفيذ
+      */
+
+      const script =
+        document.getElementById(
+          "offersApiScript"
+        );
+
+
+      if(script){
+
+        script.remove();
+
+      }
+
+    };
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.id =
+    "offersApiScript";
+
+
+  script.src =
+    APPS_SCRIPT_URL +
+    "?action=offers" +
+    "&shopId=" +
+    encodeURIComponent(
+      SHOP_ID
+    ) +
+    "&callback=" +
+    callbackName +
+    "&t=" +
+    Date.now();
+
+
+  script.onerror =
+    function(){
+
+      box.innerHTML = `
+
+        <div class="empty">
+          ❌ تعذر الاتصال بنظام العروض.
+        </div>
+
+      `;
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   عرض العروض
+   ===================================================== */
+
+function renderOffers(){
+
+  const box =
+    document.getElementById(
+      "offers"
+    );
+
+
+  box.innerHTML =
+    "";
 
 
   if(
-    discounts.length === 0
+    !offers ||
+    offers.length === 0
   ){
 
     box.innerHTML = `
 
       <div class="empty">
-        لا توجد خصومات مضافة لهذا المحل حاليًا.
+        لا توجد عروض متاحة حاليًا.
       </div>
 
     `;
 
     return;
+
   }
 
 
-  discounts.forEach(
-    function(discount){
+  offers.forEach(
+    function(offer){
 
       const button =
         document.createElement(
@@ -676,31 +638,56 @@ function renderDiscounts(){
 
 
       button.className =
-        "discount";
-
-
-      button.innerHTML = `
-
-        <div>
-          خصم ${escapeHtml(discount)}
-        </div>
-
-        <div class="discount-sub">
-          اضغط لاختيار هذا الخصم
-        </div>
-
-      `;
+        "offer";
 
 
       button.onclick =
         function(){
 
-          selectDiscount(
-            discount,
+          selectOffer(
+            offer,
             button
           );
 
         };
+
+
+      const title =
+        document.createElement(
+          "div"
+        );
+
+
+      title.className =
+        "offer-title";
+
+
+      title.innerText =
+        offer.title;
+
+
+      const details =
+        document.createElement(
+          "div"
+        );
+
+
+      details.className =
+        "offer-details";
+
+
+      details.innerText =
+        offer.details;
+
+
+      button.appendChild(
+        title
+      );
+
+
+      button.appendChild(
+        details
+      );
 
 
       box.appendChild(
@@ -713,17 +700,18 @@ function renderDiscounts(){
 }
 
 
-
 /* =====================================================
-   اختيار الخصم
+   اختيار العرض
    ===================================================== */
 
-function selectDiscount(
-  discount,
+function selectOffer(
+  offer,
   button
 ){
 
-  if(!scannedMemberId){
+  if(
+    !scannedMemberId
+  ){
 
     showMessage(
       "قم بمسح بطاقة العميل أولًا.",
@@ -731,16 +719,17 @@ function selectDiscount(
     );
 
     return;
+
   }
 
 
-  selectedDiscount =
-    discount;
+  selectedOffer =
+    offer;
 
 
   document
     .querySelectorAll(
-      ".discount"
+      ".offer"
     )
     .forEach(
       function(item){
@@ -759,9 +748,9 @@ function selectDiscount(
 
 
   document.getElementById(
-    "selectedDiscount"
+    "selectedTitle"
   ).innerText =
-    "خصم " + discount;
+    offer.title;
 
 
   document.getElementById(
@@ -785,9 +774,8 @@ function selectDiscount(
 }
 
 
-
 /* =====================================================
-   تشغيل الماسح
+   بدء الكاميرا
    ===================================================== */
 
 function startScanner(){
@@ -795,6 +783,7 @@ function startScanner(){
   if(scannerRunning){
 
     return;
+
   }
 
 
@@ -845,41 +834,44 @@ function startScanner(){
     function(errorMessage){
 
       /*
-        نتجاهل أخطاء القراءة المؤقتة.
+        أخطاء القراءة المؤقتة يتم تجاهلها.
       */
 
     }
 
   )
 
-  .then(function(){
+  .then(
+    function(){
 
-    document.getElementById(
-      "scanStatus"
-    ).innerText =
-      "📷 وجّه الكاميرا إلى QR الموجود على بطاقة العميل.";
+      document.getElementById(
+        "scanStatus"
+      ).innerText =
+        "📷 وجّه الكاميرا إلى QR بطاقة العميل.";
 
-  })
+    }
+  )
 
-  .catch(function(error){
+  .catch(
+    function(error){
 
-    scannerRunning =
-      false;
+      scannerRunning =
+        false;
 
 
-    showMessage(
-      "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا.",
-      false
-    );
+      showMessage(
+        "تعذر تشغيل الكاميرا. تأكد من السماح للمتصفح باستخدام الكاميرا.",
+        false
+      );
 
-  });
+    }
+  );
 
 }
 
 
-
 /* =====================================================
-   معالجة QR
+   قراءة QR العميل
    ===================================================== */
 
 function handleScan(
@@ -888,13 +880,6 @@ function handleScan(
 
   let memberId =
     "";
-
-
-  /*
-    QR بطاقة العميل يحتوي رابطًا مثل:
-
-    .../exec?member=SP-0001
-  */
 
 
   try{
@@ -918,10 +903,6 @@ function handleScan(
 
   catch(error){
 
-    /*
-      إذا كان QR نفسه مجرد SP-0001
-    */
-
     memberId =
       String(
         decodedText || ""
@@ -929,10 +910,6 @@ function handleScan(
 
   }
 
-
-  /*
-    نتأكد أنه Member ID.
-  */
 
   if(
     !/^SP-\d+$/i.test(
@@ -946,6 +923,7 @@ function handleScan(
     );
 
     return;
+
   }
 
 
@@ -956,14 +934,16 @@ function handleScan(
   stopScanner();
 
 
-  /*
-    إظهار رقم العضوية مباشرة.
-  */
+  document.getElementById(
+    "customer"
+  ).style.display =
+    "block";
+
 
   document.getElementById(
     "customerName"
   ).innerText =
-    "جاري التحقق من البطاقة...";
+    "⏳ جاري التحقق من العميل...";
 
 
   document.getElementById(
@@ -974,40 +954,16 @@ function handleScan(
 
 
   document.getElementById(
-    "customer"
-  ).style.display =
-    "block";
-
-
-  document.getElementById(
     "scanStatus"
   ).innerText =
     "⏳ جاري التحقق من بطاقة العميل...";
 
-
-  /*
-    التحقق من العميل عن طريق Apps Script.
-  */
-
-  const verifyUrl =
-    APPS_SCRIPT_URL +
-    "?verifyMember=" +
-    encodeURIComponent(
-      memberId
-    );
-
-
-  /*
-    فتح رابط التحقق في الخلفية
-    باستخدام iframe مخفي.
-  */
 
   verifyMember(
     memberId
   );
 
 }
-
 
 
 /* =====================================================
@@ -1018,169 +974,130 @@ function verifyMember(
   memberId
 ){
 
-  /*
-    نستخدم Apps Script Web App.
-    التطبيق يعيد صفحة HTML بسيطة،
-    لذلك هنا نستخدم fetch.
-  */
-
-  const url =
-    APPS_SCRIPT_URL +
-    "?verifyMember=" +
-    encodeURIComponent(
-      memberId
-    );
+  const callbackName =
+    "saltPassMemberCallback";
 
 
-  fetch(
-    url,
-    {
-      method:"GET",
-      mode:"cors",
-      cache:"no-store"
-    }
-  )
+  window[
+    callbackName
+  ] =
+    function(data){
 
-  .then(
-    function(response){
-
-      return response.text();
-
-    }
-  )
-
-  .then(
-    function(text){
-
-      /*
-        في حال أعاد Apps Script
-        البيانات كنص JSON.
-      */
-
-      try{
-
-        const member =
-          JSON.parse(
-            text
-          );
-
-
-        if(
-          !member ||
-          !member.id
-        ){
-
-          showMessage(
-            "بطاقة العميل غير موجودة.",
-            false
-          );
-
-          return;
-        }
-
-
-        if(
-          String(
-            member.status
-          ).toUpperCase()
-          !==
-          "ACTIVE"
-        ){
-
-          showMessage(
-            "بطاقة العميل غير فعالة.",
-            false
-          );
-
-          return;
-        }
-
+      if(
+        !data ||
+        !data.success
+      ){
 
         document.getElementById(
           "customerName"
         ).innerText =
-          member.name;
+          "العميل غير موجود.";
 
 
-        document.getElementById(
-          "customerId"
-        ).innerText =
-          "Member ID: " +
-          member.id;
+        showMessage(
+          data &&
+          data.message
+            ? data.message
+            : "تعذر التحقق من العميل.",
+          false
+        );
 
 
-        document.getElementById(
-          "scanStatus"
-        ).innerText =
-          "✅ تم التعرف على العميل بنجاح.";
-
+        return;
 
       }
 
-      catch(error){
 
-        /*
-          إذا لم يرجع JSON،
-          نعتبر أن القراءة نفسها ناجحة.
-        */
-
-        document.getElementById(
-          "customerName"
-        ).innerText =
-          "العميل " +
-          memberId;
+      scannedMemberId =
+        data.id;
 
 
-        document.getElementById(
-          "customerId"
-        ).innerText =
-          "Member ID: " +
-          memberId;
+      scannedMemberName =
+        data.name;
 
-
-        document.getElementById(
-          "scanStatus"
-        ).innerText =
-          "✅ تم قراءة بطاقة العميل.";
-
-      }
-
-    }
-  )
-
-  .catch(
-    function(error){
-
-      /*
-        إذا منع المتصفح الطلب بسبب CORS،
-        نعرض العميل المقروء.
-        وسيتم التحقق النهائي عند تسجيل العملية.
-      */
 
       document.getElementById(
         "customerName"
       ).innerText =
-        "العميل " +
-        memberId;
+        data.name;
 
 
       document.getElementById(
         "customerId"
       ).innerText =
         "Member ID: " +
-        memberId;
+        data.id;
 
 
       document.getElementById(
         "scanStatus"
       ).innerText =
-        "✅ تم قراءة بطاقة العميل.";
+        "✅ تم التعرف على العميل بنجاح.";
 
-    }
+
+      if(selectedOffer){
+
+        document.getElementById(
+          "confirmButton"
+        ).style.display =
+          "block";
+
+      }
+
+
+      const script =
+        document.getElementById(
+          "memberApiScript"
+        );
+
+
+      if(script){
+
+        script.remove();
+
+      }
+
+    };
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.id =
+    "memberApiScript";
+
+
+  script.src =
+    APPS_SCRIPT_URL +
+    "?verifyMember=" +
+    encodeURIComponent(
+      memberId
+    ) +
+    "&callback=" +
+    callbackName +
+    "&t=" +
+    Date.now();
+
+
+  script.onerror =
+    function(){
+
+      showMessage(
+        "تعذر الاتصال بالنظام للتحقق من البطاقة.",
+        false
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
   );
 
 }
-
 
 
 /* =====================================================
@@ -1219,14 +1136,15 @@ function stopScanner(){
 }
 
 
-
 /* =====================================================
    تأكيد العملية
    ===================================================== */
 
 function confirmTransaction(){
 
-  if(!scannedMemberId){
+  if(
+    !scannedMemberId
+  ){
 
     showMessage(
       "لم يتم تحديد العميل.",
@@ -1234,23 +1152,24 @@ function confirmTransaction(){
     );
 
     return;
+
   }
 
 
-  if(!selectedDiscount){
+  if(
+    !selectedOffer ||
+    !selectedOffer.id
+  ){
 
     showMessage(
-      "اختر الخصم أولًا.",
+      "اختر العرض أولًا.",
       false
     );
 
     return;
+
   }
 
-
-  /*
-    زر التأكيد
-  */
 
   const button =
     document.getElementById(
@@ -1267,16 +1186,16 @@ function confirmTransaction(){
 
 
   showMessage(
-    "⏳ جاري تسجيل العملية في النظام...",
+    "⏳ جاري تسجيل العملية...",
     true
   );
 
 
   /*
-    رابط تسجيل العملية.
+    التسجيل باستخدام Offer ID الحقيقي.
   */
 
-  const transactionUrl =
+  const url =
     APPS_SCRIPT_URL +
 
     "?action=record" +
@@ -1291,26 +1210,20 @@ function confirmTransaction(){
       scannedMemberId
     ) +
 
-    "&discount=" +
+    "&offerId=" +
     encodeURIComponent(
-      selectedDiscount
+      selectedOffer.id
     );
 
 
-  /*
-    ننتقل إلى Apps Script
-    لتسجيل العملية.
-  */
-
   window.location.href =
-    transactionUrl;
+    url;
 
 }
 
 
-
 /* =====================================================
-   إظهار رسالة
+   الرسائل
    ===================================================== */
 
 function showMessage(
@@ -1340,24 +1253,14 @@ function showMessage(
 }
 
 
-
-/* =====================================================
-   إخفاء الرسالة
-   ===================================================== */
-
 function hideMessage(){
 
-  const box =
-    document.getElementById(
-      "message"
-    );
-
-
-  box.style.display =
+  document.getElementById(
+    "message"
+  ).style.display =
     "none";
 
 }
-
 
 
 /* =====================================================
@@ -1400,6 +1303,15 @@ function escapeHtml(
   );
 
 }
+
+
+/* =====================================================
+   بدء الصفحة
+   ===================================================== */
+
+loadShop();
+
+loadOffers();
 
 </script>
 
