@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>SALT PASS - تسجيل العضوية</title>
+
+  <style>
+
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      padding:20px;
+      background:#f3f5f7;
+      font-family:Arial,Tahoma,sans-serif;
+      color:#111;
+    }
+
+    .container{
+      width:100%;
+      max-width:430px;
+      margin:30px auto;
+    }
+
+    .card{
+      background:#fff;
+      padding:28px 22px;
+      border-radius:24px;
+      box-shadow:0 8px 30px rgba(0,0,0,.08);
+    }
+
+    .logo{
+      text-align:center;
+      font-size:31px;
+      font-weight:800;
+      letter-spacing:2px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:#666;
+      margin-top:8px;
+      margin-bottom:28px;
+      line-height:1.7;
+    }
+
+    label{
+      display:block;
+      margin-top:16px;
+      margin-bottom:7px;
+      font-weight:bold;
+    }
+
+    input{
+      width:100%;
+      padding:15px;
+      border:1px solid #ddd;
+      border-radius:12px;
+      font-size:16px;
+      outline:none;
+      background:#fff;
+    }
+
+    input:focus{
+      border-color:#111;
+    }
+
+    .button{
+      width:100%;
+      padding:17px;
+      margin-top:22px;
+      border:0;
+      border-radius:13px;
+      background:#111;
+      color:#fff;
+      font-size:17px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .button:disabled{
+      opacity:.6;
+      cursor:default;
+    }
+
+    .message{
+      display:none;
+      margin-top:15px;
+      padding:14px;
+      border-radius:12px;
+      line-height:1.8;
+    }
+
+    .success{
+      background:#e9f7ec;
+      color:#256b32;
+    }
+
+    .error{
+      background:#ffecec;
+      color:#b71c1c;
+    }
+
+    #successArea{
+      display:none;
+      text-align:center;
+    }
+
+    .success-title{
+      font-size:22px;
+      font-weight:bold;
+      color:#2e7d32;
+    }
+
+    .member-name{
+      margin-top:15px;
+      font-size:21px;
+      font-weight:bold;
+    }
+
+    .member-id{
+      margin-top:8px;
+      font-size:29px;
+      font-weight:800;
+    }
+
+    .qr-title{
+      margin-top:25px;
+      font-weight:bold;
+    }
+
+    .qr-box{
+      width:310px;
+      max-width:100%;
+      margin:18px auto;
+      padding:12px;
+      background:#fff;
+      border-radius:20px;
+      border:1px solid #eee;
+    }
+
+    .qr-box img{
+      width:100%;
+      display:block;
+    }
+
+    .note{
+      color:#666;
+      font-size:13px;
+      line-height:1.8;
+      margin-top:12px;
+    }
+
+    .back-button{
+      width:100%;
+      padding:15px;
+      margin-top:15px;
+      border:0;
+      border-radius:12px;
+      background:#eee;
+      color:#111;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+
+    <!-- =========================================
+         FORM
+         ========================================= -->
+
+    <div id="formArea">
+
+      <div class="logo">
+        SALT PASS
+      </div>
+
+      <div class="subtitle">
+        سجّل بياناتك للحصول على بطاقة SALT PASS الرقمية
+      </div>
+
+
+      <label>
+        الاسم الكامل
+      </label>
+
+      <input
+        id="name"
+        type="text"
+        placeholder="مثال: أحمد محمد"
+        autocomplete="name"
+      >
+
+
+      <label>
+        رقم الهاتف
+      </label>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="0790000000"
+        autocomplete="tel"
+      >
+
+
+      <label>
+        المنطقة
+      </label>
+
+      <input
+        id="address"
+        type="text"
+        placeholder="مثال: السلط"
+        autocomplete="address-level2"
+      >
+
+
+      <button
+        id="submitButton"
+        class="button"
+        onclick="registerMember()"
+      >
+        إصدار بطاقتي
+      </button>
+
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         SUCCESS
+         ========================================= -->
+
+    <div id="successArea">
+
+      <div class="success-title">
+        ✅ تم إصدار بطاقتك بنجاح
+      </div>
+
+
+      <div
+        id="memberName"
+        class="member-name"
+      >
+      </div>
+
+
+      <div
+        id="memberId"
+        class="member-id"
+      >
+      </div>
+
+
+      <div class="qr-title">
+        QR الخاص ببطاقتك
+      </div>
+
+
+      <div class="qr-box">
+
+        <img
+          id="qrImage"
+          alt="SALT PASS QR"
+        >
+
+      </div>
+
+
+      <div class="note">
+        احتفظ بهذا الـQR وأظهره عند المحلات المشاركة في SALT PASS.
+      </div>
+
+
+      <button
+        class="back-button"
+        onclick="openCard()"
+      >
+        فتح بطاقتي الرقمية
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   رابط Apps Script الحالي
+   ===================================================== */
+
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwLo29EjRRsz7w4EmFcgt3feOaCUhfYK1JpMhrquaaOHe7a8EEUVQ1T0v4j0AAiPTtz/exec";
+
+
+/* =====================================================
+   بيانات المستخدم بعد التسجيل
+   ===================================================== */
+
+let memberUrl = "";
+
+let memberId = "";
+
+
+/* =====================================================
+   تسجيل العميل
+   ===================================================== */
+
+function registerMember(){
+
+  const name =
+    document.getElementById(
+      "name"
+    )
+    .value
+    .trim();
+
+
+  const phone =
+    document.getElementById(
+      "phone"
+    )
+    .value
+    .trim();
+
+
+  const address =
+    document.getElementById(
+      "address"
+    )
+    .value
+    .trim();
+
+
+  const button =
+    document.getElementById(
+      "submitButton"
+    );
+
+
+  if(
+    !name ||
+    !phone ||
+    !address
+  ){
+
+    showMessage(
+      "يرجى تعبئة جميع البيانات.",
+      false
+    );
+
+    return;
+  }
+
+
+  hideMessage();
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    "⏳ جاري إصدار البطاقة...";
+
+
+  /*
+    سنستخدم Apps Script عبر JSONP.
+
+    هذا مهم لأن GitHub Pages
+    وGoogle Apps Script نطاقان مختلفان.
+  */
+
+  const callbackName =
+    "saltPassRegisterCallback";
+
+
+  window[
+    callbackName
+  ] =
+    function(result){
+
+      /*
+        تنظيف السكربت المؤقت
+      */
+
+      const script =
+        document.getElementById(
+          "registerApiScript"
+        );
+
+
+      if(script){
+
+        script.remove();
+
+      }
+
+
+      if(
+        !result ||
+        !result.success
+      ){
+
+        showMessage(
+          result &&
+          result.message
+            ? result.message
+            : "تعذر إصدار البطاقة.",
+          false
+        );
+
+
+        button.disabled =
+          false;
+
+
+        button.innerText =
+          "إصدار بطاقتي";
+
+
+        return;
+      }
+
+
+      /*
+        حفظ معلومات البطاقة
+      */
+
+      memberId =
+        result.id || "";
+
+
+      memberUrl =
+        result.url || "";
+
+
+      /*
+        إخفاء النموذج
+      */
+
+      document.getElementById(
+        "formArea"
+      ).style.display =
+        "none";
+
+
+      /*
+        إظهار النتيجة
+      */
+
+      document.getElementById(
+        "successArea"
+      ).style.display =
+        "block";
+
+
+      document.getElementById(
+        "memberName"
+      ).innerText =
+        result.name;
+
+
+      document.getElementById(
+        "memberId"
+      ).innerText =
+        result.id;
+
+
+      /*
+        إنشاء QR
+      */
+
+      document.getElementById(
+        "qrImage"
+      ).src =
+
+        "https://api.qrserver.com/v1/create-qr-code/" +
+
+        "?size=800x800&data=" +
+
+        encodeURIComponent(
+          result.url
+        );
+
+    };
+
+
+  /*
+    رابط إنشاء المستخدم.
+  */
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.id =
+    "registerApiScript";
+
+
+  script.src =
+
+    APPS_SCRIPT_URL +
+
+    "?action=register" +
+
+    "&name=" +
+    encodeURIComponent(
+      name
+    ) +
+
+    "&phone=" +
+    encodeURIComponent(
+      phone
+    ) +
+
+    "&address=" +
+    encodeURIComponent(
+      address
+    ) +
+
+    "&callback=" +
+    callbackName +
+
+    "&t=" +
+    Date.now();
+
+
+  script.onerror =
+    function(){
+
+      script.remove();
+
+
+      showMessage(
+        "تعذر الاتصال بنظام SALT PASS. حاول مرة أخرى.",
+        false
+      );
+
+
+      button.disabled =
+        false;
+
+
+      button.innerText =
+        "إصدار بطاقتي";
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   فتح البطاقة
+   ===================================================== */
+
+function openCard(){
+
+  if(!memberUrl){
+
+    showMessage(
+      "تعذر فتح البطاقة.",
+      false
+    );
+
+    return;
+  }
+
+
+  window.location.href =
+    memberUrl;
+
+}
+
+
+/* =====================================================
+   الرسائل
+   ===================================================== */
+
+function showMessage(
+  text,
+  success
+){
+
+  const box =
+    document.getElementById(
+      "message"
+    );
+
+
+  box.innerHTML =
+    text;
+
+
+  box.className =
+    success
+      ? "message success"
+      : "message error";
+
+
+  box.style.display =
+    "block";
+
+}
+
+
+function hideMessage(){
+
+  document.getElementById(
+    "message"
+  ).style.display =
+    "none";
+
+}
+
+</script>
+
+</body>
+
+</html>
